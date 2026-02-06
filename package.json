@@ -1,0 +1,10 @@
+{
+  "name": "thinkbot",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix website",
+    "build": "npm run build --prefix website",
+    "publish-articles": "./scripts/publish.sh",
+    "news-monitor": "./scripts/news-monitor.sh"
+  }
+}

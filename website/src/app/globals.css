@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --color-background: #0b0f1a;
+  --color-foreground: #e2e8f0;
+  --color-brand: #1e3a5f;
+  --color-brand-light: #3b82f6;
+  --color-accent: #d97706;
+  --color-surface: #111827;
+  --color-surface-raised: #1a2236;
+  --color-border: #1e293b;
+  --color-muted: #94a3b8;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+/* Hero gradient */
+.hero-gradient {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%);
+}
+
+.hero-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+/* Category colors — tuned for dark backgrounds */
+.cat-ai { background-color: rgba(139,92,246,0.15); color: #a78bfa; }
+.cat-antitrust { background-color: rgba(236,72,153,0.15); color: #f472b6; }
+.cat-innovation { background-color: rgba(59,130,246,0.15); color: #60a5fa; }
+.cat-moderation { background-color: rgba(245,158,11,0.15); color: #fbbf24; }
+.cat-privacy { background-color: rgba(16,185,129,0.15); color: #34d399; }
+.cat-economy { background-color: rgba(99,102,241,0.15); color: #818cf8; }
+.cat-default { background-color: rgba(148,163,184,0.1); color: #94a3b8; }
+
+/* Article card */
+.article-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.article-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.accent-border {
+  border-left: 3px solid #3b82f6;
+}
+
+/* Prose — light text on dark background */
+.prose {
+  --tw-prose-body: #cbd5e1;
+  --tw-prose-headings: #f1f5f9;
+  --tw-prose-lead: #94a3b8;
+  --tw-prose-links: #60a5fa;
+  --tw-prose-bold: #f1f5f9;
+  --tw-prose-counters: #64748b;
+  --tw-prose-bullets: #475569;
+  --tw-prose-hr: #1e293b;
+  --tw-prose-quotes: #e2e8f0;
+  --tw-prose-quote-borders: #3b82f6;
+  --tw-prose-captions: #94a3b8;
+  --tw-prose-code: #e2e8f0;
+  --tw-prose-pre-code: #e2e8f0;
+  --tw-prose-pre-bg: #0f172a;
+  --tw-prose-th-borders: #334155;
+  --tw-prose-td-borders: #1e293b;
+}
+
+.prose h2 {
+  margin-top: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #1e293b;
+}
+
+.prose h3 {
+  margin-top: 1.5em;
+}
+
+.prose strong {
+  color: #f1f5f9;
+}
+
+/* Nav underline */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #3b82f6;
+  transition: width 0.2s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
