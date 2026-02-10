@@ -63,22 +63,25 @@ if [ "$DRY_RUN" = true ]; then
   exit 0
 fi
 
-# Step 2-4: For each assignment, run the pipeline
-echo "[2/4] Running Director → Fellow → Editor pipeline..."
+# Step 2-4: For each assignment, run the 2-round revision pipeline
+echo "[2/4] Running Director → Fellow → Editor (feedback) → Fellow (revision) → Editor (final) pipeline..."
 claude --print \
   --cwd "$PROJECT_DIR" \
   "You have the following article assignments from the President:
 
 $ASSIGNMENTS
 
-For each assignment, run the full publication pipeline:
-1. Use the director-of-policy agent to produce a policy framing document
-2. Use the assigned fellow agent to write the article based on the assignment and framing
-3. Use the chief-editor agent to edit, polish, and format with proper frontmatter
+For each assignment, run the full 5-step publication pipeline with editorial revision loop:
+
+1. **Director framing**: Use the director-of-policy agent to produce a policy framing document for the assignment.
+2. **Fellow first draft**: Use the assigned fellow agent to write a first draft based on the assignment and framing.
+3. **Editor feedback** (Feedback Mode): Use the chief-editor agent to review the first draft and produce structured editorial feedback — NOT a final version. The editor should follow its Feedback Mode instructions: overall assessment, major issues, minor issues, strengths, and a REVISE verdict.
+4. **Fellow revision** (Revision Mode): Use the same fellow agent again, providing the editorial feedback. The fellow should follow its Revision Mode instructions: address every major issue, handle minor issues, preserve strengths, and return the complete revised article.
+5. **Editor final polish** (Pipeline Mode / Final Edit): Use the chief-editor agent to do the final edit on the revised draft — polish prose, ensure ideological consistency, format with proper frontmatter, and produce the publication-ready version.
 
 Save each final article to website/content/articles/ with the filename format YYYY-MM-DD-slug.md.
 
-Process each assignment through the full pipeline and save the results."
+Process each assignment through all 5 steps and save the results."
 
 echo ""
 echo "[3/4] Pipeline complete. Checking for new articles..."
