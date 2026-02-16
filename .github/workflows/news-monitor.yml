@@ -1,0 +1,44 @@
+name: ThinkBot News Monitor
+
+on:
+  schedule:
+    # Every weekday at 2:00 PM Eastern (18:00 UTC) - catches afternoon news
+    - cron: '0 18 * * 1-5'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PUSH_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Scan for breaking news
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          git config user.name "ThinkBot"
+          git config user.email "thinkbot@users.noreply.github.com"
+          chmod +x scripts/news-monitor.sh
+          scripts/news-monitor.sh
+
+      - name: Log results
+        if: always()
+        run: |
+          echo "=== Recent articles ==="
+          ls -lt website/content/articles/*.md | head -5
