@@ -106,6 +106,9 @@ else
   git add website/content/articles/
   git commit -m "publish: add new ThinkBot articles ($(date '+%Y-%m-%d'))"
   echo "Committed new articles."
+  echo "Pushing to origin (triggers Vercel deploy)..."
+  git push origin main
+  echo "Pushed. Vercel will redeploy automatically."
 fi
 
 echo ""

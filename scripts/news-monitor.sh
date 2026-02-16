@@ -87,6 +87,20 @@ Run the rapid-response pipeline:
 Save the article to website/content/articles/ with format 'rapid-response' in the frontmatter.
 This needs to be fast and timely — prioritize speed while maintaining quality."
 
+# Commit and push if there are new articles
+echo ""
+echo "[3/3] Committing and deploying..."
+cd "$PROJECT_DIR"
+if git diff --quiet -- website/content/articles/ 2>/dev/null && \
+   [ -z "$(git ls-files --others --exclude-standard website/content/articles/)" ]; then
+  echo "No new articles to commit."
+else
+  git add website/content/articles/
+  git commit -m "rapid-response: $(date '+%Y-%m-%d') breaking news article"
+  git push origin main
+  echo "Pushed. Vercel will redeploy automatically."
+fi
+
 echo ""
 echo "======================================"
 echo "  Rapid response complete!"
