@@ -41,11 +41,13 @@ fi
 
 mkdir -p "$ARTICLES_DIR"
 
+# Work from the project directory so claude picks up .claude/agents/
+cd "$PROJECT_DIR"
+
 # Step 1: President scans news for significant developments
 echo "[1/2] Scanning tech policy news..."
 SCAN_RESULT=$(claude --print \
   --agent president \
-  --cwd "$PROJECT_DIR" \
   "You are running in news monitoring mode. Search the web for BREAKING or SIGNIFICANT tech policy developments from the last 24 hours. Look for:
 - New legislation introduced or passed
 - Major court decisions (antitrust, Section 230, AI)
@@ -74,7 +76,6 @@ fi
 # Step 2: Run rapid-response pipeline
 echo "[2/2] Running rapid-response pipeline..."
 claude --print \
-  --cwd "$PROJECT_DIR" \
   "The President has identified a significant development requiring a rapid response:
 
 $SCAN_RESULT
