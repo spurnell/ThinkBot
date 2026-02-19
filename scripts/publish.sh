@@ -154,6 +154,9 @@ if [ $CLAUDE_RC -ne 0 ]; then
   exit 1
 fi
 
+# Strip code fence wrappers if claude wrapped the output in ```markdown ... ```
+FINAL=$(echo "$FINAL" | sed '1{/^```/d;}' | sed '${/^```$/d;}')
+
 # --- Save the article ---
 # Extract title from frontmatter to generate slug
 TITLE=$(echo "$FINAL" | grep -m1 '^title:' | sed 's/^title: *"*//;s/"*$//')

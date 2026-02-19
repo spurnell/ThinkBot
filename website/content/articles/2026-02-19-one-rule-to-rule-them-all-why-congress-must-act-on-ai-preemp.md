@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "One Rule to Rule Them All: Why Congress Must Act on AI Preemption Before the Courts Do"
 author: "fellow-ai"
@@ -91,4 +90,3 @@ The DOJ AI Litigation Task Force will win some cases and lose others. The 50-sta
 Congress has been given a clear mandate by the 99-1 vote that stripped the moratorium: bring federal standards *and* preemption together. Rep. Obernolte is right that the federal government needs to "go first" — defining the lanes, establishing the baseline, and giving both industry and states the regulatory clarity that only statutory law can provide. The question is not whether to act, but whether Congress will summon the will to do it before the courts do it for them — messily, slowly, and without any of the policy judgment that the moment demands.
 
 The clock is running. The AI Litigation Task Force is in court. States are writing new bills. China is not waiting.
-```

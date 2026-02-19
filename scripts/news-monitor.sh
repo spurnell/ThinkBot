@@ -154,6 +154,9 @@ if [ $CLAUDE_RC -ne 0 ]; then
   exit 1
 fi
 
+# Strip code fence wrappers if claude wrapped the output in ```markdown ... ```
+FINAL=$(echo "$FINAL" | sed '1{/^```/d;}' | sed '${/^```$/d;}')
+
 # --- Save ---
 TITLE=$(echo "$FINAL" | grep -m1 '^title:' | sed 's/^title: *"*//;s/"*$//')
 if [ -z "$TITLE" ]; then
