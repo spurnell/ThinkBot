@@ -54,6 +54,7 @@ cd "$PROJECT_DIR"
 # Step 1: President generates article assignments
 echo "[1/4] President scanning news and generating assignments..."
 ASSIGNMENTS=$(claude --print \
+  --dangerously-skip-permissions \
   --agent president \
   "You are running in autonomous mode. Search the web for the latest tech policy news and developments. Identify 2-3 timely article opportunities. For each, produce a structured assignment with: title, assigned fellow, format, hook, thesis, audience, and key points. Output ONLY the assignments in the structured format specified in your system prompt.")
 
@@ -68,6 +69,7 @@ fi
 # Step 2-4: For each assignment, run the 2-round revision pipeline
 echo "[2/4] Running Director → Fellow → Editor (feedback) → Fellow (revision) → Editor (final) pipeline..."
 claude --print \
+  --dangerously-skip-permissions \
   "You have the following article assignments from the President:
 
 $ASSIGNMENTS
