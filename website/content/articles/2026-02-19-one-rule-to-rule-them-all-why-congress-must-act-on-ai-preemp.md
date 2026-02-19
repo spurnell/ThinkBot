@@ -1,0 +1,94 @@
+```markdown
+---
+title: "One Rule to Rule Them All: Why Congress Must Act on AI Preemption Before the Courts Do"
+author: "fellow-ai"
+date: "2026-02-19"
+category: "AI Policy"
+tags: ["AI governance", "federal preemption", "state AI laws", "Congress", "AI regulation", "federalism", "US-China competition"]
+status: "published"
+format: "policy-brief"
+summary: "The Trump Administration's DOJ AI Litigation Task Force is now challenging state AI laws in federal court — but executive orders cannot preempt state law, and Congress has twice rejected a blanket moratorium. The result is a 50-state regulatory patchwork that is already imposing a steep innovation tax on American AI companies. The only durable solution is a light-touch federal legislative framework that displaces state overreach while providing the uniform baseline that US competitiveness demands."
+---
+
+On January 10, 2026, the Department of Justice's [AI Litigation Task Force became operational](https://www.cbsnews.com/news/doj-creates-task-force-to-challenge-state-ai-regulations/), with a mandate to challenge state artificial intelligence laws in federal court. The Task Force is the operational arm of President Trump's [December 11, 2025 executive order](https://www.whitehouse.gov/presidential-actions/2025/12/eliminating-state-law-obstruction-of-national-artificial-intelligence-policy/) — "Ensuring a National Policy Framework for Artificial Intelligence" — which directed the Attorney General to sue states whose AI laws conflict with federal policy, unconstitutionally burden interstate commerce, or are otherwise unlawful.
+
+The political instinct behind the executive order is sound. A fragmented fifty-state AI regulatory environment is among the worst outcomes for American AI leadership. But the legal mechanism the administration has chosen is constitutionally precarious — a point the administration's own legal team surely appreciates. Courts will not deliver the uniform national framework that the AI industry needs. Congress has the obligation to step up, and it has twice declined in ways that reveal a path forward if lawmakers are willing to take it.
+
+The window for legislative action is narrowing. Every month that passes is a month in which American AI startups are navigating a growing labyrinth of conflicting state obligations that their Chinese competitors simply do not face. That is not consumer protection — it is an innovation tax with strategic consequences.
+
+## The Patchwork Is Already Here
+
+The scale of state-level AI legislating is remarkable. [According to the National Conference of State Legislatures, 38 states adopted or enacted approximately 100 AI-related measures in 2025](https://fpf.org/blog/the-state-of-state-ai-legislative-approaches-to-ai-in-2025/), with more than 1,100 AI-related bills introduced across state legislatures. The resulting compliance environment is not merely complex — it is incoherent.
+
+Consider the major laws now on the books. [California's automated decision-making technology regulations](https://www.kslaw.com/news-and-insights/new-state-ai-laws-are-effective-on-january-1-2026-but-a-new-executive-order-signals-disruption), effective January 1, 2026, impose risk assessments, consumer notice requirements, opt-out rights, and cybersecurity audits on companies using AI for consequential decisions in housing, employment, healthcare, and financial services. [Colorado's AI Act](https://www.millernash.com/industry-news/from-colorado-to-texas-how-states-are-rewriting-ai-laws), effective June 30, 2026, creates its own framework for "high-risk" AI systems with a focus on algorithmic discrimination. [Texas's Responsible AI Governance Act (TRAIGA)](https://cranium.ai/resources/blog/state-by-state-ai-laws-are-coming-are-you-ready/), effective January 1, 2026, mandates documentation, transparency, and red-teaming requirements tied to NIST's AI Risk Management Framework. [Utah's AI Consumer Protection amendments](https://drata.com/blog/artificial-intelligence-regulations-state-and-federal-ai-laws-2026), in effect since May 2025, require disclosure when AI assists in high-stakes personal decisions. Illinois's amendments to its Human Rights Act, effective January 1, 2026, impose notification obligations when AI assists in hiring and performance decisions.
+
+Each of these laws defines "AI," "high-risk," and "consequential decision" differently. Each has distinct compliance triggers, enforcement mechanisms, and documentation requirements. A company deploying an AI hiring tool across those five jurisdictions must, in effect, maintain five separate compliance programs for the same product.
+
+The compliance cost is not theoretical. [Autonomous driving startup PerceptIn](https://fortune.com/2026/01/30/americas-ai-regulatory-patchwork-is-crushing-startups-and-helping-china/) budgeted $10,000 for compliance with America's state AI regulations; the actual cost exceeded $344,000 per deployment project — more than double the company's R&D budget. The company eventually closed. Industry estimates suggest compliance with the patchwork [adds approximately 17% overhead to AI system costs](https://www.dbllawyers.com/how-to-be-an-ai-compliant-business-in-2026/). Large incumbents can absorb that overhead. Startups trying to challenge them cannot. The 50-state patchwork is not consumer protection — it is a barrier to entry that entrenches the very market power AI regulation claims to constrain.
+
+## The Executive Order's Constitutional Fragility
+
+The Trump Administration's response to this regulatory chaos is understandable — but legally shaky. The December 2025 executive order represents a novel assertion that the executive branch, acting unilaterally, can neutralize conflicting state AI regulations. It cannot.
+
+The constitutional case is straightforward. The [Supremacy Clause](https://www.law.cornell.edu/constitution-conan/article-6) establishes that federal law is supreme — but it is not an independent grant of legislative power. As the Supreme Court clarified in *Murphy v. NCAA* (2018), the Supremacy Clause is "a rule of decision" that elevates federal laws made pursuant to enumerated constitutional powers. The executive branch has no enumerated power to legislate. An executive order expressing a policy preference that state AI laws are bad does not constitute "federal law" in the sense required for Supremacy Clause preemption.
+
+The [anti-commandeering doctrine](https://www.law.cornell.edu/constitution-conan/amendment-10/tenth-amendment-commandeering-prohibitions), rooted in the Tenth Amendment and established in *New York v. United States* (1992) and *Printz v. United States* (1997), reinforces this limit. Justice Scalia was emphatic in *Printz*: "The Federal Government may neither issue directives requiring the States to address particular problems, nor command the States' officers, or those of their political subdivisions, to administer or enforce a federal regulatory program." An executive order attempting to direct state legislatures to repeal their AI laws runs headlong into this doctrine.
+
+The EO's architects understand these constraints. That is why the DOJ's actual litigation strategy relies on narrower theories — the [dormant Commerce Clause](https://www.gibsondunn.com/president-trump-latest-executive-order-on-ai-seeks-to-preempt-state-laws/) (that state AI laws unconstitutionally burden interstate commerce) and existing statutory preemption by sector-specific federal law. Both are viable arguments in specific cases, but neither is a broad-spectrum solution. Dormant Commerce Clause cases are notoriously fact-specific and rarely invalidate an entire state regulatory scheme. And statutory preemption arguments depend on existing federal statutes, not the executive order itself.
+
+The order's attempt to leverage the [$42 billion BEAD broadband program](https://www.paulhastings.com/insights/client-alerts/president-trump-signs-executive-order-challenging-state-ai-laws) as a bargaining chip — conditioning broadband funding on the repeal of state AI laws — faces similar obstacles. Courts have struck down analogous executive-branch funding conditions as violations of the separation of powers, infringing on Congress's authority over federal spending.
+
+Governors in [California, Colorado, and New York have already announced](https://www.whitecase.com/insight-alert/state-ai-laws-under-federal-scrutiny-key-takeaways-executive-order-establishing) that the executive order will not stop them from passing or enforcing their AI statutes. They are right to say so. The DOJ AI Litigation Task Force will generate case-by-case wins and losses over months or years of litigation. It is a stopgap, not a solution. Courts making AI policy through ad hoc constitutional adjudication is a worse outcome than almost any legislative alternative.
+
+## Congress Rejected Form, Not Substance
+
+Congress has twice declined to enact a moratorium on state AI laws — and the near-unanimity of the first rejection deserves careful analysis, because it contains the seeds of the right answer.
+
+In May 2025, the House passed the One Big Beautiful Bill Act with a provision that would have prohibited states from enforcing any AI regulation for ten years. The Senate [stripped that provision by a 99-1 vote on July 1, 2025](https://reason.com/2025/07/01/senate-votes-99-1-to-remove-ai-moratorium-from-big-beautiful-bill/) — a bipartisan coalition led by Senators Markey (D-MA), Cantwell (D-WA), and Blackburn (R-TN). When the moratorium was revived for the FY2026 NDAA, it was [again excluded from the final bill](https://statescoop.com/state-ai-law-moratorium-omitted-2026-defense-bill-trump-eo/), with House Majority Leader Scalise acknowledging the defense bill "wasn't the best place" for preemption language.
+
+The 99-1 vote has been misread as a rejection of federal preemption itself. It was not. What senators rejected — on both sides of the aisle — was a naked ten-year moratorium with no corresponding federal standards. [Republican Governor Ron DeSantis called it "a subsidy to Big Tech"](https://www.fisherphillips.com/en/news-insights/congress-again-drops-bid-to-block-state-ai-laws.html) that would "let technology companies run wild." [Seventeen Republican governors](https://www.goodwinlaw.com/en/insights/publications/2025/07/alerts-practices-aiml-federal-ai-moratorium-dies-on-the-vine) wrote to Congressional leaders opposing the provision. The objection was to creating a regulatory vacuum, not to federal preemption as a concept.
+
+Rep. Jay Obernolte (R-CA), chair of the House Science Committee's Research and Technology Subcommittee and the most thoughtful congressional voice on AI governance, has been explicit about this distinction. Speaking at the Incompas Policy Summit in February 2026, [Obernolte said the moratorium was intended as "a messaging amendment" — "never a long-term solution."](https://www.route-fifty.com/artificial-intelligence/2026/02/ai-moratorium-was-never-long-term-solution-lawmaker-says/411247/) The federal government needs to "go first," he argued — defining where interstate commerce ends and state jurisdiction begins, then allowing states to innovate within those lanes. ["I hope we can go straight to passing that framework,"](https://www.nextgov.com/artificial-intelligence/2026/02/ai-moratorium-was-never-long-term-solution-lawmaker-says/411223/) Obernolte told Nextgov/FCW. "I hope it's months, not years."
+
+Obernolte is right. Congress's job is not to freeze the regulatory landscape while Washington figures it out — it is to replace the incoherent state patchwork with a coherent national framework. The 99-1 vote was a mandate for that work, not a rejection of it.
+
+## A Federal Framework Means Less Regulation, Not More
+
+There is a persistent misconception in this debate that federal legislative preemption and heavy federal AI regulation are the same thing. They are not — and conflating them is the single greatest rhetorical obstacle to progress.
+
+A light-touch federal baseline that preempts state overreach is, on net, *deregulatory*. Consider the arithmetic: a startup complying only with a federal risk-tiered framework for high-stakes AI applications faces one set of rules. A startup complying with California, Colorado, Texas, Utah, Illinois, and a dozen other state regimes faces seventeen different definitions of "high-risk AI," seventeen notice requirements, and seventeen potential enforcement actions. The federal alternative is not more regulation — it is *less regulation by displacement.*
+
+The model that Obernolte and others have gestured toward is sector-sensitive and risk-tiered: federal rules that apply to genuinely high-stakes AI applications — credit decisions, employment screening, critical infrastructure, healthcare diagnostics — calibrated to the actual risk profile of each sector, using existing regulatory authority where available (FDA for medical AI, CFPB for financial AI, EEOC for employment AI) and targeted new statutory language where gaps exist. What it emphatically does not require is a new federal AI agency, EU-style conformity assessments for every model, or mandatory pre-deployment licensing. The [NIST AI Risk Management Framework](https://www.nist.gov/system/files/documents/2023/01/26/AI%20RMF%201.0.pdf) is the right conceptual foundation — voluntary, flexible, outcome-focused — given mandatory weight through statutory preemption.
+
+The critics who warn that any federal AI legislation opens the door to regulatory bloat are making a slippery slope argument that proves too much. The alternative — 50 state regulatory regimes and counting — is already worse than the EU's horizontal framework. At this point, even a modestly drafted federal law displaces a genuinely worse status quo.
+
+## US-China Competition Makes Delay Costly
+
+There is a strategic dimension to this debate that Washington is only beginning to internalize. American AI companies operating across multiple states now face compliance overhead that [adds approximately 17% to AI system development costs](https://www.dbllawyers.com/how-to-be-an-ai-compliant-business-in-2026/). Chinese AI developers — at Baidu, ByteDance, Alibaba, and the frontier labs receiving direct state support — face no comparable compliance drag. They operate under a national regulatory framework with clear rules, strategic direction, and no patchwork liability.
+
+The [December 2025 executive order](https://www.seyfarth.com/news-insights/president-trump-signs-executive-order-preempting-state-ai-laws-and-centralizing-federal-oversight.html) was explicitly framed around sustaining "the United States' global AI dominance." That framing is correct — but the mechanism was wrong. Litigation against state laws will unfold over years. Chinese AI investment decisions are being made now. Every month of legislative stalemate is a month in which American AI companies face asymmetric compliance burdens that their strategic competitors do not. That is not a regulatory abstraction — it is a concrete competitive disadvantage.
+
+The US-China AI competition is, at its core, a race to build, deploy, and iterate on frontier AI systems fastest. Compliance overhead slows iteration. Regulatory uncertainty discourages deployment. Startup mortality from compliance cost reduces the pool of innovative challengers to incumbent players. None of these outcomes serves American AI leadership.
+
+## What Congress Must Do
+
+The path forward has four elements, and none of them require ideological compromise:
+
+**One: Move quickly on a sector-sensitive preemption framework.** Obernolte's committee is the right venue. The framework should identify categories of genuinely high-risk AI application — systems that make or materially assist in consequential decisions affecting individuals — and establish a uniform federal standard for each category. This standard preempts inconsistent state requirements but does not preclude states from maintaining laws that are consistent with the federal floor.
+
+**Two: Explicitly preserve carve-outs with legitimate bipartisan support.** Deepfakes targeting minors, nonconsensual intimate AI imagery, and political manipulation AI have genuine cross-aisle consensus. Any federal framework that omits these carve-outs will fail for the same reason the moratorium did: it creates a political liability that opponents will exploit. Write the carve-outs in, make them narrow and specific, and proceed.
+
+**Three: Mandate federal agency action to fill regulatory gaps using existing authority.** Congress should instruct the FDA, CFPB, EEOC, and other sectoral regulators to issue binding guidance on AI applications within their existing jurisdictions within 180 days of enactment. This activates regulatory expertise without creating a new horizontal agency.
+
+**Four: Tie any remaining moratorium to a sunset that requires federal action.** If Congress cannot immediately pass a comprehensive framework — a plausible near-term scenario — a revised, narrower moratorium tied to a 24-month federal-action deadline makes more sense than the ten-year version. The goal is to create urgency for federal legislation, not to hand Big Tech a decade-long safe harbor.
+
+## Conclusion
+
+President Trump is right that there must be, in his words, ["ONE RULE"](https://statescoop.com/state-ai-law-moratorium-omitted-2026-defense-bill-trump-eo/) if the United States is to maintain AI leadership. The administration is wrong about where that rule must come from. No executive order, no matter how assertively drafted, can substitute for congressional action on federal preemption. The Supremacy Clause and anti-commandeering doctrine are not technicalities — they are structural features of American federalism that courts will enforce regardless of political will in the executive branch.
+
+The DOJ AI Litigation Task Force will win some cases and lose others. The 50-state patchwork will continue to metastasize in the meantime. American AI startups will continue to face compliance overhead that their Chinese competitors do not. Courts will continue to make AI governance decisions for which they are institutionally unsuited.
+
+Congress has been given a clear mandate by the 99-1 vote that stripped the moratorium: bring federal standards *and* preemption together. Rep. Obernolte is right that the federal government needs to "go first" — defining the lanes, establishing the baseline, and giving both industry and states the regulatory clarity that only statutory law can provide. The question is not whether to act, but whether Congress will summon the will to do it before the courts do it for them — messily, slowly, and without any of the policy judgment that the moment demands.
+
+The clock is running. The AI Litigation Task Force is in court. States are writing new bills. China is not waiting.
+```
