@@ -2,15 +2,18 @@
 # =============================================================================
 # ThinkBot Publish Pipeline
 # =============================================================================
-# Runs the full autonomous publication pipeline:
-#   1. President scans news and generates article assignments
-#   2. For each assignment: Director → Fellow → Editor pipeline
-#   3. Final articles saved to website/content/articles/
-#   4. Git commits the new articles
+# Runs a streamlined publication pipeline:
+#   1. President picks ONE article assignment
+#   2. Director produces policy framing
+#   3. Fellow writes the article
+#   4. Editor polishes to publication quality
+#   5. Script saves the file and commits
+#
+# Each step is a separate claude call to prevent context accumulation.
 #
 # Usage:
 #   ./scripts/publish.sh              # Run full pipeline
-#   ./scripts/publish.sh --dry-run    # Preview assignments without writing
+#   ./scripts/publish.sh --dry-run    # Preview assignment without writing
 # =============================================================================
 
 set -uo pipefail
@@ -19,8 +22,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 ARTICLES_DIR="$PROJECT_DIR/website/content/articles"
 DRY_RUN=false
+TODAY=$(date '+%Y-%m-%d')
 
-# Parse arguments
 for arg in "$@"; do
   case $arg in
     --dry-run) DRY_RUN=true ;;
@@ -32,119 +35,150 @@ echo "======================================"
 echo "  ThinkBot Publish Pipeline"
 echo "======================================"
 echo "Project: $PROJECT_DIR"
-echo "Output:  $ARTICLES_DIR"
+echo "Date:    $TODAY"
 echo "Mode:    $([ "$DRY_RUN" = true ] && echo 'DRY RUN' || echo 'LIVE')"
-echo "Date:    $(date '+%Y-%m-%d %H:%M')"
 echo "======================================"
 echo ""
 
-# Ensure output directory exists
 mkdir -p "$ARTICLES_DIR"
 
-# Check for claude CLI
 if ! command -v claude &> /dev/null; then
-  echo "Error: 'claude' CLI not found. Install Claude Code first."
-  echo "  npm install -g @anthropic-ai/claude-code"
+  echo "Error: 'claude' CLI not found."
   exit 1
 fi
 
-# Work from the project directory so claude picks up .claude/agents/
 cd "$PROJECT_DIR"
 
-# Diagnostics
-echo "Claude CLI version: $(claude --version 2>&1)"
-echo "Working directory: $(pwd)"
-echo "Agent files:"
-ls -la .claude/agents/ 2>&1 || echo "  (no .claude/agents/ directory)"
-echo ""
-
-# Smoke test
-echo "Running smoke test..."
-if SMOKE=$(claude --print --dangerously-skip-permissions "Respond with exactly: SMOKE_TEST_OK" 2>&1); then
-  echo "Smoke test passed: $SMOKE"
-else
-  echo "Smoke test FAILED (exit code $?). Output:"
-  echo "$SMOKE"
-  exit 1
-fi
-echo ""
-
-# Step 1: President generates article assignments
-echo "[1/4] President scanning news and generating assignments..."
-ASSIGNMENTS=$(claude --print \
+# --- Step 1: President generates ONE article assignment ---
+echo "[1/4] President scanning news and picking one article..."
+ASSIGNMENT=$(claude --print \
   --dangerously-skip-permissions \
+  --max-budget-usd 2 \
   --agent president \
-  "You are running in autonomous mode. Search the web for the latest tech policy news and developments. Identify 2-3 timely article opportunities. For each, produce a structured assignment with: title, assigned fellow, format, hook, thesis, audience, and key points. Output ONLY the assignments in the structured format specified in your system prompt." 2>&1)
+  "You are running in autonomous mode. Search the web for the latest tech policy news.
+
+Pick the SINGLE most timely and impactful article opportunity. Output ONE assignment in your standard format.
+
+IMPORTANT: Output exactly ONE assignment, not multiple." 2>&1)
 CLAUDE_RC=$?
 
 if [ $CLAUDE_RC -ne 0 ]; then
-  echo "Claude CLI failed (exit code $CLAUDE_RC). Output:"
-  echo "$ASSIGNMENTS"
+  echo "President step failed (exit $CLAUDE_RC):"
+  echo "$ASSIGNMENT"
   exit 1
 fi
 
-echo "$ASSIGNMENTS"
+echo "$ASSIGNMENT"
+echo ""
+
+# Extract fellow name from assignment
+FELLOW=$(echo "$ASSIGNMENT" | grep -oP 'fellow-[a-z-]+' | head -1)
+if [ -z "$FELLOW" ]; then
+  echo "Error: Could not extract fellow name from assignment."
+  echo "Assignment output was:"
+  echo "$ASSIGNMENT"
+  exit 1
+fi
+echo "Assigned to: $FELLOW"
 echo ""
 
 if [ "$DRY_RUN" = true ]; then
-  echo "[DRY RUN] Assignments generated. Exiting without writing articles."
+  echo "[DRY RUN] Assignment generated. Exiting."
   exit 0
 fi
 
-# Step 2-4: For each assignment, run the 2-round revision pipeline
-echo "[2/4] Running Director → Fellow → Editor (feedback) → Fellow (revision) → Editor (final) pipeline..."
-PIPELINE_OUTPUT=$(claude --print \
+# --- Step 2: Director produces policy framing ---
+echo "[2/4] Director of Policy producing framing..."
+FRAMING=$(claude --print \
   --dangerously-skip-permissions \
-  "You have the following article assignments from the President:
+  --max-budget-usd 1 \
+  --agent director-of-policy \
+  "Produce a concise policy framing document for this article assignment. Focus on ideological guardrails, key arguments, and framing. Keep it under 500 words.
 
-$ASSIGNMENTS
-
-For each assignment, run the full 5-step publication pipeline with editorial revision loop:
-
-1. **Director framing**: Use the director-of-policy agent to produce a policy framing document for the assignment.
-2. **Fellow first draft**: Use the assigned fellow agent to write a first draft based on the assignment and framing.
-3. **Editor feedback** (Feedback Mode): Use the chief-editor agent to review the first draft and produce structured editorial feedback — NOT a final version. The editor should follow its Feedback Mode instructions: overall assessment, major issues, minor issues, strengths, and a REVISE verdict.
-4. **Fellow revision** (Revision Mode): Use the same fellow agent again, providing the editorial feedback. The fellow should follow its Revision Mode instructions: address every major issue, handle minor issues, preserve strengths, and return the complete revised article.
-5. **Editor final polish** (Pipeline Mode / Final Edit): Use the chief-editor agent to do the final edit on the revised draft — polish prose, ensure ideological consistency, format with proper frontmatter, and produce the publication-ready version.
-
-Save each final article to website/content/articles/ with the filename format YYYY-MM-DD-slug.md.
-
-Process each assignment through all 5 steps and save the results." 2>&1)
+$ASSIGNMENT" 2>&1)
 CLAUDE_RC=$?
 
 if [ $CLAUDE_RC -ne 0 ]; then
-  echo "Pipeline failed (exit code $CLAUDE_RC). Output:"
-  echo "$PIPELINE_OUTPUT"
+  echo "Director step failed (exit $CLAUDE_RC):"
+  echo "$FRAMING"
   exit 1
 fi
 
-echo "$PIPELINE_OUTPUT"
+echo "$FRAMING"
 echo ""
-echo "[3/4] Pipeline complete. Checking for new articles..."
 
-# List new articles
-NEW_ARTICLES=$(find "$ARTICLES_DIR" -name "*.md" -newer "$SCRIPT_DIR/publish.sh" 2>/dev/null || true)
-if [ -n "$NEW_ARTICLES" ]; then
-  echo "New articles generated:"
-  echo "$NEW_ARTICLES" | while read -r f; do echo "  - $(basename "$f")"; done
-else
-  echo "No new articles detected."
+# --- Step 3: Fellow writes the article ---
+echo "[3/4] $FELLOW writing article..."
+ARTICLE=$(claude --print \
+  --dangerously-skip-permissions \
+  --max-budget-usd 3 \
+  --agent "$FELLOW" \
+  "Write a complete article based on the assignment and policy framing below. Include proper markdown frontmatter (title, author, date, category, tags, status, format, summary).
+
+Set author to \"$FELLOW\" and date to \"$TODAY\". Set status to \"published\".
+
+Output ONLY the complete article with frontmatter — no commentary before or after.
+
+--- ASSIGNMENT ---
+$ASSIGNMENT
+
+--- POLICY FRAMING ---
+$FRAMING" 2>&1)
+CLAUDE_RC=$?
+
+if [ $CLAUDE_RC -ne 0 ]; then
+  echo "Fellow step failed (exit $CLAUDE_RC):"
+  echo "$ARTICLE"
+  exit 1
 fi
 
-# Step 4: Git commit if there are changes
+echo "Draft complete ($(echo "$ARTICLE" | wc -w | tr -d ' ') words)"
 echo ""
-echo "[4/4] Committing new articles..."
-cd "$PROJECT_DIR"
-if git diff --quiet -- website/content/articles/ 2>/dev/null && \
-   [ -z "$(git ls-files --others --exclude-standard website/content/articles/)" ]; then
-  echo "No changes to commit."
+
+# --- Step 4: Editor polishes the article ---
+echo "[4/4] Chief Editor polishing..."
+FINAL=$(claude --print \
+  --dangerously-skip-permissions \
+  --max-budget-usd 2 \
+  --agent chief-editor \
+  "Edit this article to publication quality. Fix structure, clarity, tone, and formatting issues. Ensure frontmatter is complete and correct. Keep the author and date as-is.
+
+Output ONLY the complete final article with frontmatter — no commentary.
+
+$ARTICLE" 2>&1)
+CLAUDE_RC=$?
+
+if [ $CLAUDE_RC -ne 0 ]; then
+  echo "Editor step failed (exit $CLAUDE_RC):"
+  echo "$FINAL"
+  exit 1
+fi
+
+# --- Save the article ---
+# Extract title from frontmatter to generate slug
+TITLE=$(echo "$FINAL" | grep -m1 '^title:' | sed 's/^title: *"*//;s/"*$//')
+if [ -z "$TITLE" ]; then
+  SLUG="article"
 else
-  git add website/content/articles/
-  git commit -m "publish: add new ThinkBot articles ($(date '+%Y-%m-%d'))"
-  echo "Committed new articles."
-  echo "Pushing to origin (triggers Vercel deploy)..."
+  SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-\|-$//g' | cut -c1-60)
+fi
+
+FILEPATH="$ARTICLES_DIR/$TODAY-$SLUG.md"
+echo "$FINAL" > "$FILEPATH"
+echo "Saved: $FILEPATH"
+echo "Final word count: $(echo "$FINAL" | wc -w | tr -d ' ')"
+echo ""
+
+# --- Git commit and push ---
+echo "Committing..."
+cd "$PROJECT_DIR"
+if [ -f "$FILEPATH" ]; then
+  git add "$FILEPATH"
+  git commit -m "publish: $TITLE"
   git push origin main
-  echo "Pushed. Vercel will redeploy automatically."
+  echo "Pushed. Vercel will redeploy."
+else
+  echo "No article file found. Skipping commit."
 fi
 
 echo ""
