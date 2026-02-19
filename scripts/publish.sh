@@ -13,7 +13,7 @@
 #   ./scripts/publish.sh --dry-run    # Preview assignments without writing
 # =============================================================================
 
-set -euo pipefail
+set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -51,12 +51,37 @@ fi
 # Work from the project directory so claude picks up .claude/agents/
 cd "$PROJECT_DIR"
 
+# Diagnostics
+echo "Claude CLI version: $(claude --version 2>&1)"
+echo "Working directory: $(pwd)"
+echo "Agent files:"
+ls -la .claude/agents/ 2>&1 || echo "  (no .claude/agents/ directory)"
+echo ""
+
+# Smoke test
+echo "Running smoke test..."
+if SMOKE=$(claude --print --dangerously-skip-permissions "Respond with exactly: SMOKE_TEST_OK" 2>&1); then
+  echo "Smoke test passed: $SMOKE"
+else
+  echo "Smoke test FAILED (exit code $?). Output:"
+  echo "$SMOKE"
+  exit 1
+fi
+echo ""
+
 # Step 1: President generates article assignments
 echo "[1/4] President scanning news and generating assignments..."
 ASSIGNMENTS=$(claude --print \
   --dangerously-skip-permissions \
   --agent president \
-  "You are running in autonomous mode. Search the web for the latest tech policy news and developments. Identify 2-3 timely article opportunities. For each, produce a structured assignment with: title, assigned fellow, format, hook, thesis, audience, and key points. Output ONLY the assignments in the structured format specified in your system prompt.")
+  "You are running in autonomous mode. Search the web for the latest tech policy news and developments. Identify 2-3 timely article opportunities. For each, produce a structured assignment with: title, assigned fellow, format, hook, thesis, audience, and key points. Output ONLY the assignments in the structured format specified in your system prompt." 2>&1)
+CLAUDE_RC=$?
+
+if [ $CLAUDE_RC -ne 0 ]; then
+  echo "Claude CLI failed (exit code $CLAUDE_RC). Output:"
+  echo "$ASSIGNMENTS"
+  exit 1
+fi
 
 echo "$ASSIGNMENTS"
 echo ""
@@ -68,7 +93,7 @@ fi
 
 # Step 2-4: For each assignment, run the 2-round revision pipeline
 echo "[2/4] Running Director → Fellow → Editor (feedback) → Fellow (revision) → Editor (final) pipeline..."
-claude --print \
+PIPELINE_OUTPUT=$(claude --print \
   --dangerously-skip-permissions \
   "You have the following article assignments from the President:
 
@@ -84,8 +109,16 @@ For each assignment, run the full 5-step publication pipeline with editorial rev
 
 Save each final article to website/content/articles/ with the filename format YYYY-MM-DD-slug.md.
 
-Process each assignment through all 5 steps and save the results."
+Process each assignment through all 5 steps and save the results." 2>&1)
+CLAUDE_RC=$?
 
+if [ $CLAUDE_RC -ne 0 ]; then
+  echo "Pipeline failed (exit code $CLAUDE_RC). Output:"
+  echo "$PIPELINE_OUTPUT"
+  exit 1
+fi
+
+echo "$PIPELINE_OUTPUT"
 echo ""
 echo "[3/4] Pipeline complete. Checking for new articles..."
 

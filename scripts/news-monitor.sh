@@ -12,7 +12,7 @@
 # Can be run hourly via cron/launchd for continuous monitoring.
 # =============================================================================
 
-set -euo pipefail
+set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -44,6 +44,22 @@ mkdir -p "$ARTICLES_DIR"
 # Work from the project directory so claude picks up .claude/agents/
 cd "$PROJECT_DIR"
 
+# Diagnostics
+echo "Claude CLI version: $(claude --version 2>&1)"
+echo "Working directory: $(pwd)"
+echo ""
+
+# Smoke test
+echo "Running smoke test..."
+if SMOKE=$(claude --print --dangerously-skip-permissions "Respond with exactly: SMOKE_TEST_OK" 2>&1); then
+  echo "Smoke test passed: $SMOKE"
+else
+  echo "Smoke test FAILED (exit code $?). Output:"
+  echo "$SMOKE"
+  exit 1
+fi
+echo ""
+
 # Step 1: President scans news for significant developments
 echo "[1/2] Scanning tech policy news..."
 SCAN_RESULT=$(claude --print \
@@ -58,7 +74,14 @@ SCAN_RESULT=$(claude --print \
 
 If you find a development that warrants a rapid-response article, output a single assignment in your standard format with format set to 'rapid-response'.
 
-If nothing significant has happened, output exactly: NO_SIGNIFICANT_NEWS")
+If nothing significant has happened, output exactly: NO_SIGNIFICANT_NEWS" 2>&1)
+CLAUDE_RC=$?
+
+if [ $CLAUDE_RC -ne 0 ]; then
+  echo "Claude CLI failed (exit code $CLAUDE_RC). Output:"
+  echo "$SCAN_RESULT"
+  exit 1
+fi
 
 echo "$SCAN_RESULT"
 echo ""
@@ -76,7 +99,7 @@ fi
 
 # Step 2: Run rapid-response pipeline
 echo "[2/2] Running rapid-response pipeline..."
-claude --print \
+PIPELINE_OUTPUT=$(claude --print \
   --dangerously-skip-permissions \
   "The President has identified a significant development requiring a rapid response:
 
@@ -88,7 +111,16 @@ Run the rapid-response pipeline:
 3. Use the chief-editor agent for a fast edit and formatting
 
 Save the article to website/content/articles/ with format 'rapid-response' in the frontmatter.
-This needs to be fast and timely — prioritize speed while maintaining quality."
+This needs to be fast and timely — prioritize speed while maintaining quality." 2>&1)
+CLAUDE_RC=$?
+
+if [ $CLAUDE_RC -ne 0 ]; then
+  echo "Pipeline failed (exit code $CLAUDE_RC). Output:"
+  echo "$PIPELINE_OUTPUT"
+  exit 1
+fi
+
+echo "$PIPELINE_OUTPUT"
 
 # Commit and push if there are new articles
 echo ""
