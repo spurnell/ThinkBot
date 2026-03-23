@@ -87,6 +87,92 @@ if [ "$DRY_RUN" = true ]; then
   exit 0
 fi
 
+# --- Step 1b: Director reviews topic for repetition ---
+# Build a list of recent article titles and summaries for context
+RECENT_ARTICLES=$(for f in $(ls -t "$ARTICLES_DIR"/*.md 2>/dev/null | head -10); do
+  title=$(grep -m1 '^title:' "$f" | sed 's/^title: *"*//;s/"*$//')
+  date=$(grep -m1 '^date:' "$f" | sed 's/^date: *"*//;s/"*$//')
+  summary=$(grep -m1 '^summary:' "$f" | sed 's/^summary: *"*//;s/"*$//')
+  echo "- [$date] $title — $summary"
+done)
+
+MAX_RETRIES=3
+RETRY_COUNT=0
+
+while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+  echo "[1b] Director reviewing topic for repetition (attempt $((RETRY_COUNT + 1))/$MAX_RETRIES)..."
+  REVIEW=$(claude --print \
+    --dangerously-skip-permissions \
+    --max-budget-usd 1 \
+    --agent director-of-policy \
+    "Review this proposed article assignment for topic repetition against our recent publications. Output VERDICT: APPROVED or VERDICT: REJECTED with your rationale.
+
+--- PROPOSED ASSIGNMENT ---
+$ASSIGNMENT
+
+--- RECENT THINKBOT ARTICLES (last 10) ---
+$RECENT_ARTICLES" 2>&1)
+  CLAUDE_RC=$?
+
+  if [ $CLAUDE_RC -ne 0 ]; then
+    echo "Director review step failed (exit $CLAUDE_RC):"
+    echo "$REVIEW"
+    exit 1
+  fi
+
+  echo "$REVIEW"
+  echo ""
+
+  if echo "$REVIEW" | grep -qi "VERDICT: APPROVED"; then
+    echo "Topic approved by Director of Policy."
+    echo ""
+    break
+  fi
+
+  RETRY_COUNT=$((RETRY_COUNT + 1))
+  if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
+    echo "Error: Director rejected $MAX_RETRIES topics. Aborting pipeline."
+    exit 1
+  fi
+
+  echo "Topic rejected. Asking President for a new assignment..."
+  echo ""
+  ASSIGNMENT=$(claude --print \
+    --dangerously-skip-permissions \
+    --max-budget-usd 2 \
+    --agent president \
+    "You are running in autonomous mode. Your previous article assignment was REJECTED by the Director of Policy for being too repetitive.
+
+Rejection reason:
+$REVIEW
+
+Here are the recent ThinkBot articles — AVOID these topics:
+$RECENT_ARTICLES
+
+Search the web for the latest tech policy news and pick a DIFFERENT, fresh topic. Output ONE assignment in your standard format.
+
+IMPORTANT: Output exactly ONE assignment, not multiple. Pick something we have NOT covered recently." 2>&1)
+  CLAUDE_RC=$?
+
+  if [ $CLAUDE_RC -ne 0 ]; then
+    echo "President retry step failed (exit $CLAUDE_RC):"
+    echo "$ASSIGNMENT"
+    exit 1
+  fi
+
+  # Re-extract fellow name
+  FELLOW=$(echo "$ASSIGNMENT" | grep -oP 'fellow-[a-z-]+' | head -1)
+  if [ -z "$FELLOW" ]; then
+    echo "Error: Could not extract fellow name from retry assignment."
+    echo "$ASSIGNMENT"
+    exit 1
+  fi
+
+  echo "$ASSIGNMENT"
+  echo "Assigned to: $FELLOW"
+  echo ""
+done
+
 # --- Step 2: Director produces policy framing ---
 echo "[2/4] Director of Policy producing framing..."
 FRAMING=$(claude --print \

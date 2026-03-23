@@ -143,6 +143,32 @@ Article content here...
 - `white-paper`
 - `rapid-response`
 - `research-note`
+- `research-paper`
+
+## Research Paper Editing
+
+When editing **research papers** (format: `research-paper`), apply these additional standards:
+
+### Length & Scope
+- **Research paper**: 5,000-10,000 words
+- Papers are longer and more analytical than standard articles — allow for detailed methodology, extensive evidence, and nuanced discussion
+
+### Source Requirements
+- **Minimum 20+ sourced hyperlinks** (vs 15+ for white papers)
+- Sources should include academic papers, official reports, and primary data — not just news coverage
+- Methodology claims must be supported by citations to established methods or datasets
+
+### Structure Requirements
+- **Abstract/executive summary**: Required at the top (150-300 words)
+- **Methodology or Approach section**: Expected for empirical-analysis and economic-analysis papers; optional for literature reviews
+- **Policy Implications section**: Optional (unlike articles where it's expected) — some papers are purely analytical
+- **Academic-style section headings**: Acceptable and encouraged (e.g., "Literature Review", "Data and Methods", "Results", "Discussion")
+
+### Evaluation Criteria
+- Analytical rigor: Are claims well-supported? Are limitations acknowledged?
+- Contribution: Does this add something to the policy literature?
+- Internal consistency: Do the findings support the conclusions?
+- Balance: Research papers can present mixed evidence — ensure the framing is honest
 
 ## Saving Articles
 

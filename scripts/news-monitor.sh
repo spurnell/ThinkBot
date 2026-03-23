@@ -87,6 +87,45 @@ if [ "$DRY_RUN" = true ]; then
   exit 0
 fi
 
+# --- Step 1b: Director reviews topic for repetition ---
+RECENT_ARTICLES=$(for f in $(ls -t "$ARTICLES_DIR"/*.md 2>/dev/null | head -10); do
+  title=$(grep -m1 '^title:' "$f" | sed 's/^title: *"*//;s/"*$//')
+  date=$(grep -m1 '^date:' "$f" | sed 's/^date: *"*//;s/"*$//')
+  summary=$(grep -m1 '^summary:' "$f" | sed 's/^summary: *"*//;s/"*$//')
+  echo "- [$date] $title — $summary"
+done)
+
+echo "[1b] Director reviewing topic for repetition..."
+REVIEW=$(claude --print \
+  --dangerously-skip-permissions \
+  --max-budget-usd 1 \
+  --agent director-of-policy \
+  "Review this proposed rapid-response assignment for topic repetition against our recent publications. Rapid-response pieces get more leeway since they respond to breaking news, but reject if the angle is essentially identical to a recent piece. Output VERDICT: APPROVED or VERDICT: REJECTED with your rationale.
+
+--- PROPOSED ASSIGNMENT ---
+$SCAN_RESULT
+
+--- RECENT THINKBOT ARTICLES (last 10) ---
+$RECENT_ARTICLES" 2>&1)
+CLAUDE_RC=$?
+
+if [ $CLAUDE_RC -ne 0 ]; then
+  echo "Director review step failed (exit $CLAUDE_RC):"
+  echo "$REVIEW"
+  exit 1
+fi
+
+echo "$REVIEW"
+echo ""
+
+if echo "$REVIEW" | grep -qi "VERDICT: REJECTED"; then
+  echo "Topic rejected by Director of Policy as too repetitive. Skipping."
+  exit 0
+fi
+
+echo "Topic approved by Director of Policy."
+echo ""
+
 # --- Step 2: Director framing (quick) ---
 echo "[2/4] Director producing framing..."
 FRAMING=$(claude --print \
