@@ -3,7 +3,7 @@
 # ThinkBot Schedule Setup
 # =============================================================================
 # Installs macOS launchd jobs for ThinkBot automation:
-#   - Publish pipeline:  Mon/Wed/Fri at 9:00 AM
+#   - Publish pipeline:  Mon/Wed at 9:00 AM
 #   - Viral monitor:     Daily at 8:00 AM and 8:00 PM
 #
 # Usage:
@@ -59,7 +59,7 @@ case "$ACTION" in
     done
     echo ""
     echo "Schedules:"
-    echo "  publish:        Mon/Wed/Fri at 9:00 AM"
+    echo "  publish:        Mon/Wed at 9:00 AM"
     echo "  viral-monitor:  Daily at 8:00 AM and 8:00 PM"
     exit 0
     ;;
@@ -102,15 +102,6 @@ case "$ACTION" in
         <dict>
             <key>Weekday</key>
             <integer>3</integer>
-            <key>Hour</key>
-            <integer>9</integer>
-            <key>Minute</key>
-            <integer>0</integer>
-        </dict>
-        <!-- Friday at 9:00 AM -->
-        <dict>
-            <key>Weekday</key>
-            <integer>5</integer>
             <key>Hour</key>
             <integer>9</integer>
             <key>Minute</key>
@@ -185,7 +176,7 @@ PLIST
     echo "  Publish pipeline:"
     echo "    Plist:    $PLIST_PUBLISH_PATH"
     echo "    Script:   $SCRIPT_DIR/publish.sh"
-    echo "    Schedule: Mon/Wed/Fri at 9:00 AM"
+    echo "    Schedule: Mon/Wed at 9:00 AM"
     echo ""
     echo "  Viral monitor:"
     echo "    Plist:    $PLIST_VIRAL_PATH"

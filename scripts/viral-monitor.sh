@@ -7,8 +7,8 @@
 # Most runs detect nothing and exit cheaply (~$0.50).
 #
 # Two-phase design:
-#   Phase 1: Virality gate (President, $0.50) — NO_VIRAL or VIRAL_DETECTED
-#   Phase 2: Pipeline ($4.50) — Director review → Framing → Fellow → Editor
+#   Phase 1: Virality gate (President/Haiku, $0.25) — NO_VIRAL or VIRAL_DETECTED
+#   Phase 2: Pipeline (~$4.00) — Director review+framing → Fellow → Editor
 #
 # Usage:
 #   ./scripts/viral-monitor.sh              # Run once
@@ -50,7 +50,8 @@ cd "$PROJECT_DIR"
 echo "[1/5] Checking for viral tech policy news..."
 VIRAL_CHECK=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 0.25 \
+  --max-budget-usd 0.15 \
+  --model claude-haiku-4-5-20251001 \
   --agent president \
   "You are running in VIRAL NEWS DETECTION mode. This runs automatically every 12 hours. Your ONLY job is to determine whether something VIRAL is happening in tech policy right now.
 
@@ -107,7 +108,7 @@ if [ "$DRY_RUN" = true ]; then
   exit 0
 fi
 
-# --- Phase 2a: Director topic review ---
+# --- Phase 2a: Director topic review + framing (combined call) ---
 RECENT_ARTICLES=$(for f in $(ls -t "$ARTICLES_DIR"/*.md 2>/dev/null | head -10); do
   title=$(grep -m1 '^title:' "$f" | sed 's/^title: *"*//;s/"*$//')
   date=$(grep -m1 '^date:' "$f" | sed 's/^date: *"*//;s/"*$//')
@@ -115,12 +116,16 @@ RECENT_ARTICLES=$(for f in $(ls -t "$ARTICLES_DIR"/*.md 2>/dev/null | head -10);
   echo "- [$date] $title — $summary"
 done)
 
-echo "[2/5] Director reviewing topic for repetition..."
-REVIEW=$(claude --print \
+echo "[2/4] Director reviewing topic + producing framing..."
+FRAMING=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 0.50 \
+  --max-budget-usd 0.75 \
   --agent director-of-policy \
-  "Review this proposed viral rapid-response for topic repetition against our recent publications. This story was flagged as VIRAL — give it extra leeway for breaking developments, but reject if the angle is essentially identical to a recent piece. Output VERDICT: APPROVED or VERDICT: REJECTED with your rationale.
+  "You have TWO tasks for this viral rapid-response. Complete both in a single response.
+
+TASK 1 — TOPIC REVIEW: Check this viral story against our recent publications. This was flagged as VIRAL — give extra leeway for breaking developments, but reject if the angle is essentially identical to a recent piece. Start your response with VERDICT: APPROVED or VERDICT: REJECTED with a brief rationale.
+
+TASK 2 — POLICY FRAMING (only if APPROVED): Produce a BRIEF policy framing. Keep it under 300 words — this is urgent.
 
 --- VIRAL DETECTION ---
 $VIRAL_CHECK
@@ -130,35 +135,7 @@ $RECENT_ARTICLES" 2>&1)
 CLAUDE_RC=$?
 
 if [ $CLAUDE_RC -ne 0 ]; then
-  echo "Director review step failed (exit $CLAUDE_RC):"
-  echo "$REVIEW"
-  exit 1
-fi
-
-echo "$REVIEW"
-echo ""
-
-if echo "$REVIEW" | grep -qi "VERDICT: REJECTED"; then
-  echo "Topic rejected by Director of Policy as too repetitive. Skipping."
-  exit 0
-fi
-
-echo "Topic approved by Director of Policy."
-echo ""
-
-# --- Phase 2b: Director framing (brief) ---
-echo "[3/5] Director producing framing..."
-FRAMING=$(claude --print \
-  --dangerously-skip-permissions \
-  --max-budget-usd 0.50 \
-  --agent director-of-policy \
-  "Produce a BRIEF policy framing for this viral rapid-response. Keep it under 300 words — this is urgent.
-
-$VIRAL_CHECK" 2>&1)
-CLAUDE_RC=$?
-
-if [ $CLAUDE_RC -ne 0 ]; then
-  echo "Director framing step failed (exit $CLAUDE_RC):"
+  echo "Director step failed (exit $CLAUDE_RC):"
   echo "$FRAMING"
   exit 1
 fi
@@ -166,8 +143,16 @@ fi
 echo "$FRAMING"
 echo ""
 
-# --- Phase 2c: Fellow writes rapid-response ---
-echo "[4/5] $FELLOW writing rapid-response..."
+if echo "$FRAMING" | grep -qi "VERDICT: REJECTED"; then
+  echo "Topic rejected by Director of Policy as too repetitive. Skipping."
+  exit 0
+fi
+
+echo "Topic approved by Director of Policy (with framing)."
+echo ""
+
+# --- Phase 2b: Fellow writes rapid-response ---
+echo "[3/4] $FELLOW writing rapid-response..."
 ARTICLE=$(claude --print \
   --dangerously-skip-permissions \
   --max-budget-usd 2.50 \
@@ -194,8 +179,8 @@ fi
 echo "Draft complete ($(echo "$ARTICLE" | wc -w | tr -d ' ') words)"
 echo ""
 
-# --- Phase 2d: Editor quick polish ---
-echo "[5/5] Chief Editor polishing..."
+# --- Phase 2c: Editor quick polish ---
+echo "[4/4] Chief Editor polishing..."
 FINAL=$(claude --print \
   --dangerously-skip-permissions \
   --max-budget-usd 1.00 \

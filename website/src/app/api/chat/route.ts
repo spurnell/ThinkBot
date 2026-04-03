@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   const system = buildSystemPrompt(agentId);
 
   const result = streamText({
-    model: anthropic("claude-sonnet-4-20250514"),
+    model: anthropic("claude-haiku-4-5-20251001"),
     system,
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1024,
