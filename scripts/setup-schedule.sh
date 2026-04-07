@@ -3,7 +3,7 @@
 # ThinkBot Schedule Setup
 # =============================================================================
 # Installs macOS launchd jobs for ThinkBot automation:
-#   - Publish pipeline:  Mon/Wed at 9:00 AM
+#   - Publish pipeline:  Daily — Mon/Wed/Fri 9 AM ET, Tue/Thu/Sat 4 PM ET, Sun 11 AM ET
 #   - Viral monitor:     Daily at 8:00 AM and 8:00 PM
 #
 # Usage:
@@ -12,6 +12,13 @@
 #   ./scripts/setup-schedule.sh --status     # Check job status
 #
 # The schedules can be customized by editing the generated plist files.
+#
+# TIMEZONE NOTE: launchd uses the Mac's LOCAL wall-clock time. The publish
+# schedule is anchored to Eastern Time (ET) but the Mac is currently in CEST
+# (UTC+2). Eastern Time is UTC-5, so the offset is +6 hours. The Hour values
+# in the publish plist below already include this conversion. If you fly back
+# to ET, subtract 6 from each Hour value (22 -> 16, 15 -> 9, 17 -> 11) and
+# re-run this script. DST shifts will also offset by ±1.
 # =============================================================================
 
 set -euo pipefail
@@ -30,9 +37,10 @@ ACTION="${1:-install}"
 case "$ACTION" in
   --remove)
     echo "Removing ThinkBot scheduled jobs..."
+    LAUNCHCTL_LIST=$(launchctl list)
     for PLIST_NAME in "$PLIST_PUBLISH" "$PLIST_VIRAL"; do
       PLIST_PATH="$HOME/Library/LaunchAgents/$PLIST_NAME.plist"
-      if launchctl list | grep -q "$PLIST_NAME"; then
+      if echo "$LAUNCHCTL_LIST" | grep -q "$PLIST_NAME"; then
         launchctl unload "$PLIST_PATH" 2>/dev/null || true
       fi
       rm -f "$PLIST_PATH"
@@ -46,9 +54,13 @@ case "$ACTION" in
     echo "ThinkBot Schedule Status"
     echo "========================"
     echo ""
+    # Capture launchctl list once into a variable to avoid SIGPIPE-with-pipefail
+    # bug where `launchctl list | grep -q ...` reports a false negative because
+    # grep -q closes the pipe early and pipefail surfaces launchctl's SIGPIPE.
+    LAUNCHCTL_LIST=$(launchctl list)
     for PLIST_NAME in "$PLIST_PUBLISH" "$PLIST_VIRAL"; do
       PLIST_PATH="$HOME/Library/LaunchAgents/$PLIST_NAME.plist"
-      if [ -f "$PLIST_PATH" ] && launchctl list | grep -q "$PLIST_NAME"; then
+      if [ -f "$PLIST_PATH" ] && echo "$LAUNCHCTL_LIST" | grep -q "$PLIST_NAME"; then
         echo "  $PLIST_NAME: INSTALLED and ACTIVE"
       elif [ -f "$PLIST_PATH" ]; then
         echo "  $PLIST_NAME: plist EXISTS but NOT LOADED"
@@ -59,7 +71,8 @@ case "$ACTION" in
     done
     echo ""
     echo "Schedules:"
-    echo "  publish:        Mon/Wed at 9:00 AM"
+    echo "  publish:        Daily — Mon/Wed/Fri 9 AM ET, Tue/Thu/Sat 4 PM ET, Sun 11 AM ET"
+    echo "                  (CEST clock: Mon/Wed/Fri 15:00, Tue/Thu/Sat 22:00, Sun 17:00)"
     echo "  viral-monitor:  Daily at 8:00 AM and 8:00 PM"
     exit 0
     ;;
@@ -89,21 +102,66 @@ case "$ACTION" in
     <string>$PROJECT_DIR</string>
     <key>StartCalendarInterval</key>
     <array>
-        <!-- Monday at 9:00 AM -->
+        <!-- Sunday at 11 AM EST = 17:00 CEST -->
+        <dict>
+            <key>Weekday</key>
+            <integer>0</integer>
+            <key>Hour</key>
+            <integer>17</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- Monday at 9 AM EST = 15:00 CEST -->
         <dict>
             <key>Weekday</key>
             <integer>1</integer>
             <key>Hour</key>
-            <integer>9</integer>
+            <integer>15</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
-        <!-- Wednesday at 9:00 AM -->
+        <!-- Tuesday at 4 PM EST = 22:00 CEST -->
+        <dict>
+            <key>Weekday</key>
+            <integer>2</integer>
+            <key>Hour</key>
+            <integer>22</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- Wednesday at 9 AM EST = 15:00 CEST -->
         <dict>
             <key>Weekday</key>
             <integer>3</integer>
             <key>Hour</key>
-            <integer>9</integer>
+            <integer>15</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- Thursday at 4 PM EST = 22:00 CEST -->
+        <dict>
+            <key>Weekday</key>
+            <integer>4</integer>
+            <key>Hour</key>
+            <integer>22</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- Friday at 9 AM EST = 15:00 CEST -->
+        <dict>
+            <key>Weekday</key>
+            <integer>5</integer>
+            <key>Hour</key>
+            <integer>15</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- Saturday at 4 PM EST = 22:00 CEST -->
+        <dict>
+            <key>Weekday</key>
+            <integer>6</integer>
+            <key>Hour</key>
+            <integer>22</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
@@ -180,7 +238,8 @@ PLIST
     echo "  Publish pipeline:"
     echo "    Plist:    $PLIST_PUBLISH_PATH"
     echo "    Script:   $SCRIPT_DIR/publish.sh"
-    echo "    Schedule: Mon/Wed at 9:00 AM"
+    echo "    Schedule: Daily — Mon/Wed/Fri 9 AM ET, Tue/Thu/Sat 4 PM ET, Sun 11 AM ET"
+    echo "              (CEST clock: Mon/Wed/Fri 15:00, Tue/Thu/Sat 22:00, Sun 17:00)"
     echo ""
     echo "  Viral monitor:"
     echo "    Plist:    $PLIST_VIRAL_PATH"
