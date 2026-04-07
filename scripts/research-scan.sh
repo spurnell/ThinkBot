@@ -6,7 +6,7 @@
 # policy sources for research-worthy topics in their domain.
 #
 # Runs: Weekly (Mondays at 8 AM)
-# Budget: $2 per fellow ($10/week max)
+# Budget: $2 per idle fellow (only idle fellows scan to save costs)
 # Output: research/scans/{fellow}/{YYYY-MM-DD}-scan.md
 #
 # Usage:
@@ -69,6 +69,15 @@ for FELLOW in "${FELLOWS[@]}"; do
   if [ ! -f "$STATE_FILE" ]; then
     echo "Warning: No state file for $FELLOW. Skipping."
     FAIL_COUNT=$((FAIL_COUNT + 1))
+    continue
+  fi
+
+  # Only scan idle fellows to reduce costs — fellows with active papers
+  # don't need to discover new topics yet
+  STATUS=$(jq -r '.status' "$STATE_FILE")
+  if [ "$STATUS" != "idle" ]; then
+    echo "[$FELLOW] Status is '$STATUS' — skipping (only idle fellows scan)."
+    echo ""
     continue
   fi
 

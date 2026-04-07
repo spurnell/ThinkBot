@@ -4,7 +4,7 @@
 # =============================================================================
 # Runs a streamlined publication pipeline:
 #   1. President picks ONE article assignment
-#   2. Director produces policy framing
+#   2. Director reviews topic + produces policy framing (combined call)
 #   3. Fellow writes the article
 #   4. Editor polishes to publication quality
 #   5. Script saves the file and commits
@@ -87,7 +87,7 @@ if [ "$DRY_RUN" = true ]; then
   exit 0
 fi
 
-# --- Step 1b: Director reviews topic for repetition ---
+# --- Step 2: Director reviews topic + produces framing (combined call) ---
 # Build a list of recent article titles and summaries for context
 RECENT_ARTICLES=$(for f in $(ls -t "$ARTICLES_DIR"/*.md 2>/dev/null | head -10); do
   title=$(grep -m1 '^title:' "$f" | sed 's/^title: *"*//;s/"*$//')
@@ -100,12 +100,16 @@ MAX_RETRIES=3
 RETRY_COUNT=0
 
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-  echo "[1b] Director reviewing topic for repetition (attempt $((RETRY_COUNT + 1))/$MAX_RETRIES)..."
-  REVIEW=$(claude --print \
+  echo "[2/4] Director reviewing topic + producing framing (attempt $((RETRY_COUNT + 1))/$MAX_RETRIES)..."
+  REVIEW_AND_FRAMING=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 1 \
+    --max-budget-usd 1.50 \
     --agent director-of-policy \
-    "Review this proposed article assignment for topic repetition against our recent publications. Output VERDICT: APPROVED or VERDICT: REJECTED with your rationale.
+    "You have TWO tasks for this article assignment. Complete both in a single response.
+
+TASK 1 — TOPIC REVIEW: Check this proposed assignment against our recent publications for repetition. Start your response with VERDICT: APPROVED or VERDICT: REJECTED with a brief rationale.
+
+TASK 2 — POLICY FRAMING (only if APPROVED): Produce a concise policy framing document. Focus on ideological guardrails, key arguments, and framing. Keep it under 500 words.
 
 --- PROPOSED ASSIGNMENT ---
 $ASSIGNMENT
@@ -115,17 +119,18 @@ $RECENT_ARTICLES" 2>&1)
   CLAUDE_RC=$?
 
   if [ $CLAUDE_RC -ne 0 ]; then
-    echo "Director review step failed (exit $CLAUDE_RC):"
-    echo "$REVIEW"
+    echo "Director step failed (exit $CLAUDE_RC):"
+    echo "$REVIEW_AND_FRAMING"
     exit 1
   fi
 
-  echo "$REVIEW"
+  echo "$REVIEW_AND_FRAMING"
   echo ""
 
-  if echo "$REVIEW" | grep -qi "VERDICT: APPROVED"; then
-    echo "Topic approved by Director of Policy."
+  if echo "$REVIEW_AND_FRAMING" | grep -qi "VERDICT: APPROVED"; then
+    echo "Topic approved by Director of Policy (with framing)."
     echo ""
+    FRAMING="$REVIEW_AND_FRAMING"
     break
   fi
 
@@ -144,7 +149,7 @@ $RECENT_ARTICLES" 2>&1)
     "You are running in autonomous mode. Your previous article assignment was REJECTED by the Director of Policy for being too repetitive.
 
 Rejection reason:
-$REVIEW
+$REVIEW_AND_FRAMING
 
 Here are the recent ThinkBot articles — AVOID these topics:
 $RECENT_ARTICLES
@@ -172,26 +177,6 @@ IMPORTANT: Output exactly ONE assignment, not multiple. Pick something we have N
   echo "Assigned to: $FELLOW"
   echo ""
 done
-
-# --- Step 2: Director produces policy framing ---
-echo "[2/4] Director of Policy producing framing..."
-FRAMING=$(claude --print \
-  --dangerously-skip-permissions \
-  --max-budget-usd 1 \
-  --agent director-of-policy \
-  "Produce a concise policy framing document for this article assignment. Focus on ideological guardrails, key arguments, and framing. Keep it under 500 words.
-
-$ASSIGNMENT" 2>&1)
-CLAUDE_RC=$?
-
-if [ $CLAUDE_RC -ne 0 ]; then
-  echo "Director step failed (exit $CLAUDE_RC):"
-  echo "$FRAMING"
-  exit 1
-fi
-
-echo "$FRAMING"
-echo ""
 
 # --- Step 3: Fellow writes the article ---
 echo "[3/4] $FELLOW writing article..."

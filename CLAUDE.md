@@ -131,7 +131,7 @@ Article content here...
 ## Automation
 
 - **On-demand batch**: Run `scripts/publish.sh` to trigger the full autonomous pipeline
-- **Scheduled production**: Run `scripts/setup-schedule.sh` to install recurring schedules (publish: Mon/Wed/Fri 9 AM; viral monitor: daily 8 AM/8 PM)
+- **Scheduled production**: Run `scripts/setup-schedule.sh` to install recurring schedules (publish: Mon/Wed 9 AM; viral monitor: daily 8 AM/8 PM)
 - **News-triggered**: Run `scripts/news-monitor.sh` to scan for breaking developments and produce rapid-response articles
 - **Viral monitoring**: Run `scripts/viral-monitor.sh` to check for viral tech policy news; only produces articles when something is truly dominating headlines. Scheduled every 12 hours via `scripts/setup-schedule.sh`
 - **Research pipeline**: Run `scripts/research-schedule.sh` to install the research paper schedule (scan/discuss/write cycle)

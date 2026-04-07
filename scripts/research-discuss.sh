@@ -5,7 +5,7 @@
 # Weekly topic discussion: idle fellows propose 2-3 research topics from their
 # scan results. President picks one, Director confirms alignment.
 #
-# Runs: Weekly (Tuesdays at 8 AM)
+# Runs: Biweekly (every other Tuesday at 8 AM) — cost optimization
 # Budget: ~$2.50 per fellow (proposal + president + director)
 # Output: research/papers/{fellow}/{paper-id}/topic-proposal.md
 #
@@ -46,6 +46,14 @@ echo "Date:    $TODAY"
 echo "Mode:    $([ "$DRY_RUN" = true ] && echo 'DRY RUN' || echo 'LIVE')"
 echo "======================================"
 echo ""
+
+# Biweekly gate: only run on odd-numbered ISO weeks to cut costs in half.
+# The schedule still fires every Tuesday, but we skip even weeks.
+WEEK_NUM=$(date '+%V' | sed 's/^0//')
+if [ $((WEEK_NUM % 2)) -eq 0 ]; then
+  echo "Skipping — biweekly schedule (week $WEEK_NUM is even). Next run next Tuesday."
+  exit 0
+fi
 
 if ! command -v claude &> /dev/null; then
   echo "Error: 'claude' CLI not found."
