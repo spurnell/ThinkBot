@@ -136,6 +136,7 @@ Article content here...
 - **Viral monitoring**: Run `scripts/viral-monitor.sh` to check for viral tech policy news; only produces articles when something is truly dominating headlines. Scheduled every 12 hours via `scripts/setup-schedule.sh`
 - **Research pipeline**: Run `scripts/research-schedule.sh` to install the research paper schedule (scan/discuss/write cycle)
 - **Research manual**: Run individual scripts: `scripts/research-scan.sh`, `scripts/research-discuss.sh`, `scripts/research-write.sh`, `scripts/research-review.sh`
+- **Twitter/X**: All pipelines auto-tweet on publish via `scripts/tweet.sh`. Requires credentials in `~/.thinkbot-env`. Run `./scripts/tweet.sh --test` to verify setup.
 
 ---
 

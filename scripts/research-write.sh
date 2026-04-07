@@ -6,7 +6,7 @@
 # section per day, capped at $1.50/fellow to produce ~500-700 words/session.
 #
 # Runs: Daily Mon-Fri (10 AM)
-# Budget: $1.50 per fellow per day
+# Uses Max subscription (no per-call API cost)
 # Output: Appends to research/papers/{fellow}/{paper-id}/draft.md
 #
 # Usage:
@@ -115,7 +115,6 @@ for FELLOW in "${FELLOWS[@]}"; do
 
     OUTLINE=$(claude --print \
       --dangerously-skip-permissions \
-      --max-budget-usd 1.50 \
       --agent "$FELLOW" \
       "You are running in RESEARCH PAPER MODE — outlining phase.
 
@@ -177,7 +176,6 @@ $PROPOSAL_CONTENT" 2>&1)
   echo "Writing next section..."
   SECTION_OUTPUT=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 1.50 \
     --agent "$FELLOW" \
     "You are running in RESEARCH PAPER MODE — section writing phase.
 

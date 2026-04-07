@@ -4,11 +4,12 @@
 # =============================================================================
 # Checks for VIRAL tech policy news every 12 hours. Only produces a
 # rapid-response article if something is truly dominating headlines.
-# Most runs detect nothing and exit cheaply (~$0.50).
+# Most runs detect nothing and exit quickly.
 #
 # Two-phase design:
-#   Phase 1: Virality gate (President/Haiku, $0.25) — NO_VIRAL or VIRAL_DETECTED
-#   Phase 2: Pipeline (~$4.00) — Director review+framing → Fellow → Editor
+#   Phase 1: Virality gate (President with Haiku) — NO_VIRAL or VIRAL_DETECTED
+#   Phase 2: Pipeline — Director review+framing → Fellow → Editor
+# Uses Max subscription (no per-call API cost)
 #
 # Usage:
 #   ./scripts/viral-monitor.sh              # Run once
@@ -47,10 +48,9 @@ mkdir -p "$ARTICLES_DIR"
 cd "$PROJECT_DIR"
 
 # --- Phase 1: Virality Gate ---
-echo "[1/5] Checking for viral tech policy news..."
+echo "[1/4] Checking for viral tech policy news..."
 VIRAL_CHECK=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 0.15 \
   --model claude-haiku-4-5-20251001 \
   --agent president \
   "You are running in VIRAL NEWS DETECTION mode. This runs automatically every 12 hours. Your ONLY job is to determine whether something VIRAL is happening in tech policy right now.
@@ -69,7 +69,7 @@ A story is NOT viral if:
 - It is a think tank report, academic paper, or industry statement
 - It would be a good article topic but is not dominating headlines RIGHT NOW
 
-The bar is HIGH. Most runs should return NO_VIRAL. This script costs money every time it runs.
+The bar is HIGH. Most runs should return NO_VIRAL.
 
 If NOTHING meets the viral threshold, output exactly: NO_VIRAL
 
@@ -95,7 +95,7 @@ if echo "$VIRAL_CHECK" | grep -q "NO_VIRAL"; then
 fi
 
 # Extract fellow name
-FELLOW=$(echo "$VIRAL_CHECK" | grep -oP 'fellow-[a-z-]+' | head -1)
+FELLOW=$(echo "$VIRAL_CHECK" | grep -oE 'fellow-[a-z-]+' | head -1)
 if [ -z "$FELLOW" ]; then
   echo "Error: Could not extract fellow name from viral check."
   exit 1
@@ -119,7 +119,6 @@ done)
 echo "[2/4] Director reviewing topic + producing framing..."
 FRAMING=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 0.75 \
   --agent director-of-policy \
   "You have TWO tasks for this viral rapid-response. Complete both in a single response.
 
@@ -155,7 +154,6 @@ echo ""
 echo "[3/4] $FELLOW writing rapid-response..."
 ARTICLE=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 2.50 \
   --agent "$FELLOW" \
   "Write a rapid-response article (800-1200 words) based on this viral development and framing. Include proper markdown frontmatter with format set to 'rapid-response'.
 
@@ -183,7 +181,6 @@ echo ""
 echo "[4/4] Chief Editor polishing..."
 FINAL=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 1.00 \
   --agent chief-editor \
   "Quick edit this viral rapid-response article for publication. Fix any obvious issues with clarity, tone, and formatting. Ensure frontmatter is correct. Keep it tight — this is a rapid response.
 
@@ -222,6 +219,7 @@ if [ -f "$FILEPATH" ]; then
   git commit -m "rapid-response: $TITLE"
   git push origin main
   echo "Pushed. Vercel will redeploy."
+  "$SCRIPT_DIR/tweet.sh" "$FILEPATH"
 else
   echo "No article file found. Skipping commit."
 fi

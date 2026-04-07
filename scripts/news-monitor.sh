@@ -45,7 +45,6 @@ cd "$PROJECT_DIR"
 echo "[1/4] Scanning tech policy news..."
 SCAN_RESULT=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 2 \
   --agent president \
   "You are running in news monitoring mode. Search the web for BREAKING or SIGNIFICANT tech policy developments from the last 24 hours. Look for:
 - New legislation introduced or passed
@@ -74,7 +73,7 @@ if echo "$SCAN_RESULT" | grep -q "NO_SIGNIFICANT_NEWS"; then
 fi
 
 # Extract fellow name
-FELLOW=$(echo "$SCAN_RESULT" | grep -oP 'fellow-[a-z-]+' | head -1)
+FELLOW=$(echo "$SCAN_RESULT" | grep -oE 'fellow-[a-z-]+' | head -1)
 if [ -z "$FELLOW" ]; then
   echo "Error: Could not extract fellow name from assignment."
   exit 1
@@ -98,7 +97,6 @@ done)
 echo "[1b] Director reviewing topic for repetition..."
 REVIEW=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 1 \
   --agent director-of-policy \
   "Review this proposed rapid-response assignment for topic repetition against our recent publications. Rapid-response pieces get more leeway since they respond to breaking news, but reject if the angle is essentially identical to a recent piece. Output VERDICT: APPROVED or VERDICT: REJECTED with your rationale.
 
@@ -130,7 +128,6 @@ echo ""
 echo "[2/4] Director producing framing..."
 FRAMING=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 1 \
   --agent director-of-policy \
   "Produce a BRIEF policy framing for this rapid-response assignment. Keep it under 300 words — this is urgent.
 
@@ -150,7 +147,6 @@ echo ""
 echo "[3/4] $FELLOW writing rapid-response..."
 ARTICLE=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 2 \
   --agent "$FELLOW" \
   "Write a rapid-response article (800-1200 words) based on this assignment and framing. Include proper markdown frontmatter with format set to 'rapid-response'.
 
@@ -178,7 +174,6 @@ echo ""
 echo "[4/4] Chief Editor polishing..."
 FINAL=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 1 \
   --agent chief-editor \
   "Quick edit this rapid-response article for publication. Fix any obvious issues with clarity, tone, and formatting. Ensure frontmatter is correct. Keep it tight — this is a rapid response.
 
@@ -217,6 +212,7 @@ if [ -f "$FILEPATH" ]; then
   git commit -m "rapid-response: $TITLE"
   git push origin main
   echo "Pushed. Vercel will redeploy."
+  "$SCRIPT_DIR/tweet.sh" "$FILEPATH"
 else
   echo "No article file found. Skipping commit."
 fi

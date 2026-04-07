@@ -53,13 +53,17 @@ cd "$PROJECT_DIR"
 echo "[1/4] President scanning news and picking one article..."
 ASSIGNMENT=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 2 \
   --agent president \
-  "You are running in autonomous mode. Search the web for the latest tech policy news.
+  "You are running in ASSIGNMENT-ONLY mode.
 
-Pick the SINGLE most timely and impactful article opportunity. Output ONE assignment in your standard format.
-
-IMPORTANT: Output exactly ONE assignment, not multiple." 2>&1)
+CRITICAL RULES:
+- Your ONLY job is to output an assignment as TEXT. Do NOT call other agents. Do NOT use Write/Edit/Bash tools. Do NOT create any files. Do NOT execute the pipeline. You may use WebSearch to find fresh news, nothing else.
+- Search the web for the latest tech policy news and pick the SINGLE most timely and impactful article opportunity.
+- Output exactly ONE assignment, not multiple.
+- Your output MUST contain a line in this exact format so the script can parse it:
+  FELLOW: fellow-<name>
+  where <name> is one of: ai, antitrust, content-moderation, general-tech, tech-innovation
+- After that line, include your standard assignment format (Hook, Thesis, Key Points, etc.)." 2>&1)
 CLAUDE_RC=$?
 
 if [ $CLAUDE_RC -ne 0 ]; then
@@ -72,7 +76,10 @@ echo "$ASSIGNMENT"
 echo ""
 
 # Extract fellow name from assignment
-FELLOW=$(echo "$ASSIGNMENT" | grep -oP 'fellow-[a-z-]+' | head -1)
+FELLOW=$(echo "$ASSIGNMENT" | sed -n 's/^[[:space:]]*FELLOW:[[:space:]]*\(fellow-[a-z-]*\).*/\1/p' | head -1)
+if [ -z "$FELLOW" ]; then
+  FELLOW=$(echo "$ASSIGNMENT" | grep -oE 'fellow-[a-z-]+' | head -1)
+fi
 if [ -z "$FELLOW" ]; then
   echo "Error: Could not extract fellow name from assignment."
   echo "Assignment output was:"
@@ -103,7 +110,6 @@ while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
   echo "[2/4] Director reviewing topic + producing framing (attempt $((RETRY_COUNT + 1))/$MAX_RETRIES)..."
   REVIEW_AND_FRAMING=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 1.50 \
     --agent director-of-policy \
     "You have TWO tasks for this article assignment. Complete both in a single response.
 
@@ -144,9 +150,8 @@ $RECENT_ARTICLES" 2>&1)
   echo ""
   ASSIGNMENT=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 2 \
     --agent president \
-    "You are running in autonomous mode. Your previous article assignment was REJECTED by the Director of Policy for being too repetitive.
+    "You are running in ASSIGNMENT-ONLY mode. Your previous article assignment was REJECTED by the Director of Policy for being too repetitive.
 
 Rejection reason:
 $REVIEW_AND_FRAMING
@@ -154,9 +159,14 @@ $REVIEW_AND_FRAMING
 Here are the recent ThinkBot articles — AVOID these topics:
 $RECENT_ARTICLES
 
-Search the web for the latest tech policy news and pick a DIFFERENT, fresh topic. Output ONE assignment in your standard format.
-
-IMPORTANT: Output exactly ONE assignment, not multiple. Pick something we have NOT covered recently." 2>&1)
+CRITICAL RULES:
+- Your ONLY job is to output an assignment as TEXT. Do NOT call other agents. Do NOT use Write/Edit/Bash tools. Do NOT create any files. Do NOT execute the pipeline. You may use WebSearch to find fresh news, nothing else.
+- Search the web for the latest tech policy news and pick a DIFFERENT, fresh topic ThinkBot has NOT covered recently.
+- Output exactly ONE assignment, not multiple.
+- Your output MUST contain a line in this exact format so the script can parse it:
+  FELLOW: fellow-<name>
+  where <name> is one of: ai, antitrust, content-moderation, general-tech, tech-innovation
+- After that line, include your standard assignment format (Hook, Thesis, Key Points, etc.)." 2>&1)
   CLAUDE_RC=$?
 
   if [ $CLAUDE_RC -ne 0 ]; then
@@ -166,7 +176,10 @@ IMPORTANT: Output exactly ONE assignment, not multiple. Pick something we have N
   fi
 
   # Re-extract fellow name
-  FELLOW=$(echo "$ASSIGNMENT" | grep -oP 'fellow-[a-z-]+' | head -1)
+  FELLOW=$(echo "$ASSIGNMENT" | sed -n 's/^[[:space:]]*FELLOW:[[:space:]]*\(fellow-[a-z-]*\).*/\1/p' | head -1)
+  if [ -z "$FELLOW" ]; then
+    FELLOW=$(echo "$ASSIGNMENT" | grep -oE 'fellow-[a-z-]+' | head -1)
+  fi
   if [ -z "$FELLOW" ]; then
     echo "Error: Could not extract fellow name from retry assignment."
     echo "$ASSIGNMENT"
@@ -182,7 +195,6 @@ done
 echo "[3/4] $FELLOW writing article..."
 ARTICLE=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 3 \
   --agent "$FELLOW" \
   "Write a complete article based on the assignment and policy framing below. Include proper markdown frontmatter (title, author, date, category, tags, status, format, summary).
 
@@ -210,7 +222,6 @@ echo ""
 echo "[4/4] Chief Editor polishing..."
 FINAL=$(claude --print \
   --dangerously-skip-permissions \
-  --max-budget-usd 2 \
   --agent chief-editor \
   "Edit this article to publication quality. Fix structure, clarity, tone, and formatting issues. Ensure frontmatter is complete and correct. Keep the author and date as-is.
 
@@ -251,6 +262,7 @@ if [ -f "$FILEPATH" ]; then
   git commit -m "publish: $TITLE"
   git push origin main
   echo "Pushed. Vercel will redeploy."
+  "$SCRIPT_DIR/tweet.sh" "$FILEPATH"
 else
   echo "No article file found. Skipping commit."
 fi

@@ -1,10 +1,12 @@
+# NOTE: This workflow runs on-demand only (via "Run workflow" button in the
+# Actions tab). Regular scheduled news monitoring runs locally via launchd on
+# Spence's Mac, using the Max subscription instead of API credits.
+# Manual runs here still use ANTHROPIC_API_KEY and incur per-run cost.
+
 name: ThinkBot News Monitor
 
 on:
-  schedule:
-    # Every weekday at 2:00 PM Eastern (18:00 UTC) - catches afternoon news
-    - cron: '0 18 * * 1-5'
-  workflow_dispatch: # Allow manual trigger from GitHub UI
+  workflow_dispatch: # Manual trigger from GitHub UI only — no cron schedule
 
 permissions:
   contents: write
@@ -16,12 +18,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.PUSH_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
 

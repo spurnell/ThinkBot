@@ -5,8 +5,8 @@
 # Weekly scan: each fellow searches academic journals, news, think tanks, and
 # policy sources for research-worthy topics in their domain.
 #
-# Runs: Weekly (Mondays at 8 AM)
-# Budget: $2 per idle fellow (only idle fellows scan to save costs)
+# Runs: Weekly (Mondays at 8 AM) — only idle fellows scan
+# Uses Max subscription (no per-call API cost)
 # Output: research/scans/{fellow}/{YYYY-MM-DD}-scan.md
 #
 # Usage:
@@ -94,7 +94,6 @@ for FELLOW in "${FELLOWS[@]}"; do
 
   SCAN_OUTPUT=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 2 \
     --agent "$FELLOW" \
     "You are running in RESEARCH SCANNING MODE.
 

@@ -5,8 +5,8 @@
 # Weekly topic discussion: idle fellows propose 2-3 research topics from their
 # scan results. President picks one, Director confirms alignment.
 #
-# Runs: Biweekly (every other Tuesday at 8 AM) — cost optimization
-# Budget: ~$2.50 per fellow (proposal + president + director)
+# Runs: Biweekly (every other Tuesday at 8 AM)
+# Uses Max subscription (no per-call API cost)
 # Output: research/papers/{fellow}/{paper-id}/topic-proposal.md
 #
 # Usage:
@@ -152,7 +152,6 @@ for FELLOW in "${FELLOWS[@]}"; do
   echo "[1/3] $FELLOW proposing research topics..."
   PROPOSAL=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 1 \
     --agent "$FELLOW" \
     "You are running in RESEARCH PAPER MODE — topic proposal phase.
 
@@ -185,7 +184,6 @@ $SCAN_CONTENT" 2>&1)
   echo "[2/3] President reviewing proposals..."
   PRESIDENT_REVIEW=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 1 \
     --agent president \
     "You are running in RESEARCH PAPER REVIEW MODE.
 
@@ -237,7 +235,6 @@ $RESEARCH_CONTEXT" 2>&1)
   echo "[3/3] Director checking alignment..."
   DIRECTOR_CHECK=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 0.50 \
     --agent director-of-policy \
     "You are running in RESEARCH PAPER ALIGNMENT CHECK mode.
 
@@ -284,7 +281,7 @@ $RESEARCH_CONTEXT" 2>&1)
   mkdir -p "$PAPER_DIR"
 
   # Extract a working title from the proposal (best effort)
-  APPROVED_NUM=$(echo "$PRESIDENT_REVIEW" | grep -oP 'RESEARCH_APPROVED:\s*\K[0-9]+' | head -1)
+  APPROVED_NUM=$(echo "$PRESIDENT_REVIEW" | sed -n 's/.*RESEARCH_APPROVED:[[:space:]]*//' | grep -oE '[0-9]+' | head -1)
   if [ -z "$APPROVED_NUM" ]; then
     APPROVED_NUM="1"
   fi
@@ -320,7 +317,7 @@ EOF
   fi
 
   # Extract title from the approved proposal (best effort)
-  PAPER_TITLE=$(echo "$PROPOSAL" | grep -A1 "^${APPROVED_NUM}\." | grep -oP '\*\*Working Title\*\*:\s*\K.*' | head -1)
+  PAPER_TITLE=$(echo "$PROPOSAL" | grep -A1 "^${APPROVED_NUM}\." | sed -n 's/.*\*\*Working Title\*\*:[[:space:]]*//p' | head -1)
   if [ -z "$PAPER_TITLE" ]; then
     PAPER_TITLE="Research Paper $PAPER_ID"
   fi

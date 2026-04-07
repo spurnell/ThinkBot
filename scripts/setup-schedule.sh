@@ -116,6 +116,8 @@ case "$ACTION" in
     <dict>
         <key>PATH</key>
         <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
+        <key>HOME</key>
+        <string>$HOME</string>
     </dict>
 </dict>
 </plist>
@@ -160,6 +162,8 @@ PLIST
     <dict>
         <key>PATH</key>
         <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
+        <key>HOME</key>
+        <string>$HOME</string>
     </dict>
 </dict>
 </plist>

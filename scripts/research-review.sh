@@ -6,7 +6,7 @@
 # final polish, then publishes to website/content/research/.
 #
 # Runs: Triggered by research-write.sh or manually
-# Budget: ~$8 per paper (editor feedback + fellow revision + final polish)
+# Uses Max subscription (no per-call API cost)
 # Output: website/content/research/{date}-{slug}.md
 #
 # Usage:
@@ -108,7 +108,6 @@ for FELLOW in "${FELLOWS[@]}"; do
   echo "[1/3] Chief Editor reviewing draft..."
   FEEDBACK=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 3 \
     --agent chief-editor \
     "You are reviewing a RESEARCH PAPER draft (not a standard article). Apply your Research Paper Editing standards.
 
@@ -145,7 +144,6 @@ $DRAFT_CONTENT" 2>&1)
   echo "[2/3] $FELLOW revising paper..."
   REVISED=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 3 \
     --agent "$FELLOW" \
     "You are running in RESEARCH PAPER MODE — revision phase.
 
@@ -188,7 +186,6 @@ $FEEDBACK" 2>&1)
   echo "[3/3] Chief Editor final polish..."
   FINAL=$(claude --print \
     --dangerously-skip-permissions \
-    --max-budget-usd 2 \
     --agent chief-editor \
     "Final edit of this RESEARCH PAPER for publication. This is the revised version after your feedback was incorporated.
 
@@ -234,6 +231,7 @@ $REVISED" 2>&1)
     git commit -m "research: $TITLE"
     git push origin main
     echo "Pushed. Vercel will redeploy."
+    "$SCRIPT_DIR/tweet.sh" "$FILEPATH"
   fi
 
   # --- Update state ---
