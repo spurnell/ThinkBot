@@ -19,6 +19,10 @@
 # ~06:15 CEST) so it fits inside one Claude Max 5-hour rolling window and
 # never competes with daytime interactive use. DST shifts are handled
 # automatically by launchd since times are local-clock.
+#
+# SLEEP NOTE: System sleep is disabled (`sudo pmset -c sleep 0`) so launchd
+# calendar-interval jobs actually fire overnight — launchd will NOT wake a
+# sleeping Mac. Display sleep is unaffected. To re-enable: `sudo pmset -c sleep 1`.
 # =============================================================================
 
 set -euo pipefail
