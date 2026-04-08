@@ -3,8 +3,8 @@
 # ThinkBot Schedule Setup
 # =============================================================================
 # Installs macOS launchd jobs for ThinkBot automation:
-#   - Publish pipeline:  Daily — Mon/Wed/Fri 9 AM ET, Tue/Thu/Sat 4 PM ET, Sun 11 AM ET
-#   - Viral monitor:     Daily at 8:00 AM and 8:00 PM
+#   - Publish pipeline:  Daily 03:00, 04:00, 05:00 CEST (3 articles/night)
+#   - Viral monitor:     Daily 01:30 and 13:30 CEST
 #
 # Usage:
 #   ./scripts/setup-schedule.sh              # Install all schedules
@@ -13,12 +13,12 @@
 #
 # The schedules can be customized by editing the generated plist files.
 #
-# TIMEZONE NOTE: launchd uses the Mac's LOCAL wall-clock time. The publish
-# schedule is anchored to Eastern Time (ET) but the Mac is currently in CEST
-# (UTC+2). Eastern Time is UTC-5, so the offset is +6 hours. The Hour values
-# in the publish plist below already include this conversion. If you fly back
-# to ET, subtract 6 from each Hour value (22 -> 16, 15 -> 9, 17 -> 11) and
-# re-run this script. DST shifts will also offset by ±1.
+# TIMEZONE NOTE: launchd uses the Mac's LOCAL wall-clock time. The Mac is in
+# CEST (UTC+2) and the Hour values in the plists below are CEST wall-clock.
+# All heavy automation is clustered into a single overnight window (01:30 ->
+# ~06:15 CEST) so it fits inside one Claude Max 5-hour rolling window and
+# never competes with daytime interactive use. DST shifts are handled
+# automatically by launchd since times are local-clock.
 # =============================================================================
 
 set -euo pipefail
@@ -71,9 +71,8 @@ case "$ACTION" in
     done
     echo ""
     echo "Schedules:"
-    echo "  publish:        Daily — Mon/Wed/Fri 9 AM ET, Tue/Thu/Sat 4 PM ET, Sun 11 AM ET"
-    echo "                  (CEST clock: Mon/Wed/Fri 15:00, Tue/Thu/Sat 22:00, Sun 17:00)"
-    echo "  viral-monitor:  Daily at 8:00 AM and 8:00 PM"
+    echo "  publish:        Daily 03:00, 04:00, 05:00 CEST (3 articles/night)"
+    echo "  viral-monitor:  Daily 01:30 and 13:30 CEST"
     exit 0
     ;;
 
@@ -102,66 +101,24 @@ case "$ACTION" in
     <string>$PROJECT_DIR</string>
     <key>StartCalendarInterval</key>
     <array>
-        <!-- Sunday at 11 AM EST = 17:00 CEST -->
+        <!-- Article 1 of 3 — 03:00 CEST daily -->
         <dict>
-            <key>Weekday</key>
-            <integer>0</integer>
             <key>Hour</key>
-            <integer>17</integer>
-            <key>Minute</key>
-            <integer>0</integer>
-        </dict>
-        <!-- Monday at 9 AM EST = 15:00 CEST -->
-        <dict>
-            <key>Weekday</key>
-            <integer>1</integer>
-            <key>Hour</key>
-            <integer>15</integer>
-            <key>Minute</key>
-            <integer>0</integer>
-        </dict>
-        <!-- Tuesday at 4 PM EST = 22:00 CEST -->
-        <dict>
-            <key>Weekday</key>
-            <integer>2</integer>
-            <key>Hour</key>
-            <integer>22</integer>
-            <key>Minute</key>
-            <integer>0</integer>
-        </dict>
-        <!-- Wednesday at 9 AM EST = 15:00 CEST -->
-        <dict>
-            <key>Weekday</key>
             <integer>3</integer>
-            <key>Hour</key>
-            <integer>15</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
-        <!-- Thursday at 4 PM EST = 22:00 CEST -->
+        <!-- Article 2 of 3 — 04:00 CEST daily -->
         <dict>
-            <key>Weekday</key>
+            <key>Hour</key>
             <integer>4</integer>
-            <key>Hour</key>
-            <integer>22</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
-        <!-- Friday at 9 AM EST = 15:00 CEST -->
+        <!-- Article 3 of 3 — 05:00 CEST daily -->
         <dict>
-            <key>Weekday</key>
+            <key>Hour</key>
             <integer>5</integer>
-            <key>Hour</key>
-            <integer>15</integer>
-            <key>Minute</key>
-            <integer>0</integer>
-        </dict>
-        <!-- Saturday at 4 PM EST = 22:00 CEST -->
-        <dict>
-            <key>Weekday</key>
-            <integer>6</integer>
-            <key>Hour</key>
-            <integer>22</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
@@ -197,19 +154,19 @@ PLIST
     <string>$PROJECT_DIR</string>
     <key>StartCalendarInterval</key>
     <array>
-        <!-- 8:00 AM daily -->
+        <!-- 01:30 CEST daily — night cluster -->
         <dict>
             <key>Hour</key>
-            <integer>8</integer>
+            <integer>1</integer>
             <key>Minute</key>
-            <integer>0</integer>
+            <integer>30</integer>
         </dict>
-        <!-- 8:00 PM daily -->
+        <!-- 13:30 CEST daily — afternoon news-cycle check -->
         <dict>
             <key>Hour</key>
-            <integer>20</integer>
+            <integer>13</integer>
             <key>Minute</key>
-            <integer>0</integer>
+            <integer>30</integer>
         </dict>
     </array>
     <key>StandardOutPath</key>
@@ -238,13 +195,12 @@ PLIST
     echo "  Publish pipeline:"
     echo "    Plist:    $PLIST_PUBLISH_PATH"
     echo "    Script:   $SCRIPT_DIR/publish.sh"
-    echo "    Schedule: Daily — Mon/Wed/Fri 9 AM ET, Tue/Thu/Sat 4 PM ET, Sun 11 AM ET"
-    echo "              (CEST clock: Mon/Wed/Fri 15:00, Tue/Thu/Sat 22:00, Sun 17:00)"
+    echo "    Schedule: Daily 03:00, 04:00, 05:00 CEST (3 articles/night)"
     echo ""
     echo "  Viral monitor:"
     echo "    Plist:    $PLIST_VIRAL_PATH"
     echo "    Script:   $SCRIPT_DIR/viral-monitor.sh"
-    echo "    Schedule: Daily at 8:00 AM and 8:00 PM"
+    echo "    Schedule: Daily 01:30 and 13:30 CEST"
     echo ""
     echo "  Logs: $LOG_DIR/"
     echo ""

@@ -3,11 +3,12 @@
 # ThinkBot Research Schedule Setup
 # =============================================================================
 # Installs macOS launchd jobs for the research paper pipeline:
-#   - research-scan:    Monday 8:00 AM
-#   - research-discuss: Tuesday 8:00 AM
-#   - research-write:   Mon-Fri 10:00 AM
+#   - research-scan:    Monday 01:45 CEST
+#   - research-discuss: Tuesday 01:45 CEST
+#   - research-write:   Mon-Fri 06:00 CEST
 #
-# Review is triggered automatically by research-write.sh, not scheduled.
+# All times are part of the overnight automation cluster (see setup-schedule.sh
+# for the full picture). Review is triggered automatically by research-write.sh.
 #
 # Usage:
 #   ./scripts/research-schedule.sh              # Install schedule
@@ -58,9 +59,9 @@ case "$ACTION" in
     done
     echo ""
     echo "Schedule:"
-    echo "  research-scan:    Monday 8:00 AM"
-    echo "  research-discuss: Tuesday 8:00 AM"
-    echo "  research-write:   Mon-Fri 10:00 AM"
+    echo "  research-scan:    Monday 01:45 CEST"
+    echo "  research-discuss: Tuesday 01:45 CEST"
+    echo "  research-write:   Mon-Fri 06:00 CEST"
     exit 0
     ;;
 
@@ -91,9 +92,9 @@ case "$ACTION" in
         <key>Weekday</key>
         <integer>1</integer>
         <key>Hour</key>
-        <integer>8</integer>
+        <integer>1</integer>
         <key>Minute</key>
-        <integer>0</integer>
+        <integer>45</integer>
     </dict>
     <key>StandardOutPath</key>
     <string>$LOG_DIR/research-scan-stdout.log</string>
@@ -129,9 +130,9 @@ PLIST
         <key>Weekday</key>
         <integer>2</integer>
         <key>Hour</key>
-        <integer>8</integer>
+        <integer>1</integer>
         <key>Minute</key>
-        <integer>0</integer>
+        <integer>45</integer>
     </dict>
     <key>StandardOutPath</key>
     <string>$LOG_DIR/research-discuss-stdout.log</string>
@@ -169,7 +170,7 @@ PLIST
             <key>Weekday</key>
             <integer>1</integer>
             <key>Hour</key>
-            <integer>10</integer>
+            <integer>6</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
@@ -178,7 +179,7 @@ PLIST
             <key>Weekday</key>
             <integer>2</integer>
             <key>Hour</key>
-            <integer>10</integer>
+            <integer>6</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
@@ -187,7 +188,7 @@ PLIST
             <key>Weekday</key>
             <integer>3</integer>
             <key>Hour</key>
-            <integer>10</integer>
+            <integer>6</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
@@ -196,7 +197,7 @@ PLIST
             <key>Weekday</key>
             <integer>4</integer>
             <key>Hour</key>
-            <integer>10</integer>
+            <integer>6</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
@@ -205,7 +206,7 @@ PLIST
             <key>Weekday</key>
             <integer>5</integer>
             <key>Hour</key>
-            <integer>10</integer>
+            <integer>6</integer>
             <key>Minute</key>
             <integer>0</integer>
         </dict>
@@ -237,9 +238,9 @@ PLIST
     echo "Research schedule installed successfully!"
     echo ""
     echo "  Schedule:"
-    echo "    research-scan:    Monday 8:00 AM"
-    echo "    research-discuss: Tuesday 8:00 AM"
-    echo "    research-write:   Mon-Fri 10:00 AM"
+    echo "    research-scan:    Monday 01:45 CEST"
+    echo "    research-discuss: Tuesday 01:45 CEST"
+    echo "    research-write:   Mon-Fri 06:00 CEST"
     echo "    research-review:  Triggered automatically"
     echo ""
     echo "  Logs: $LOG_DIR/"
