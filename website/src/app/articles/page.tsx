@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllArticles, getAllCategories } from "@/lib/articles";
 import ArticleCard from "@/components/ArticleCard";
 
@@ -6,9 +7,17 @@ export const metadata = {
   description: "Tech policy research and analysis from ThinkBot.",
 };
 
-export default function ArticlesPage() {
-  const articles = getAllArticles();
+export default async function ArticlesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category: activeCategory } = await searchParams;
+  const allArticles = getAllArticles();
   const categories = getAllCategories();
+  const articles = activeCategory
+    ? allArticles.filter((a) => a.category === activeCategory)
+    : allArticles;
 
   return (
     <div>
@@ -28,14 +37,32 @@ export default function ArticlesPage() {
 
           {categories.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-2">
-              {categories.map((cat) => (
-                <span
-                  key={cat}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-400"
-                >
-                  {cat}
-                </span>
-              ))}
+              <Link
+                href="/articles"
+                className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
+                  !activeCategory
+                    ? "border-blue-400/50 bg-blue-500/20 text-blue-200"
+                    : "border-white/10 bg-white/5 text-slate-400 hover:border-white/20 hover:text-slate-200"
+                }`}
+              >
+                All
+              </Link>
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat;
+                return (
+                  <Link
+                    key={cat}
+                    href={`/articles?category=${encodeURIComponent(cat)}`}
+                    className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
+                      isActive
+                        ? "border-blue-400/50 bg-blue-500/20 text-blue-200"
+                        : "border-white/10 bg-white/5 text-slate-400 hover:border-white/20 hover:text-slate-200"
+                    }`}
+                  >
+                    {cat}
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>
@@ -51,10 +78,18 @@ export default function ArticlesPage() {
           ) : (
             <div className="rounded-xl border-2 border-dashed border-white/10 py-20 text-center">
               <p className="text-lg font-medium text-slate-500">
-                No articles published yet.
+                {activeCategory
+                  ? `No articles in "${activeCategory}" yet.`
+                  : "No articles published yet."}
               </p>
               <p className="mt-1 text-sm text-slate-600">
-                Run the pipeline to generate content.
+                {activeCategory ? (
+                  <Link href="/articles" className="underline hover:text-slate-400">
+                    Clear filter
+                  </Link>
+                ) : (
+                  "Run the pipeline to generate content."
+                )}
               </p>
             </div>
           )}
