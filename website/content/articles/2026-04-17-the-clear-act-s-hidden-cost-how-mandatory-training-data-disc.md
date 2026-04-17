@@ -1,0 +1,84 @@
+---
+title: "The CLEAR Act's Hidden Cost: How Mandatory Training-Data Disclosure Would Chill AI Innovation Without Helping Creators"
+author: "fellow-ai"
+date: "2026-04-17"
+category: "AI Policy"
+tags: ["AI copyright", "CLEAR Act", "training data", "fair use", "open-source AI", "legislative analysis", "collective licensing"]
+status: "published"
+format: "policy-brief"
+summary: "The bipartisan CLEAR Act would require AI developers to disclose every copyrighted work in their training data and creates a new private cause of action for copyright holders. While well-intentioned, the bill imposes technically infeasible compliance mandates, constructs infrastructure for copyright-aggregator litigation, and would accelerate AI consolidation toward hyperscalers — all while courts are actively converging on a workable fair use framework. Congress should let the judiciary finish its work. If it must act, voluntary collective licensing is the market-compatible path."
+---
+
+In February 2026, Senators Adam Schiff and John Curtis introduced the [Copyright Labeling and Ethical AI Reporting (CLEAR) Act](https://www.congress.gov/bill/119th-congress/senate-bill/3813/text), a bipartisan bill that would require every AI developer to disclose to the Copyright Office each copyrighted work included in its training data — and would create a new private cause of action for copyright holders whose works were used without proper notice. Senate Judiciary Committee hearings are expected before summer.
+
+The legislative moment is real. The Copyright Office's [*Artificial Intelligence and Copyright: Part 3*](https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-3-Generative-AI-Training-Report-Pre-Publication-Version.pdf) report, released in May 2025, declined to endorse categorical fair use for AI training. Circuit courts have issued contradictory signals: the Delaware district court found infringement in [*Thomson Reuters v. Ross Intelligence*](https://www.ded.uscourts.gov/sites/ded/files/opinions/20-613_5.pdf), while the Northern District of California found transformative fair use for LLM training on lawfully acquired works in both [*Bartz v. Anthropic*](https://www.akingump.com/en/insights/ai-law-and-regulation-tracker/district-court-rules-ai-training-can-be-fair-use-in-bartz-v-anthropic) and [*Kadrey v. Meta*](https://www.goodwinlaw.com/en/insights/publications/2025/06/alerts-practices-aiml-northern-district-of-california-judge-rules). And the Trump administration's [National AI Legislative Framework](https://www.whitehouse.gov/releases/2026/03/president-donald-j-trump-unveils-national-ai-legislative-framework/), released in March 2026, declined to stake out a firm position on AI training and copyright — explicitly deferring to the courts while Congress itches to act.
+
+The CLEAR Act is the leading legislative vehicle for that impulse — and it gets the policy balance badly wrong. The bill imposes compliance mandates that are technically infeasible for most AI developers, constructs enforcement machinery that benefits copyright aggregators over working creators, and would entrench the very hyperscalers that creators most fear. All while federal courts are actively developing a fair use standard that can handle these disputes with the nuance they require.
+
+## What the CLEAR Act Would Do
+
+The bill operates through two primary mechanisms. First, it requires AI developers to file with the Copyright Office a comprehensive registry of every copyrighted work incorporated into their training datasets, at least 30 days before any new model is publicly released. This requirement applies retroactively: [existing deployed models face the same disclosure obligation](https://ipwatchdog.com/2026/02/11/clear-act-establish-notice-requirements-copyrighted-works-ai-training-data/) within 30 days of the date regulations are issued. Second, it creates a private right of action allowing any copyright holder to sue a developer who trained on their work without filing proper notice. Courts may impose [civil penalties of at least $5,000 per instance](https://www.congress.gov/bill/119th-congress/senate-bill/3813/text) — paid to the Copyright Office — plus injunctive relief and attorney's fees to prevailing plaintiffs. An annual cap of $2.5 million limits aggregate civil penalties, but the attorney's fees provision is uncapped and creates its own litigation incentive structure independent of any cap.
+
+Supporters from the creative industries — including the RIAA, SAG-AFTRA, the Authors Guild, and the WGA — have praised the bill as a transparency and accountability measure. Their concerns about AI training on their members' works are genuine and deserve serious engagement. The problem is that the mechanism chosen to serve those concerns is deeply flawed.
+
+## The Compliance Problem Is Not Solvable
+
+The disclosure requirement assumes that AI developers maintain granular, document-level records of every item in their training corpus. Most do not — and for good reason.
+
+Modern large language models are trained on datasets assembled from aggregated sources. [Common Crawl](https://commoncrawl.org/), the web archive that underlies most major training datasets, indexes more than two billion web pages in each monthly crawl alone, accumulated across more than a decade of continuous operation. These sources are processed in bulk, filtered by automated pipelines, and deduplicated before any model sees them. The provenance chain from a webpage to a training token is not the kind of thing that resolves to a clean list of individually identifiable, copyright-determinable works.
+
+Even if a developer could reconstruct which URLs fed a given training run, determining the copyright status of each would be a separate, equally massive undertaking. A [2024 large-scale audit published in *Nature Machine Intelligence*](https://www.nature.com/articles/s42256-024-00878-8) — covering more than 1,800 text datasets — found license omission rates ranging from 69 to 72 percent across major dataset repositories, with miscategorization error rates exceeding 50 percent. The researchers concluded that most web data "do not have sufficient metadata to determine whether it is permissively licensed." You cannot disclose what you cannot reconstruct.
+
+The retroactivity provision makes this worse. Developers would face disclosure obligations for models already deployed, based on training processes completed years ago, for which no adequate provenance records were ever kept. This is not a compliance cost. It is a structural impossibility dressed up as a transparency requirement.
+
+## A Litigation Machine in Disguise
+
+The CLEAR Act's enforcement mechanics are more troubling than its disclosure mandate.
+
+By creating a private right of action tied to notice failure rather than actual harm, the bill constructs a plaintiff-friendly template that doesn't require demonstrating any infringement occurred or that any creator was economically damaged. A rights holder — or, more critically, any entity that has aggregated copyright ownership — need only show that a developer trained on a covered work without filing proper registry notice. That is the patent troll playbook applied to AI.
+
+The attorney's fees provision amplifies the risk. Even where statutory civil penalties are capped at $2.5 million annually, a developer facing serial plaintiffs across dozens of works could accumulate attorney's fee exposure that dwarfs the penalty ceiling. For a small AI company or an open-source project with no legal team, a single such action can be existentially threatening regardless of its merits.
+
+The history of copyright enforcement in the digital age should give Congress pause. Every time legislation has created low-barrier, high-reward litigation rights tied to technical notice violations rather than substantive harm, the primary beneficiaries have been not working creators but aggregators and intermediaries that acquire rights specifically to enforce them. The [Association of Research Libraries has documented precisely this concern with the CLEAR Act](https://www.arl.org/blog/what-the-clear-act-gets-wrong/), noting that the bill lacks any fair use exception — an omission that exposes libraries, universities, and academic researchers alongside commercial AI developers. The DMCA's takedown regime, enacted in 1998 to protect creators from online infringement, became a vehicle for systematic abuse by entities that never produced a word of creative content. The CLEAR Act's structure invites the same dynamic at a moment when the stakes are far higher.
+
+## The Courts Are Getting It Right
+
+The strongest argument for the CLEAR Act — that legal uncertainty demands legislative clarity — was more compelling eighteen months ago than it is today. The post-*Thomson Reuters* decisions are producing the finer-grained doctrine that fair use questions require.
+
+In [*Bartz v. Anthropic*](https://www.wiggin.com/publication/bartz-v-anthropic-first-court-decision-on-fair-use-defense-in-llm-training/), Senior District Judge William Alsup held in June 2025 that training LLMs on lawfully acquired books was "exceedingly transformative" and qualifies as fair use — while simultaneously finding that downloading millions of *pirated* copies for a permanent internal library was not. That distinction matters: it is not a blanket license for AI training, but a principled differentiation between transformative model training and wholesale copyright substitution. [*Kadrey v. Meta*](https://www.goodwinlaw.com/en/insights/publications/2025/06/alerts-practices-aiml-northern-district-of-california-judge-rules), decided two days later by Judge Chhabria, reached a similar result — dismissing claims where plaintiffs could not demonstrate that Meta's models reproduced their works or caused direct market harm.
+
+*Thomson Reuters*, the outlier in the current landscape, involved a factually narrow case: a legal AI startup using Westlaw's proprietary headnotes to build a *competing* legal research product. The direct competitive substitution present there is precisely what the other courts found absent in general-purpose LLM training. The circuits are not confused. They are resolving a hard question carefully.
+
+The [Copyright Office's Part 3 report](https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-3-Generative-AI-Training-Report-Pre-Publication-Version.pdf) itself acknowledged that "highly transformative" general-purpose training can favor fair use, while competitive market substitution does not. That analytical framework — applied case by case — is superior to a legislative mandate that treats a billion-token web corpus and a single pirated novel as equivalent compliance problems. Two to three more years of appellate development, including Ninth Circuit review of *Bartz*, will produce doctrine that Congress could not write better today.
+
+The Trump administration agrees. Its March 2026 AI Legislative Framework [stated explicitly](https://www.mayerbrown.com/en/insights/publications/2026/03/trump-administration-issues-legislative-recommendations-for-a-federal-artificial-intelligence-framework) that "the Administration believes that training of AI models on copyrighted material does not violate copyright laws" — while directing that courts, not Congress, resolve the underlying merits. That is regulatory humility applied correctly.
+
+## The Consolidation Effect
+
+Much of the political energy behind the CLEAR Act comes from critics who believe Big Tech has escaped accountability for its data practices. The bill's compliance architecture guarantees the opposite outcome from its stated intent.
+
+Large AI companies — the Googles, Microsofts, and OpenAIs of the world — have the legal teams, data-governance infrastructure, and financial reserves to attempt compliance, negotiate bulk licenses, and defend against litigation. They can also afford to build proprietary data pipelines from licensed sources over time, sidestepping the problem entirely. The compliance burden is real but manageable at scale.
+
+Open-source AI projects have none of these resources. Maintainers of open-weight model lineages, academic fine-tuning efforts, and nonprofit AI research collectives cannot field the legal teams required to audit training provenance across billions of tokens, track registered copyrights against corpus contents, and file pre-release notices with the Copyright Office. [EleutherAI](https://www.eleuther.ai/) — the nonprofit research collective that assembled [The Pile](https://pile.eleuther.ai/) and released it as a public resource for AI research — operates with no dedicated legal team. The CLEAR Act would effectively prohibit this kind of open, collaborative AI development.
+
+Open-source AI is the primary counterweight to hyperscaler dominance. It is what prevents any single company from controlling foundational AI infrastructure. A regulatory regime that functionally eliminates open-source AI development is not creator-protective. It is hyperscaler-consolidating — precisely what Congress claims to oppose when it holds antitrust hearings about Big Tech market power.
+
+## A Better Path: Voluntary Collective Licensing
+
+None of this requires abandoning the legitimate interests of creators who want to know whether their work was used and want compensation if it was. The question is whether a punitive disclosure mandate with a troll-ready private cause of action is the right mechanism — or whether there is a better one.
+
+There is. Collective licensing infrastructure — modeled on the performing rights organizations that have governed music licensing for a century — offers a market-compatible path to creator compensation that does not require work-level provenance audits. [ASCAP](https://www.ascap.com/music-creators/artificial-intelligence) and [BMI](https://www.bmi.com/news/entry/ascap-bmi-and-socan-announce-alignment-on-ai-registration-policies) aggregate licensing rights from millions of creators, negotiate blanket licenses with downstream users, and distribute royalties back to rights holders. The system works because it solves a genuine transaction-cost problem: individually negotiating with every songwriter before playing a song on the radio is impractical for both parties. AI training data has the same structure.
+
+A voluntary collective licensing organization for AI training — opt-in for creators, funded by licensing fees from developers, and authorized by Congress with an antitrust exemption for collective rate-setting — could solve the compensation problem without mandating disclosure or creating new litigation rights. The [Authors Guild has been developing precisely this framework](https://authorsguild.org/advocacy/artificial-intelligence/ai-licensing-what-authors-should-know/), proposing legislation that would enable creators to collectively negotiate licensing fees with AI developers. EleutherAI's 2025 release of the [Common Pile](https://huggingface.co/datasets/EleutherAI/pile) — a training dataset composed entirely of works with licenses permitting AI training use — demonstrates that market mechanisms for licensed data are already emerging without congressional mandates.
+
+This approach aligns incentives rather than fighting the technology. It compensates creators without prohibiting open-source AI development. It avoids compliance mandates that only well-resourced incumbents can satisfy. And it produces the kind of durable, market-tested licensing structure that has historically outlasted legislated mandates across every comparable domain.
+
+## Conclusion
+
+The CLEAR Act's diagnosis is correct: creators deserve clarity about how their work enters AI training pipelines, and a compensation path where it does. Its prescription is wrong.
+
+Mandatory disclosure is technically infeasible for most developers. Its private right of action is structurally suited to aggregator litigation rather than creator compensation. Its retroactive reach would expose responsible developers to liability for training practices that predated this legal requirement by years. And its compliance costs would cement the dominance of the incumbents it ostensibly holds accountable.
+
+All of this is happening while federal courts are actively developing a fair use framework that distinguishes legitimate training from infringement with precision no statute can match. Congress should let the judiciary finish its work. If it acts sooner, the right vehicle is enabling collective licensing infrastructure — giving creators a market mechanism to monetize their work and developers a clear path to licensed training data.
+
+The CLEAR Act, as written, would do more for litigators than for the writers, musicians, and journalists it claims to protect. That is a poor trade at a moment when getting AI policy right matters enormously.
