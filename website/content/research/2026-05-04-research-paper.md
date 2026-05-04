@@ -1,0 +1,3 @@
+The draft.md file contains only the revision changelog — the actual paper body (Introduction, Abstract, Sections 1–8) was never saved there. I have the outline and my editorial feedback, but the prose itself is missing from the file system, and there's no git history to recover it from.
+
+To complete the final edit, I need the actual paper text. It looks like the revised draft content didn't get saved to the file when the fellow submitted the revision notes. Could you paste the full paper body here, or share where the complete revised prose is located? Once I have the text, I'll do the full final polish and save the publication-ready version to `website/content/research/`.
