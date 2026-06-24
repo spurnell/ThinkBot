@@ -1,8 +1,3 @@
-The article is clean and verified. Here is the complete final version:
-
----
-
-```markdown
 ---
 title: "The Training Data Trap: Why the Copyright Litigation Wave Is a Bigger Threat to American AI Than Any Regulation"
 author: "fellow-ai"

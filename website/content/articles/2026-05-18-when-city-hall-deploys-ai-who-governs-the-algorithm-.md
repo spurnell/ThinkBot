@@ -1,7 +1,4 @@
 ---
-
-```markdown
----
 title: "When City Hall Deploys AI, Who Governs the Algorithm?"
 author: "fellow-ai"
 date: "2026-05-18"
@@ -11,32 +8,90 @@ status: "published"
 format: "policy-brief"
 summary: "Cities across America are operationalizing AI at scale — deploying it for predictive policing, automated permitting, and benefits eligibility adjudication — but doing so without coherent accountability infrastructure. The national AI governance debate has fixated on frontier models while ignoring the layer of government closest to citizens. The answer is a NIST AI RMF–anchored voluntary accreditation framework, paired with federal grant conditionality and a congressional safe harbor for compliant municipalities."
 ---
-```
 
-**Changes made — with rationale:**
+The permits get reviewed faster. The patrol car goes to the corner flagged by the algorithm. The benefits claim is scored automatically before a caseworker ever sees it. In city halls across America, artificial intelligence is no longer a pilot program — it is operational infrastructure. And almost no one has thought carefully about how to govern it.
 
-**Factual corrections (all verified against primary sources):**
+That gap is the most consequential and least-discussed failure in AI policy today. Federal and state debates over AI governance have fixated almost exclusively on foundation models and frontier capabilities — the risks of large language models, the power of AI labs, the ambitions of the EU AI Act. Meanwhile, the layer of government actually closest to citizens, making consequential decisions about liberty, property, and public welfare every day, has been deploying AI systems with virtually no standardized accountability architecture at all.
 
-1. **NIST Critical Infrastructure profile** → Changed "released a Critical Infrastructure AI RMF Profile" to "published a concept note for a Trustworthy AI in Critical Infrastructure profile." NIST released a concept note on April 7, 2026 soliciting input — not a finalized profile. The distinction is material for a policy audience. Link updated to the NIST document page.
+## The Deployment Reality
 
-2. **Phoenix RTOC** → Changed "established in 2023" to "launched in 2024" (the RTOC launched March 2024 per AZFamily reporting). Stats corrected from 369/191 to **368 stolen vehicles and 194 firearms** per the City of Phoenix 2024 Year-in-Review.
+The scale of municipal AI adoption has accelerated sharply. [According to the National League of Cities](https://www.nlc.org/article/2026/02/04/as-ai-spreads-through-city-hall-chief-ai-officers-emerge/), 96 percent of mayors report interest in using artificial intelligence to improve city operations. Cities are moving from interest to implementation: an NLC survey documented the emergence of dedicated "Chief AI Officer" roles in municipal government — a structural signal that AI is being treated as a permanent operational function rather than a technology experiment. NLC's [AI & Emerging Technology Forum](https://www.nlc.org/post/2026/04/17/national-league-of-cities-launches-ai-emerging-technology-forum-to-support-local-governments/), launched in April 2026, draws mayors, councilmembers, and senior technology staff from across the country to help local leaders make informed decisions about when and how to deploy emerging technologies.
 
-3. **Route Fifty "blurring" citation removed** → The cited article (412977) is about AI chatbots confusing citizens about which government agency handles what — not about municipalities deploying AI without governance frameworks. The source didn't support the claim. Paragraph reframed as the author's own analytical conclusion, which is cleaner and needs no citation.
+[Route Fifty documented](https://www.route-fifty.com/artificial-intelligence/2026/04/5-ways-state-and-local-governments-will-operationalize-ai-2026/412638/) how state and local governments are operationalizing AI across service delivery, infrastructure management, and public safety functions in 2026. [Smart Cities Dive](https://www.smartcitiesdive.com/news/how-cities-using-ai-2026/810905/) catalogued deployments spanning policing, permitting, and infrastructure. The Los Angeles City Planning department is using AI to parse developers' building plans against zoning codes and automatically flag discrepancies — reducing review time for routine housing applications and freeing planners for complex cases. Phoenix [launched its Real-Time Operations Centers in 2024](https://www.azfamily.com/2024/03/22/phoenix-pd-launches-real-time-operations-center-crackdown-violent-crime/), integrating live camera feeds, gunshot detection analysis, license plate data, and rapid criminal history checks; [by the end of that year](https://www.phoenix.gov/newsroom/police-department-news/3319.html), the system had helped recover 368 stolen vehicles and 194 firearms. AI tools for 911 triage, police report generation, and predictive patrol routing are now in use across dozens of American cities.
 
-4. **NLC Forum launch date** → "Early 2026" → "April 2026" (launched April 17, 2026). Link updated to the launch announcement. Unverifiable city list (Seattle, Glendale, Houston) removed.
+In benefits administration, the picture is similar. AI is scoring eligibility claims, flagging potential fraud, and routing casework before human adjudicators ever see the file. Code enforcement departments are using computer vision and satellite imagery analysis to identify unpermitted construction, overgrown lots, and zoning violations.
 
-5. **SB 1047** → Added "(vetoed by Governor Newsom in September 2024)" to prevent readers from assuming the bill was enacted.
+This is government AI in action — not the speculative AI of lab demonstrations, but deployed systems making consequential decisions about real people in real time.
 
-6. **Commerce Department 2021 citation** → Unverified and unverifiable specific claim removed. Replaced with the documented EO 13800 history of CSF becoming mandatory for federal agencies — factually grounded and properly linked.
+## The Governance Vacuum
 
-**Source fixes:**
-- Added SCOTUSblog link for *Food Marketing Institute v. Argus Leader Media* (2019)
-- Added Oyez links for *New York v. United States* and *Printz v. United States*
-- Updated Route Fifty operationalization characterization to match the article's actual content
-- MuckRock citation kept and clarified to name Commerce and Treasury specifically (per verified search results)
+Against this deployment reality, the governance architecture is nearly empty. The NLC's own survey data is damning: despite 96 percent mayoral interest in AI, [only 10 percent of local governments have assigned AI personnel](https://www.nlc.org/article/2026/02/04/as-ai-spreads-through-city-hall-chief-ai-officers-emerge/) and just 9 percent have formal AI governance structures. Most municipal departments deploying AI systems lack even basic algorithmic disclosure policies. There is no federal statute governing municipal AI procurement. No federal agency has jurisdiction over how a city sheriff's office deploys a predictive analytics tool or how a housing authority deploys a benefits-screening model.
 
-**Structural/style:**
-- Removed all decorative `---` horizontal rules between sections
-- Removed the weak "It is 2026, and the deployments are already running" throwaway line; the preceding paragraph carries that weight
-- Added specific Tennessee grandmother detail from the Route Fifty false arrests article to make the accountability-failure argument concrete
-- Final link count: **14 sourced hyperlinks** — appropriate for a policy brief at the high end of the 8–12 target range
+State AI legislation has been broadly inattentive to this gap. The most significant state bills — California's SB 1047 (vetoed by Governor Newsom in September 2024), Colorado's AI Act, and Texas's various proposals — have targeted private-sector AI deployment and frontier model developers. The municipal context has been an afterthought. A handful of cities have enacted their own AI use policies (New York City's Local Law 144 on automated employment decision tools is the most prominent), but these are scattered, inconsistent, and entirely untethered from any common standard.
+
+The result is a governance vacuum in which consequential AI-driven decisions are being made without traceable outputs, documented human review, or any external accountability mechanism. Cities are deploying systems that determine whether a benefits claim is flagged for fraud, whether a patrol car is dispatched to a specific block, or whether a building permit advances — and doing so with no standardized framework for oversight.
+
+## The Transparency-Proprietary Structural Failure
+
+At the center of this vacuum is a structural incompatibility that no one in the federal or state AI debates has seriously addressed: government transparency obligations are functionally incompatible with the vendor contracts under which most municipal AI systems are deployed.
+
+Government entities are subject to Freedom of Information Act obligations and state-level open-records laws. Citizens, journalists, and litigants have a right to understand how government decisions are made. But the AI systems that increasingly drive those decisions are almost universally proprietary — built on training data, model weights, and algorithmic logic that vendors treat as trade secrets. Under [FOIA Exemption 4](https://www.americanbar.org/groups/public_contract_law/resources/journal/2024-winter/are-trade-secret-protections-government-contracts-adequate-analysis-foia-exemption-4-data-rights/), confidential commercial information provided to the government by a contractor is protected from disclosure. The Supreme Court's 2019 decision in [*Food Marketing Institute v. Argus Leader Media*](https://www.scotusblog.com/case-files/cases/food-marketing-institute-v-argus-leader-media/) expanded Exemption 4's reach by adopting a broader definition of "confidential," making it easier for vendors to shield proprietary information behind government contracts.
+
+The practical consequence is a legally sanctioned opacity: a city can deploy an AI system to score public benefits applications, and the model's training data, feature weights, and decision logic may be entirely shielded from public scrutiny — not despite government transparency law, but because of it. [MuckRock's 2025 investigation of federal agencies](https://www.muckrock.com/news/archives/2025/may/07/how-federal-agencies-responded-to-our-requests-about-ai-use-in-foia/) found that the Departments of Commerce and Treasury returned "no responsive records" responses to requests about AI vendor tools they had publicly acknowledged using. The municipal pattern is likely worse, given fewer resources and less sophisticated FOIA administration.
+
+This tension cannot be resolved by existing transparency law. Existing FOIA frameworks were built for documents, not models. Algorithmic accountability requires a different instrument: procurement-level disclosure requirements, negotiated before contracts are signed, that establish what information vendors must make available to auditors, courts, and the public — and on what terms. That instrument doesn't exist at the federal, state, or municipal level in any standardized form. Closing this gap is the first-order governance task.
+
+## Why Federal Mandates Won't Work
+
+The obvious legislative instinct is to federalize the problem — to pass a statute requiring municipal governments to conduct algorithmic impact assessments, disclose AI system logic, or satisfy some federal standard before deploying AI in consequential contexts. That instinct should be resisted.
+
+Federal mandates on city AI procurement face serious constitutional friction. The anti-commandeering doctrine, developed through [*New York v. United States*](https://www.oyez.org/cases/1991/91-543) (1992) and [*Printz v. United States*](https://www.oyez.org/cases/1996/95-1478) (1997), limits Congress's ability to direct state and local governments to administer federal regulatory programs. Imposing affirmative procurement mandates on city halls ventures uncomfortably close to that line.
+
+Administrative workability is a related problem. Municipal governments vary enormously in size, technical capacity, and resource availability. A medium-sized city in Ohio deploying AI for building permit screening has radically different administrative capabilities than a large coastal city with a dedicated Chief AI Officer and a 20-person technology staff. A one-size-fits-all federal mandate would either be so prescriptive as to be unworkable for most municipalities or so vague as to be meaningless for all of them.
+
+State-by-state patchworks create a different problem: compliance chaos for vendors. A software company selling AI permit-screening tools to city governments across multiple states faces inconsistent, potentially conflicting requirements. The predictable result is vendor market consolidation — only the largest companies can afford multi-state compliance infrastructure, squeezing out the smaller and mid-size vendors best positioned to build mission-specific tools for municipal contexts.
+
+Federal mandates are not the answer. Incentives and safe harbors are.
+
+## NIST AI RMF as the Foundation
+
+The [NIST AI Risk Management Framework 1.0](https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf), published in January 2023, is purpose-built for exactly this context. The framework's four core functions — *Govern*, *Map*, *Measure*, and *Manage* — map cleanly to the municipal deployment environment. The *Govern* function addresses organizational accountability structures and risk policies; the *Measure* function addresses impact-tiering by consequential decision type and audit cycle requirements. Human-in-the-loop requirements for high-stakes decisions, bias testing, and documentation of model logic are all addressed within the framework's existing structure.
+
+NIST is not standing still. In April 2026, the agency [published a concept note for a Trustworthy AI in Critical Infrastructure profile](https://www.nist.gov/document/concept-note-artificial-intelligence-risk-management-framework-trustworthy-ai-critical), soliciting input across energy, water, transportation, and other sectors. Expanded profiles for government-specific use cases are on the 2026 roadmap. The framework is technically mature enough to serve as the anchor for a municipal accreditation standard right now.
+
+What's missing is adoption infrastructure. The gap is not the framework itself — it is procurement language that operationalizes RMF requirements in municipal RFPs, an accreditor ecosystem capable of evaluating vendor compliance, and congressional incentives that make RMF adoption attractive rather than just admirable.
+
+The right mechanism is a NIST AI RMF–anchored voluntary accreditation framework for municipal AI procurement, paired with three policy levers Congress can pull today:
+
+**1. Federal grant conditionality.** The federal government already channels significant funding to cities for smart city initiatives, public safety technology, and infrastructure modernization through programs including DOJ's COPS grants and DHS's homeland security assistance programs. Congress should condition a portion of these discretionary grants on RMF compliance — requiring that municipalities deploying AI in mission-critical functions demonstrate adherence to the *Govern* and *Measure* functions as a condition of grant eligibility. This is incentive, not mandate — cities that choose not to pursue federal smart-city funding face no federal requirement. But for the overwhelming majority of municipalities that do seek federal technology funding, compliance becomes effectively obligatory.
+
+This model has a proven track record. The [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework), voluntary at its face, achieved broad adoption across sectors as federal procurement requirements, regulatory expectations, and [Executive Order 13800](https://www.govinfo.gov/content/pkg/FR-2017-05-16/pdf/2017-10004.pdf) progressively incorporated it as a de facto standard — ultimately making it mandatory for federal agencies. The same playbook applies here.
+
+**2. A congressional safe harbor for compliant municipalities.** Section 1983 litigation risk is a significant constraint on municipal AI deployment — and a legitimate one. Cities deploying AI systems that produce discriminatory or erroneous outcomes face potential civil rights liability under existing law. But the threat of litigation in the absence of any compliance standard creates perverse incentives: cities may deploy AI informally and quietly, avoiding documentation that could become evidence in litigation, rather than building the transparent accountability structures that would actually reduce error and bias.
+
+A legislative safe harbor — limiting damages or establishing a rebuttable presumption of compliance for municipalities that have obtained RMF accreditation for their AI systems — would invert this dynamic. It makes accountability infrastructure the risk-reduction strategy rather than a liability generator. This is good policy: it rewards the behavior we want without eliminating judicial recourse for genuine harm.
+
+**3. Standardized procurement language.** NIST, in coordination with the General Services Administration, should publish model RFP language for municipal AI procurement that operationalizes RMF requirements into vendor contract terms — including disclosure obligations, audit access rights, and bias testing requirements that resolve the transparency-proprietary tension before contract signing rather than through post-hoc litigation. This is a tractable near-term task that requires no new statutory authority.
+
+## Getting Governance Right Protects the Innovation Runway
+
+None of this is anti-innovation analysis. Cities represent one of the most promising laboratories for AI-augmented government in the world: they are close to citizens, under constant performance pressure, and managing concrete operational challenges — traffic, permitting backlogs, fraud in benefits programs, patrol resource allocation — that AI is genuinely well-suited to improve.
+
+[Smart Cities Dive's 2026 outlook](https://www.smartcitiesdive.com/news/smart-cities-trends-outlook-2026/810932/) and [Route Fifty's operationalization analysis](https://www.route-fifty.com/artificial-intelligence/2026/04/5-ways-state-and-local-governments-will-operationalize-ai-2026/412638/) document real deployments producing real results. Faster permitting reduces housing costs. Smarter patrol resource allocation can reduce both crime and unnecessary police contacts. AI-assisted fraud detection in benefits programs recovers public funds that can be redirected to actual beneficiaries.
+
+That innovation runway is genuinely at risk — not from federal regulation, but from accountability failures that produce political backlash. [Route Fifty's May 2026 investigation](https://www.route-fifty.com/artificial-intelligence/2026/05/how-ai-can-lead-false-arrests-and-wrongful-convictions/413447/) into AI systems contributing to false arrests — including a Tennessee grandmother who spent five months jailed after facial recognition incorrectly linked her to crimes committed in a state she had never visited — is a preview of what happens when municipal AI deployment proceeds without governance architecture. A high-profile wrongful conviction attributed to a predictive policing algorithm, or a wrongful benefits denial traced to an opaque eligibility model, has the potential to freeze municipal AI adoption broadly — not just in the jurisdiction where the failure occurred. Public trust, once damaged by algorithmic accountability failures, is difficult to restore.
+
+Building accountability infrastructure now is the pro-innovation play. The NIST Cybersecurity Framework precedent is instructive: voluntary standards with real incentive structures did not slow cybersecurity adoption across government and industry — they accelerated it by giving organizations a common language, a clear compliance pathway, and reduced liability exposure. The same mechanism, applied to municipal AI, converts governance from a brake on deployment to an enabler of it.
+
+## A Clear Agenda for Congress and NIST
+
+The federal AI governance agenda has spent three years debating frontier model risk and private-sector obligations. It is past time to address the layer of government where AI is already operating at scale, making consequential decisions about citizens' liberty and welfare, without a coherent accountability architecture.
+
+The agenda is tractable and does not require new bureaucratic apparatus:
+
+- **NIST** should publish a government-specific AI RMF profile for municipal deployment contexts, operationalizing the *Govern* and *Measure* functions for law enforcement, permitting, and benefits adjudication use cases.
+- **Congress** should authorize a voluntary municipal AI accreditation program anchored to the RMF, with DOJ and DHS conditioning relevant discretionary grant programs on accreditation as a condition of eligibility.
+- **GSA and NIST** should jointly publish model RFP language for municipal AI procurement that resolves the FOIA Exemption 4 tension by building disclosure and audit access requirements into vendor contracts before they are executed.
+- **Congress** should establish a safe harbor from Section 1983 damages for RMF-accredited municipalities, creating a direct incentive for accountability investment and rewarding transparent governance architecture over opacity.
+
+The governance gap at the municipal level is not a hard problem. It is an unattended one. Cities are not waiting for Washington to figure this out — the deployments are already running. The question is whether accountability infrastructure catches up before the first high-profile failure forecloses the conversation.

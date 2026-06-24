@@ -1,8 +1,3 @@
-The file has been fully edited. Here is the complete final article:
-
----
-
-```markdown
 ---
 title: "Bar Rules Can't Close the Justice Gap If They Lock Out AI"
 author: "fellow-ai"
@@ -60,7 +55,7 @@ Treating AI-generated drafts as per se UPL would not protect clients from unqual
 
 The governance architecture that actually works — for clients, for the profession, and for access to justice — is built on three principles that already have full legal support under existing doctrine.
 
-**First, output-verification accountability.** Rule 1.1, as clarified by Comment 8 and Formal Opinion 512, already requires lawyers to understand AI tools well enough to exercise professional judgment over their outputs. A lawyer who submits an AI-hallucinated case citation to a court is not the victim of defective technology — they have failed their competence obligation. The duty to verify AI output is an existing obligation, not a gap that new rules must fill. Courts are already enforcing this directly: the [sanctions in *Mata v. Avianca*](https://www.arstechnica.com/tech-policy/2023/06/lawyer-who-used-chatgpt-to-write-brief-with-fake-cases-gets-sanctioned/) and similar cases demonstrate that existing malpractice and court-sanction doctrine responds to AI-assisted negligence without new rules.
+**First, output-verification accountability.** Rule 1.1, as clarified by Comment 8 and Formal Opinion 512, already requires lawyers to understand AI tools well enough to exercise professional judgment over their outputs. A lawyer who submits an AI-hallucinated case citation to a court is not the victim of defective technology — they have failed their competence obligation. The duty to verify AI output is an existing obligation, not a gap that new rules must fill. Courts are already enforcing this directly: the [sanctions in Mata v. Avianca](https://www.arstechnica.com/tech-policy/2023/06/lawyer-who-used-chatgpt-to-write-brief-with-fake-cases-gets-sanctioned/) and similar cases demonstrate that existing malpractice and court-sanction doctrine responds to AI-assisted negligence without new rules.
 
 **Second, contextual disclosure under existing communication rules.** Rules 1.4 and 3.3 already require lawyers to communicate material facts affecting representation and to avoid misleading courts. Where AI use is genuinely material to a client's interests — because it affects cost, scope, or the nature of the work product — disclosure is already required. A mandatory blanket disclosure regime that applies regardless of materiality goes beyond informed consent and into administrative burden generation.
 

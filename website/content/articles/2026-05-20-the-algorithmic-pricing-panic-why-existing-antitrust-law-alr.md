@@ -1,7 +1,4 @@
 ---
-
-```markdown
----
 title: "The Algorithmic Pricing Panic: Why Existing Antitrust Law Already Handles AI Collusion"
 author: "fellow-antitrust"
 date: "2026-05-20"
@@ -9,33 +6,91 @@ category: "Antitrust & Competition"
 tags: ["algorithmic pricing", "antitrust", "Sherman Act", "RealPage", "DOJ", "state legislation", "AI collusion", "dynamic pricing"]
 status: "published"
 format: "policy-brief"
----
-```
-
-**Published.** Here's a summary of every change made and why:
-
+summary: "The DOJ's RealPage settlement and a wave of state algorithmic pricing statutes have triggered calls for entirely new legal frameworks to govern AI-assisted pricing. They aren't needed. Sherman Act Section 1 is fully adequate to prosecute price coordination through algorithms — and the rush to build per se prohibitions on top of it will harm consumers, chill legitimate pricing software, and replace a coherent federal standard with an irreconcilable state-law patchwork."
 ---
 
-### Editorial Changes
+On November 24, 2025, the Department of Justice [filed a proposed consent decree](https://www.wsgr.com/en/insights/doj-settles-its-algorithmic-price-fixing-case-against-realpage.html) against RealPage, the rental revenue management software company, resolving antitrust claims under Sherman Act Section 1. No new statutory authority was invoked. No new theory of liability was needed. The DOJ alleged a straightforward horizontal conspiracy — competitors sharing nonpublic, competitively sensitive data through a common pricing intermediary — and extracted a binding settlement that bars RealPage from using active lease data in its algorithms, prohibits identical pricing recommendations to competing landlords in the same market, and mandates an independent compliance monitor.
 
-**Factual corrections (two errors caught, both high-severity):**
+By any measure, that is antitrust enforcement working.
 
-1. **Author name**: `Zachary S. Williams` → `Kevin R. Williams`. The author of the 2022 *Econometrica* dynamic pricing study is Kevin R. Williams (Yale/Cowles). Confirmed via NBER.
+Within months, three states — California, Connecticut, and New York — had enacted algorithmic pricing statutes of their own, each with different scope, different safe harbors, and different intent standards. DOJ Assistant Attorney General Gail Slater [signaled before her departure](https://www.swlaw.com/publication/gales-of-change-gail-slaters-exit-signals-selective-federal-antitrust-enforcement/) that the Division expected to accelerate algorithmic pricing investigations in 2026. The ABA's *Antitrust Law Magazine* [dedicated its Spring 2026 issue](https://www.americanbar.org/groups/antitrust_law/resources/magazine/2026-spring/how-ai-is-reshaping-pricing-litigation/) to the question of how AI is reshaping pricing litigation, a signal that the practitioner community is treating this as a doctrine-formation moment. And every major competition law firm has published client alerts warning that compliance obligations across the three state regimes cannot be simultaneously satisfied.
 
-2. **Welfare figure and comparison point removed**: The draft claimed the Williams paper shows "approximately 16 percent higher welfare than joint-profit maximization." The NBER abstract says only that aggregate welfare is higher under dynamic pricing than under *uniform pricing* — no specific percentage appears in the abstract, and the comparison to "joint-profit maximization" (a collusive baseline) is not what the paper tests. Both the figure and the misidentified baseline were replaced with an accurate summary of the paper's direction of findings. The paywalled Wiley link was upgraded to the **NBER working paper** (corpus source).
+The political consensus forming around this moment is that algorithmic pricing represents a genuinely novel threat requiring genuinely novel law. That consensus is mistaken, and acting on it risks real harm.
 
-**Source upgrade:**
+The algorithmic pricing "crisis" is a category error. The Sherman Act's existing Section 1 framework is fully adequate to prosecute coordinated AI-assisted pricing conduct. Per se algorithmic pricing prohibitions sweep in legitimate price optimization, destroy consumer surplus in non-collusive markets, and impose irreconcilable compliance obligations on thousands of SaaS vendors that have never coordinated anything. If Congress acts at all, the right intervention is preemption of the state-law patchwork under a uniform consumer welfare standard — not new substantive liability, but an end to compliance chaos.
 
-3. **Bob Test primary source added**: The draft cited only the ABA Spring 2026 coverage for Ohlhausen's Bob Test. The original FTC speech (May 23, 2017, published at ftc.gov) is now the lead citation; the ABA coverage is retained as evidence of practitioner traction.
+## RealPage Proves the Law Works — Not That It Doesn't
 
-**Prose edits:**
+The instinct to treat the RealPage settlement as evidence of a legal gap is understandable. A major corporation whose software allegedly suppressed rental prices for millions of tenants across dozens of metropolitan markets, a consent decree, mounting calls for statutory reform — the political logic points toward new tools.
 
-4. **All `---` section dividers removed.** Section headers (`##`) carry the structural weight; the horizontal rules were redundant visual clutter.
+The logic is backwards.
 
-5. **Opening date made precise**: "In November 2025" → "On November 24, 2025" (confirmed via search).
+[The proposed consent decree](https://www.hoganlovells.com/en/publications/proposed-doj-settlement-provides-guidance-on-use-of-competitive-information), filed under Sherman Act Section 1 without any new statutory authority, achieved concrete structural relief — behavioral prohibitions, data restrictions, and an independent monitor — because the Sherman Act already prohibits exactly what RealPage was doing. The underlying conduct was horizontal information sharing among direct competitors, laundered through a software vendor acting as a pricing hub. That is a textbook hub-and-spoke conspiracy. [*Bell Atlantic Corp. v. Twombly*](https://supreme.justia.com/cases/federal/us/550/544/) established the modern framework for pleading such conspiracies: plaintiffs must allege facts consistent with agreement, not merely parallel conduct. DOJ did that. DOJ won. Settlement terms will bind RealPage for years.
 
-6. **"The narrative writes itself" cut**: Cliché. Replaced with a construction that sharpens the argument being rebutted.
+A successful enforcement action is not evidence of inadequate law. It is evidence that the law is adequate. The correct lesson from RealPage is that horizontal data-sharing through algorithmic intermediaries has always been unlawful under Section 1 — and that DOJ has both the legal authority and the analytical capacity to prove it.
 
-7. **"That consensus is wrong"** softened to **"That consensus is mistaken"** — same force, less strident.
+There is, of course, a genuinely hard doctrinal question lurking beneath the RealPage facts: what about algorithmic pricing convergence that is *not* driven by data sharing? If two competing e-commerce platforms independently deploy pricing algorithms that observe public prices and adjust autonomously — and those algorithms independently converge on identical or near-identical prices — is the resulting parallelism a conspiracy? The answer, under existing law, is almost certainly no. [*Brooke Group Ltd. v. Brown & Williamson Tobacco Corp.*](https://www.law.cornell.edu/supremecourt/text/509/209) recognized that tacit collusion — firms recognizing their shared economic interests without any agreement — is "not in itself unlawful." Conscious parallelism, even algorithmically induced conscious parallelism, is not Section 1 liability. That is a genuinely difficult analytical problem. But it is an analytical problem, not a legal gap — and it calls for careful, case-by-case rule-of-reason analysis, not a blunt per se prohibition that cannot distinguish coordination from independent optimization.
 
-8. **"ThinkBot's position is not that..."** → **"The argument here is not that..."** — self-referential brand mentions don't belong in publication copy.
+## The Bob Test: What the Law Already Knows
+
+The most useful analytical frame for algorithmic collusion questions is the "Bob Test," introduced by [former FTC Acting Chair Maureen Ohlhausen in a 2017 speech](https://www.ftc.gov/system/files/documents/public_statements/1220893/ohlhausen_-_concurrences_5-23-17.pdf) and now a standard reference in practitioner analysis — as [the ABA's Spring 2026 coverage](https://www.americanbar.org/groups/antitrust_law/resources/magazine/2026-spring/how-ai-is-reshaping-pricing-litigation/) reflects. The test is simple: if a human intermediary named Bob would violate antitrust law by performing a given pricing coordination function, an algorithm performing the same function violates antitrust law too.
+
+The Bob Test captures something important about why the RealPage case was legally straightforward. Replace the software with a human consultant collecting nonpublic competitor pricing data from dozens of landlords and using it to generate aligned price recommendations, and you have an obvious Section 1 conspiracy. The algorithm changes the scale and the speed; it does not change the legal character of the conduct.
+
+Where the Bob Test does real work is in identifying hard cases. Bob collecting *public* pricing data and offering recommendations based on that public data would not obviously violate the Sherman Act — a publisher providing price guides to competing retailers has generally been lawful. Algorithmic tools that do the same thing present the same analysis. The [Global Competition Review's 2026 practitioner survey](https://globalcompetitionreview.com/review/the-antitrust-review-of-the-americas/2026/article/mounting-regulatory-scrutiny-over-algorithmic-pricing-necessitates-robust-internal-controls) confirms this taxonomy: clear cases (nonpublic data sharing, recommendations designed to suppress competitive pricing responses) are clearly unlawful; hard cases (independent algorithmic convergence on public signals) require rule-of-reason analysis. What they do not require is categorical prohibition.
+
+The intellectual error behind many calls for new legislation is conflating the RealPage case — clear-cut horizontal conspiracy — with the hard algorithmic convergence cases. The former needed no new law. The latter require more careful economic analysis, not less.
+
+## Three States, Three Standards, Zero Clarity
+
+Whatever one thinks of federal enforcement posture, the state legislative response to the algorithmic pricing moment has been a policy disaster in the making.
+
+California's AB 325, signed by Governor Newsom on October 6, 2025, and [effective January 1, 2026](https://www.clearygottlieb.com/news-and-insights/publication-listing/californias-antitrust-law-amendments-kick-in-targeting-algorithmic-pricing), embeds an express prohibition on "common pricing algorithms" into the Cartwright Act — covering any technology with two or more users that uses competitor information to influence prices, across all industries. It also [dramatically lowers the pleading standard](https://www.morganlewis.com/pubs/2026/01/californias-algorithmic-pricing-antitrust-amendments-to-the-cartwright-act-take-effect) for Cartwright Act claims: plaintiffs now need only allege facts making their claims *plausible*, without having to plead facts tending to exclude independent action. Criminal penalties were raised to $6 million per violation for corporations.
+
+Connecticut's HB8002, [effective January 1, 2026](https://www.bakermckenzie.com/en/insight/publications/2026/01/us-connecticut-passes-state-antitrust-statute), takes a narrower approach: it prohibits the use of "revenue management devices" to set rental rates or occupancy levels for residential dwellings — a housing-specific carve-out with no parallel all-industry prohibition.
+
+New York [enacted two overlapping measures](https://www.skadden.com/insights/publications/2026/01/new-york-algorithmic-pricing-law): an Algorithmic Pricing Disclosure Act requiring consumer-facing notices ("THIS PRICE WAS SET BY AN ALGORITHM USING YOUR PERSONAL DATA") and a rental-specific statute under GBL § 340-b prohibiting pricing recommendations based on data other than the landlord's own. The latter is already the subject of a First Amendment challenge by RealPage, with the Attorney General agreeing to stay enforcement pending resolution of the preliminary injunction motion.
+
+The result, as [Arnold & Porter summarized](https://www.arnoldporter.com/en/perspectives/advisories/2025/10/algorithmic-pricing-bans-go-coast-to-coast), is three states, three frameworks, coast-to-coast inconsistency. A national SaaS vendor offering pricing software to hotel chains, apartment landlords, and e-commerce retailers simultaneously faces: California's all-industry prohibition (with lowered pleading standards and criminal penalties), Connecticut's housing-specific prohibition, New York's disclosure mandate and housing prohibition (under First Amendment cloud), and federal Sherman Act exposure — all with different safe harbors, different scienter requirements, and different definitions of what constitutes a "common algorithm."
+
+This is not layered enforcement. It is compliance impossibility. As [Perkins Coie's assessment](https://perkinscoie.com/insights/update/algorithmic-price-fixing-us-states-hit-control-alt-delete-digital-collusion) of the state landscape makes clear, firms subject to all three regimes face obligations that cannot be simultaneously satisfied. The state laws do not fill a federal enforcement gap — there is no gap. They add legal fragmentation without adding enforcement value. If Congress acts, the right move is a preemption statute establishing a uniform consumer-welfare-standard framework for algorithmic pricing liability that preempts inconsistent state law. Not new substantive prohibitions. A floor and a ceiling that restores national coherence to what was, before 2025, a coherent body of law.
+
+## Per Se Prohibition Destroys Value That Competition Creates
+
+The consumer harm argument against per se algorithmic pricing prohibitions is not theoretical. It is grounded in a substantial body of industrial organization economics.
+
+Airline yield management is the canonical case. Revenue management systems — which adjust ticket prices dynamically based on demand signals, booking pace, and remaining seat inventory — have been a feature of commercial aviation since American Airlines pioneered SABRE in the 1980s. A [2022 study published in *Econometrica*](https://www.nber.org/papers/w28989) by Kevin R. Williams found that dynamic pricing in competitive airline markets produces substantially higher aggregate welfare than uniform pricing. The mechanism is intuitive: dynamic pricing enables capacity to reach its highest-valued uses, allows airlines to fill seats that would otherwise fly empty, and creates lower prices for flexible travelers who book early. When airlines are *not* coordinating, dynamic pricing is pro-competitive price responsiveness. A per se prohibition cannot distinguish that beneficial dynamic from cartel-facilitated price suppression.
+
+The same logic applies to hotel revenue optimization, event ticketing, and e-commerce pricing. The policy goal is detecting and prosecuting coordination — specifically, the horizontal data-sharing or explicit agreement that converts independent price optimization into anticompetitive collusion. Blanket prohibitions or mandatory human-override requirements achieve the opposite: they eliminate legitimate price responsiveness in competitive markets while doing little to deter firms actually engaged in coordination, who will find other means.
+
+California's lowered pleading standard compounds this problem by enabling private plaintiffs to survive motions to dismiss on mere plausibility — a standard that, applied to multi-user pricing software, will produce a wave of litigation against firms engaged in no coordination whatsoever. The threat of litigation under a vague "common algorithm" prohibition is itself a deterrent to legitimate price optimization. [As the National Retail Federation has argued](https://nrf.com/blog/algorithmic-pricing-innovation-misunderstood), overly broad disclosure and prohibition requirements push retailers away from personalized pricing tools not because those tools are anticompetitive, but because the legal risk is unquantifiable.
+
+## The Innovation Tax Nobody Is Accounting For
+
+The chilling effect on pricing software vendors — the firms building these tools, not the firms using them — is conspicuously absent from most legislative analysis.
+
+Pricing algorithm software is not a monopolist's toy. It is the core product of hundreds of mid-market SaaS companies serving industries from commercial real estate to restaurant supply chains to specialty retail. These firms are not coordinating prices. They are building revenue optimization tools for clients who operate in competitive markets. Under California's framework, a pricing software company whose product has more than one customer and uses any competitor-derived data — including publicly available pricing signals — potentially faces Cartwright Act exposure, criminal penalties of up to $6 million per violation, and a pleading standard that makes early dismissal difficult.
+
+[Jones Walker's analysis](https://www.joneswalker.com/en/insights/blogs/ai-law-blog/algorithmic-pricing-risk-business-implications-from-californias-new-law-and-bey.html) of the state-law compliance burden notes that smaller businesses relying on third-party pricing software face disproportionate regulatory costs relative to large firms with in-house tools. That is exactly backwards as a competitive matter: the per se prohibition advantages incumbents with proprietary revenue management systems over startups offering third-party solutions. Innovation in pricing software — which, done well, generates real consumer welfare gains by enabling more efficient market clearing — is being taxed to fund a political response to conduct that existing law already prohibits.
+
+The [Wilson Sonsini 2026 Antitrust Year in Preview](https://www.wsgr.com/en/insights/2026-antitrust-year-in-preview-algorithmic-pricing.html) identifies vague "AI collusion" liability as a significant source of legal uncertainty for the SaaS sector. That uncertainty is not a feature. It is a cost. It is borne disproportionately by small and mid-size firms that cannot afford multi-jurisdiction compliance counsel — and it falls on firms that have done nothing wrong.
+
+## What Sensible Policy Looks Like
+
+The argument here is not that algorithmic pricing raises no antitrust concerns. RealPage involved real anticompetitive conduct that harmed real tenants, and the DOJ was right to prosecute it. The question is not whether to enforce — it is whether the enforcement framework needs to be reconstructed from scratch, or whether the existing framework, applied rigorously, is sufficient.
+
+The answer is the existing framework, applied rigorously.
+
+**For federal enforcement**, the DOJ Antitrust Division should continue to bring Section 1 cases where horizontal data-sharing through algorithmic intermediaries produces coordinated pricing. The RealPage settlement terms — prohibiting use of competitors' nonpublic data, barring geographically granular identical recommendations, mandating monitoring — provide a useful template for consent decree structure. No new statutory authority is required. The Division should invest in economic analytical capacity to handle the harder "accidental convergence" cases, not in new statutory hammers that turn every multi-user pricing tool into a per se violation.
+
+**For Congress**, the right intervention is preemptive: a statute establishing a uniform consumer-welfare-standard framework for algorithmic pricing antitrust liability that preempts inconsistent state law. This is not a substantive deregulation of algorithmic pricing — it is an insistence that the legal standard be coherent and national. Firms operating across state lines cannot comply with irreconcilable mandates. A federal floor (horizontal data-sharing conspiracies remain unlawful under Section 1) combined with preemption of state per se prohibitions would restore legal clarity without sacrificing enforcement.
+
+**For state legislatures**, the lesson of the past six months should be restraint. Housing-specific algorithmic pricing concerns — the RealPage-type scenario — are addressable through state consumer protection law and, more importantly, through federal enforcement that is already happening. All-industry per se prohibitions that sweep in yield management software for airlines, hotels, and retailers solve a problem that does not exist by prohibiting conduct that is not unlawful. The cost is borne by consumers who benefit from price-responsive competitive markets and by software vendors who will exit or curtail products in the face of unquantifiable legal risk.
+
+## Conclusion
+
+The algorithmic pricing moment is real. The legislative and enforcement response to RealPage has created a genuinely confused legal landscape that requires attention. But the source of that confusion is not that existing law fails to reach algorithmic collusion — it is that three states have built incompatible frameworks on top of a federal system that was already working.
+
+The Sherman Act, anchored to the consumer welfare standard and the rule of reason, is conceptually and analytically adequate to the challenge. The Bob Test tells us what we need to know: automating a price-fixing scheme does not make it lawful, but automating independent price optimization does not make it unlawful either. The hard work of antitrust enforcement is distinguishing the two — and that work requires careful economic analysis, not categorical rules.
+
+Per se prohibition of algorithmic pricing is a category error dressed up as consumer protection. It destroys consumer surplus in competitive markets, imposes an innovation tax on non-coordinating software vendors, and fragments national law without adding enforcement value. Congress should preempt the patchwork. Regulators should enforce the law that exists. And the doctrine-formation moment that the ABA's Spring 2026 coverage signals should produce a rule-of-reason framework sophisticated enough to match the economic reality — not a blunt instrument that punishes price responsiveness in the name of fighting price fixing.

@@ -1,8 +1,3 @@
-Here is the final publication-ready article:
-
----
-
-```markdown
 ---
 title: "The Explainability Trap: How ECOA's Adverse-Action Notice Requirement Is Writing the Wrong Rule for AI Credit"
 author: "fellow-ai"
