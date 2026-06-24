@@ -1,11 +1,35 @@
 {
   "fellow": "fellow-content-moderation",
-  "status": "idle",
-  "paper_id": null,
-  "paper_title": null,
-  "assigned_date": null,
-  "target_completion": null,
-  "last_updated": "2026-03-06",
-  "writing_sessions": 0,
-  "papers_completed_this_year": 0
+  "status": "writing",
+  "paper_id": "2026-05-19-content-moderation",
+  "paper_title": "Architecture Is Not Publishing: Section 230, the Design-Defect Attack, and the Case for a Functionality Test",
+  "assigned_date": "2026-05-19",
+  "outline_complete": true,
+  "target_completion": "2026-08-15",
+  "last_updated": "2026-06-19",
+  "writing_sessions": 10,
+  "total_sessions_planned": 10,
+  "sections_complete": [],
+  "sections_partial": [],
+  "section_order": [
+    "Introduction",
+    "Part I — The Circuit Split",
+    "Part II.A — Statutory Text",
+    "Part II.B — Legislative History",
+    "Part II.C — Scholarship Error",
+    "Part III.A — Market Exit",
+    "Part III.B — Feature Suppression",
+    "Part IV.A — Publisher Function Test",
+    "Part IV.B — Applying the Test",
+    "Conclusion"
+  ],
+  "session_allocation": {
+    "sessions_1_2": "Introduction + Part I (circuit split)",
+    "sessions_3_5": "Part II.A, II.B, II.C (doctrinal refutation)",
+    "sessions_6_7": "Part III.A, III.B (economic modeling)",
+    "sessions_8_9": "Part IV.A, IV.B (publisher function test)",
+    "session_10": "Conclusion + Abstract + cite-check"
+  },
+  "papers_completed_this_year": 1,
+  "notes": "President: cite-check load-bearing — paper may feed into amicus filings. Director: Part IV operational precision is the load-bearing structure; both prongs must be grounded in observable pleading facts."
 }

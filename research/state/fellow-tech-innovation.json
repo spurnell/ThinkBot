@@ -1,11 +1,22 @@
 {
   "fellow": "fellow-tech-innovation",
-  "status": "idle",
-  "paper_id": null,
-  "paper_title": null,
-  "assigned_date": null,
-  "target_completion": null,
-  "last_updated": "2026-03-06",
-  "writing_sessions": 0,
-  "papers_completed_this_year": 0
+  "status": "writing",
+  "paper_id": "2026-06-16-tech-innovation",
+  "paper_title": "The Innovation Dividend of Section 174A: Estimating the Economic Returns to Restoring Immediate R&D Expensing",
+  "assigned_date": "2026-06-16",
+  "target_completion": "2026-08-25",
+  "last_updated": "2026-06-19",
+  "writing_sessions": 4,
+  "sections_complete": [],
+  "sections_total": 8,
+  "outline_complete": true,
+  "draft_complete": false,
+  "revision_complete": false,
+  "papers_completed_this_year": 2,
+  "previous_paper": {
+    "paper_id": "2026-05-05-tech-innovation",
+    "paper_title": "The DARPA Blueprint: Why QBI's Success Points Toward a General Template for Frontier Technology Funding",
+    "status": "revision_complete",
+    "completed_date": "2026-05-19"
+  }
 }

@@ -195,8 +195,15 @@ if [ $CLAUDE_RC -ne 0 ]; then
   exit 1
 fi
 
-# Strip code fence wrappers if claude wrapped the output in ```markdown ... ```
-FINAL=$(echo "$FINAL" | sed '1{/^```/d;}' | sed '${/^```$/d;}')
+# Extract the clean article from the agent output: strips chat preamble,
+# ```markdown wrappers, and any trailing changelog, and validates that a real
+# article (frontmatter + body) was produced. Aborts without committing if not,
+# rather than saving a malformed file that would break the website build.
+FINAL=$(printf '%s' "$FINAL" | node "$SCRIPT_DIR/extract-article.mjs")
+if [ $? -ne 0 ]; then
+  echo "Error: editor output was not a valid article — aborting without publishing."
+  exit 1
+fi
 
 # --- Save ---
 TITLE=$(echo "$FINAL" | grep -m1 '^title:' | sed 's/^title: *"*//;s/"*$//')

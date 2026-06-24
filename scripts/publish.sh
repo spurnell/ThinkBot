@@ -22,14 +22,51 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 ARTICLES_DIR="$PROJECT_DIR/website/content/articles"
 DRY_RUN=false
+TEST_MODE=false
 TODAY=$(date '+%Y-%m-%d')
+
+# Run ID ties every tool-call log entry to this pipeline invocation.
+# Consumed by the PostToolUse hook at scripts/log-tool-call.sh.
+export THINKBOT_RUN_ID="publish-$(date -u +%Y-%m-%dT%H%M%S)"
 
 for arg in "$@"; do
   case $arg in
     --dry-run) DRY_RUN=true ;;
+    --test)    TEST_MODE=true ;;
     *) echo "Unknown argument: $arg"; exit 1 ;;
   esac
 done
+
+# Test mode: write to scratch dir, skip git commit/push and tweet.
+if [ "$TEST_MODE" = true ]; then
+  ARTICLES_DIR="/tmp/thinkbot-test-articles"
+fi
+
+# Per-fellow pointers into research/sources/ — which curated files to sweep first.
+# Fellows still search the open web; this is a floor, not a ceiling.
+# (Mirrors the function in research-scan.sh. bash 3.2 compat — no associative arrays.)
+source_hint_for() {
+  case "$1" in
+    fellow-ai)
+      echo "journals-open.md (arXiv cs.AI/cs.LG, SSRN, JAIR, JMLR, ACL Anthology), journals-paid.md (Nature Machine Intelligence, Research Policy), think-tanks-liberal.md (AI Now, Data & Society, New America), think-tanks-conservative.md (CSET, Mercatus, FAI, AEI), newspapers.md (The Information, Wired, Ars Technica, Platformer)"
+      ;;
+    fellow-antitrust)
+      echo "journals-paid.md (Antitrust Law Journal, Journal of Competition Law & Economics, RAND Journal of Economics, Journal of Industrial Economics), journals-open.md (SSRN, NBER, law reviews), think-tanks-liberal.md (Open Markets, AELP, Roosevelt, Brookings), think-tanks-conservative.md (AEI, ITIF, Mercatus, Manhattan Institute), newspapers.md (WSJ, Politico, FT, Bloomberg)"
+      ;;
+    fellow-content-moderation)
+      echo "journals-open.md (Yale Law Journal, Stanford Tech Law Review, Harvard JOLT, Berkeley Tech LJ, Knight Columbia), think-tanks-liberal.md (CDT, EFF, Free Press, Knight First Amendment Institute, Public Knowledge), think-tanks-conservative.md (R Street, FAI, EPPC), newspapers.md (Platformer, 404 Media, The Information)"
+      ;;
+    fellow-general-tech)
+      echo "journals-open.md (arXiv, SSRN, law reviews, GAO, CRS), journals-paid.md (Telecommunications Policy, Information Economics and Policy), think-tanks-liberal.md (New America, Brookings, CDT), think-tanks-conservative.md (ITIF, Mercatus, R Street, AEI), newspapers.md (Ars Technica, Wired, Bloomberg, FT)"
+      ;;
+    fellow-tech-innovation)
+      echo "journals-paid.md (Research Policy, Management Science, RAND Journal of Economics, HBR, Sloan MR), journals-open.md (NBER, SSRN, IZA), think-tanks-liberal.md (Brookings, Roosevelt, Aspen), think-tanks-conservative.md (ITIF, Mercatus, Niskanen, AEI, Hoover, FAI), newspapers.md (WSJ, FT, Bloomberg, The Information)"
+      ;;
+    *)
+      echo ""
+      ;;
+  esac
+}
 
 echo "======================================"
 echo "  ThinkBot Publish Pipeline"
@@ -193,6 +230,7 @@ done
 
 # --- Step 3: Fellow writes the article ---
 echo "[3/4] $FELLOW writing article..."
+SOURCE_HINT="$(source_hint_for "$FELLOW")"
 ARTICLE=$(claude --print \
   --dangerously-skip-permissions \
   --agent "$FELLOW" \
@@ -201,6 +239,16 @@ ARTICLE=$(claude --print \
 Set author to \"$FELLOW\" and date to \"$TODAY\". Set status to \"published\".
 
 Output ONLY the complete article with frontmatter — no commentary before or after.
+
+## Curated source corpus
+
+ThinkBot maintains a curated source corpus at \`research/sources/\`. Before drafting, Read the files most relevant to your domain and use those outlets / journals / think tanks as your primary sourcing foundation. For your domain, prioritize:
+
+$SOURCE_HINT
+
+The full corpus is in: research/sources/newspapers.md, research/sources/think-tanks-liberal.md, research/sources/think-tanks-conservative.md, research/sources/journals-paid.md, research/sources/journals-open.md.
+
+This corpus is a **floor, not a ceiling**. Cite beyond it when needed — primary government documents, court filings, official agency statements, and fresh breaking-news reporting are always welcome regardless of whether the outlet is in the corpus. Do not cite low-credibility outlets just because they are not in the corpus.
 
 --- ASSIGNMENT ---
 $ASSIGNMENT
@@ -225,6 +273,13 @@ FINAL=$(claude --print \
   --agent chief-editor \
   "Edit this article to publication quality. Fix structure, clarity, tone, and formatting issues. Ensure frontmatter is complete and correct. Keep the author and date as-is.
 
+## Source review
+
+ThinkBot's curated source corpus lives at \`research/sources/\`. During editing:
+- Prefer sources from the corpus when an equivalent alternative to a cited source exists.
+- Flag or replace low-credibility sources per the rules in \`.claude/agent-memory/chief-editor/source-quality.md\`.
+- Do not manufacture corpus citations — if the fellow cited an outlet outside the corpus and the claim is sound, leave it.
+
 Output ONLY the complete final article with frontmatter — no commentary.
 
 $ARTICLE" 2>&1)
@@ -236,8 +291,15 @@ if [ $CLAUDE_RC -ne 0 ]; then
   exit 1
 fi
 
-# Strip code fence wrappers if claude wrapped the output in ```markdown ... ```
-FINAL=$(echo "$FINAL" | sed '1{/^```/d;}' | sed '${/^```$/d;}')
+# Extract the clean article from the agent output: strips chat preamble,
+# ```markdown wrappers, and any trailing changelog, and validates that a real
+# article (frontmatter + body) was produced. Aborts without committing if not,
+# rather than saving a malformed file that would break the website build.
+FINAL=$(printf '%s' "$FINAL" | node "$SCRIPT_DIR/extract-article.mjs")
+if [ $? -ne 0 ]; then
+  echo "Error: editor output was not a valid article — aborting without publishing."
+  exit 1
+fi
 
 # --- Save the article ---
 # Extract title from frontmatter to generate slug
@@ -254,17 +316,23 @@ echo "Saved: $FILEPATH"
 echo "Final word count: $(echo "$FINAL" | wc -w | tr -d ' ')"
 echo ""
 
-# --- Git commit and push ---
-echo "Committing..."
-cd "$PROJECT_DIR"
-if [ -f "$FILEPATH" ]; then
-  git add "$FILEPATH"
-  git commit -m "publish: $TITLE"
-  git push origin main
-  echo "Pushed. Vercel will redeploy."
-  "$SCRIPT_DIR/tweet.sh" "$FILEPATH"
+# --- Git commit and push (skipped in --test mode) ---
+if [ "$TEST_MODE" = true ]; then
+  echo ""
+  echo "[--test] Skipping git commit, push, and tweet."
+  echo "[--test] Output saved to: $FILEPATH"
 else
-  echo "No article file found. Skipping commit."
+  echo "Committing..."
+  cd "$PROJECT_DIR"
+  if [ -f "$FILEPATH" ]; then
+    git add "$FILEPATH"
+    git commit -m "publish: $TITLE"
+    git push origin main
+    echo "Pushed. Vercel will redeploy."
+    "$SCRIPT_DIR/tweet.sh" "$FILEPATH"
+  else
+    echo "No article file found. Skipping commit."
+  fi
 fi
 
 echo ""

@@ -1,11 +1,27 @@
 {
   "fellow": "fellow-general-tech",
-  "status": "idle",
-  "paper_id": null,
-  "paper_title": null,
-  "assigned_date": null,
-  "target_completion": null,
-  "last_updated": "2026-03-06",
-  "writing_sessions": 0,
-  "papers_completed_this_year": 0
+  "status": "writing",
+  "paper_id": "2026-05-19-general-tech",
+  "paper_title": "Research Paper 2026-05-19-general-tech",
+  "assigned_date": "2026-05-19",
+  "outline_date": "2026-04-21",
+  "target_completion": "2026-07-28",
+  "last_updated": "2026-06-19",
+  "published_date": "2026-05-06",
+  "published_path": "website/content/articles/2026-05-06-counting-the-cost-fifty-state-privacy-fragmentation.md",
+  "writing_sessions": 10,
+  "total_sessions_planned": 10,
+  "papers_completed_this_year": 1,
+  "sections": {
+    "abstract": "complete",
+    "executive_summary": "complete",
+    "introduction": "complete",
+    "section_2_audit": "complete",
+    "section_2_audit_sessions_complete": 3,
+    "section_3_cost": "complete",
+    "section_3_cost_sessions_complete": 2,
+    "section_4_political_economy": "complete",
+    "section_5_alternatives": "complete",
+    "section_6_conclusion": "complete"
+  }
 }

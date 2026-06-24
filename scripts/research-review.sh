@@ -207,8 +207,15 @@ $REVISED" 2>&1)
     continue
   fi
 
-  # Strip code fence wrappers
-  FINAL=$(echo "$FINAL" | sed '1{/^```/d;}' | sed '${/^```$/d;}')
+  # Extract the clean article from the agent output (strips preamble,
+  # ```markdown wrappers, trailing changelog) and validate it. Skip publishing
+  # this paper if the agent failed to emit a valid article, rather than saving
+  # a malformed file that would break the website build.
+  FINAL=$(printf '%s' "$FINAL" | node "$SCRIPT_DIR/extract-article.mjs")
+  if [ $? -ne 0 ]; then
+    echo "Error: polished output was not a valid article — skipping publish."
+    continue
+  fi
 
   # --- Save and publish ---
   TITLE=$(echo "$FINAL" | grep -m1 '^title:' | sed 's/^title: *"*//;s/"*$//')

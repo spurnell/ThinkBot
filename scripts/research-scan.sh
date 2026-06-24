@@ -23,6 +23,10 @@ SCANS_DIR="$PROJECT_DIR/research/scans"
 DRY_RUN=false
 TODAY=$(date '+%Y-%m-%d')
 
+# Run ID ties every tool-call log entry to this pipeline invocation.
+# Consumed by the PostToolUse hook at scripts/log-tool-call.sh.
+export THINKBOT_RUN_ID="scan-$(date -u +%Y-%m-%dT%H%M%S)"
+
 FELLOWS=(
   "fellow-ai"
   "fellow-antitrust"
@@ -30,6 +34,33 @@ FELLOWS=(
   "fellow-general-tech"
   "fellow-tech-innovation"
 )
+
+# Per-fellow pointers into research/sources/ — which curated files to sweep first.
+# Fellows still search the open web; this is a floor, not a ceiling.
+# (Implemented as a case statement because macOS ships bash 3.2, which lacks
+# associative arrays.)
+source_hint_for() {
+  case "$1" in
+    fellow-ai)
+      echo "journals-open.md (arXiv cs.AI/cs.LG, SSRN, JAIR, JMLR, ACL Anthology), journals-paid.md (Nature Machine Intelligence, Research Policy), think-tanks-liberal.md (AI Now, Data & Society, New America), think-tanks-conservative.md (CSET, Mercatus, FAI, AEI), newspapers.md (The Information, Wired, Ars Technica, Platformer)"
+      ;;
+    fellow-antitrust)
+      echo "journals-paid.md (Antitrust Law Journal, Journal of Competition Law & Economics, RAND Journal of Economics, Journal of Industrial Economics), journals-open.md (SSRN, NBER, law reviews), think-tanks-liberal.md (Open Markets, AELP, Roosevelt, Brookings), think-tanks-conservative.md (AEI, ITIF, Mercatus, Manhattan Institute), newspapers.md (WSJ, Politico, FT, Bloomberg)"
+      ;;
+    fellow-content-moderation)
+      echo "journals-open.md (Yale Law Journal, Stanford Tech Law Review, Harvard JOLT, Berkeley Tech LJ, Knight Columbia), think-tanks-liberal.md (CDT, EFF, Free Press, Knight First Amendment Institute, Public Knowledge), think-tanks-conservative.md (R Street, FAI, EPPC), newspapers.md (Platformer, 404 Media, The Information)"
+      ;;
+    fellow-general-tech)
+      echo "journals-open.md (arXiv, SSRN, law reviews, GAO, CRS), journals-paid.md (Telecommunications Policy, Information Economics and Policy), think-tanks-liberal.md (New America, Brookings, CDT), think-tanks-conservative.md (ITIF, Mercatus, R Street, AEI), newspapers.md (Ars Technica, Wired, Bloomberg, FT)"
+      ;;
+    fellow-tech-innovation)
+      echo "journals-paid.md (Research Policy, Management Science, RAND Journal of Economics, HBR, Sloan MR), journals-open.md (NBER, SSRN, IZA), think-tanks-liberal.md (Brookings, Roosevelt, Aspen), think-tanks-conservative.md (ITIF, Mercatus, Niskanen, AEI, Hoover, FAI), newspapers.md (WSJ, FT, Bloomberg, The Information)"
+      ;;
+    *)
+      echo ""
+      ;;
+  esac
+}
 
 for arg in "$@"; do
   case $arg in
@@ -92,12 +123,26 @@ for FELLOW in "${FELLOWS[@]}"; do
     continue
   fi
 
+  SOURCE_HINT="$(source_hint_for "$FELLOW")"
+
   SCAN_OUTPUT=$(claude --print \
     --dangerously-skip-permissions \
     --agent "$FELLOW" \
     "You are running in RESEARCH SCANNING MODE.
 
-Search the web for recent academic papers, working papers, policy reports, think tank publications, and significant developments in your domain that could be the basis for a ThinkBot research paper.
+## Curated source corpus (always sweep these)
+
+ThinkBot maintains a curated source corpus at \`research/sources/\`. You MUST sweep the files most relevant to your domain before concluding a scan — Read them and check their listed outlets / journals / think tanks for new material. For your domain, prioritize:
+
+$SOURCE_HINT
+
+The full corpus is in: research/sources/newspapers.md, research/sources/think-tanks-liberal.md, research/sources/think-tanks-conservative.md, research/sources/journals-paid.md, research/sources/journals-open.md.
+
+This corpus is a **floor, not a ceiling**. After sweeping it, also search the open web for developments outside the corpus. You do not need to justify citing sources outside the corpus — the goal is the best research, not corpus purity.
+
+## Your task
+
+Search for recent academic papers, working papers, policy reports, think tank publications, and significant developments in your domain that could be the basis for a ThinkBot research paper.
 
 Produce a structured scan report with 5-8 interesting findings. For each, include:
 1. **Title/Topic**: What you found
@@ -105,6 +150,7 @@ Produce a structured scan report with 5-8 interesting findings. For each, includ
 3. **Key Finding**: The core result or argument (1-2 sentences)
 4. **Research Potential**: Why this could be a ThinkBot research paper topic (1-2 sentences)
 5. **URL**: Link to the source if available
+6. **In corpus?**: Yes / No — whether the source appears in research/sources/
 
 Focus on:
 - Empirical findings and data-driven research

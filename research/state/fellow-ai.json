@@ -1,11 +1,18 @@
 {
   "fellow": "fellow-ai",
-  "status": "idle",
-  "paper_id": null,
-  "paper_title": null,
-  "assigned_date": null,
-  "target_completion": null,
-  "last_updated": "2026-03-06",
-  "writing_sessions": 0,
-  "papers_completed_this_year": 0
+  "status": "writing",
+  "paper_id": "2026-05-19-ai",
+  "paper_title": "Who Governs the Robot? Regulatory Jurisdiction, Supply Chain Vulnerability, and the Physical AI Gap",
+  "assigned_date": "2026-05-19",
+  "target_completion": "2026-07-28",
+  "last_updated": "2026-06-19",
+  "writing_sessions": 10,
+  "papers_completed_this_year": 1,
+  "outline_complete": true,
+  "total_sections": 11,
+  "sections_written": 1,
+  "sections_complete": [
+    "1. Introduction"
+  ],
+  "draft_complete": false
 }

@@ -1,11 +1,93 @@
 {
   "fellow": "fellow-antitrust",
-  "status": "idle",
-  "paper_id": null,
-  "paper_title": null,
-  "assigned_date": null,
-  "target_completion": null,
-  "last_updated": "2026-03-06",
-  "writing_sessions": 0,
-  "papers_completed_this_year": 0
+  "status": "writing",
+  "paper_id": "2026-06-16-antitrust",
+  "paper_title": "Platform Plurality and the Limits of Market Definition: What FTC v. Meta Means for the Digital Antitrust Toolkit",
+  "assigned_date": "2026-06-16",
+  "outlined_date": "2026-06-16",
+  "last_updated": "2026-06-19",
+  "writing_sessions_completed": 0,
+  "total_sessions_planned": 10,
+  "papers_completed_this_year": 2,
+  "sections": [
+    {
+      "id": 0,
+      "title": "Abstract",
+      "status": "placeholder",
+      "words_target": 250,
+      "notes": "To be written after all sections complete"
+    },
+    {
+      "id": 1,
+      "title": "Introduction",
+      "status": "pending",
+      "words_target": 600,
+      "session": 1
+    },
+    {
+      "id": 2,
+      "title": "§1: The FTC's Market Definition Failure in FTC v. Meta — A Doctrinal Autopsy",
+      "status": "pending",
+      "words_target": 750,
+      "session": 2
+    },
+    {
+      "id": 3,
+      "title": "§2: Why the Hypothetical Monopolist Test Fails in Multi-Dimensional Platform Markets",
+      "status": "pending",
+      "words_target": 800,
+      "session": 3
+    },
+    {
+      "id": 4,
+      "title": "§3: Two-Sided Platform Theory and the Competitive Reality of Digital Markets",
+      "status": "pending",
+      "words_target": 700,
+      "session": 4
+    },
+    {
+      "id": 5,
+      "title": "§4: A Revised Framework — Functional Substitution Plus Competitive Constraint Analysis",
+      "status": "pending",
+      "words_target": 800,
+      "session": 5
+    },
+    {
+      "id": 6,
+      "title": "§5: Applied — The Apple App Store and the Market Boundary Problem",
+      "status": "pending",
+      "words_target": 600,
+      "session": 6
+    },
+    {
+      "id": 7,
+      "title": "§6: Applied — Amazon Marketplace and the Multi-Layer Market Definition Problem",
+      "status": "pending",
+      "words_target": 550,
+      "session": 7
+    },
+    {
+      "id": 8,
+      "title": "§7: Applied — Google Search Remedies and the Emerging AI Substitution Question",
+      "status": "pending",
+      "words_target": 650,
+      "session": 8
+    },
+    {
+      "id": 9,
+      "title": "§8: Implications for the 2023 Merger Guidelines and Future Platform Enforcement",
+      "status": "pending",
+      "words_target": 700,
+      "session": 9
+    },
+    {
+      "id": 10,
+      "title": "Conclusion",
+      "status": "pending",
+      "words_target": 500,
+      "session": 10
+    }
+  ],
+  "writing_sessions": 4,
+  "target_completion": "2026-09-15"
 }
