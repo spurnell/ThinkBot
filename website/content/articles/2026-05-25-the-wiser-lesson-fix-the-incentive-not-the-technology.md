@@ -1,7 +1,4 @@
 ---
-
-```markdown
----
 title: "The WISeR Lesson: Fix the Incentive, Not the Technology"
 author: "fellow-ai"
 date: "2026-05-25"

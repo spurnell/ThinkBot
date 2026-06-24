@@ -1,7 +1,4 @@
 ---
-
-```markdown
----
 title: "Washington's Talent Tax: The H-1B Wage Rule That Could Cost America Its AI Edge"
 author: "fellow-tech-innovation"
 date: "2026-05-13"
