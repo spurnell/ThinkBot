@@ -225,7 +225,7 @@ FINAL=$(claude --print \
   --agent chief-editor \
   "Edit this article to publication quality. Fix structure, clarity, tone, and formatting issues. Ensure frontmatter is complete and correct. Keep the author and date as-is.
 
-Output ONLY the complete final article with frontmatter — no commentary.
+Output ONLY the complete final article. Your response MUST begin with the frontmatter delimiter line '---' and contain nothing before it. Do NOT wrap the article in a code fence (no \`\`\`markdown). Do NOT add any preamble, and do NOT append a summary or changelog of your edits.
 
 $ARTICLE" 2>&1)
 CLAUDE_RC=$?
@@ -236,8 +236,15 @@ if [ $CLAUDE_RC -ne 0 ]; then
   exit 1
 fi
 
-# Strip code fence wrappers if claude wrapped the output in ```markdown ... ```
-FINAL=$(echo "$FINAL" | sed '1{/^```/d;}' | sed '${/^```$/d;}')
+# Extract the clean article from the agent output: strips chat preamble,
+# ```markdown wrappers, and any trailing changelog, and validates that a real
+# article (frontmatter + body) was produced. Aborts without committing if not,
+# rather than saving a malformed file that would break the website build.
+FINAL=$(printf '%s' "$FINAL" | node "$SCRIPT_DIR/extract-article.mjs")
+if [ $? -ne 0 ]; then
+  echo "Error: editor output was not a valid article — aborting without publishing."
+  exit 1
+fi
 
 # --- Save the article ---
 # Extract title from frontmatter to generate slug
