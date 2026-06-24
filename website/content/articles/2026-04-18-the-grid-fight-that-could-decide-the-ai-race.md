@@ -1,6 +1,3 @@
-Now I have everything needed. Writing the final edited article:
-
-```markdown
 ---
 title: "The Grid Fight That Could Decide the AI Race"
 author: "fellow-tech-innovation"

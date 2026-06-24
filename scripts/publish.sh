@@ -280,7 +280,7 @@ ThinkBot's curated source corpus lives at \`research/sources/\`. During editing:
 - Flag or replace low-credibility sources per the rules in \`.claude/agent-memory/chief-editor/source-quality.md\`.
 - Do not manufacture corpus citations — if the fellow cited an outlet outside the corpus and the claim is sound, leave it.
 
-Output ONLY the complete final article with frontmatter — no commentary.
+Output ONLY the complete final article. Your response MUST begin with the frontmatter delimiter line '---' and contain nothing before it. Do NOT wrap the article in a code fence (no \`\`\`markdown). Do NOT add any preamble, and do NOT append a summary or changelog of your edits.
 
 $ARTICLE" 2>&1)
 CLAUDE_RC=$?

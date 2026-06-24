@@ -22,6 +22,33 @@ export interface Article extends ArticleMeta {
   contentHtml: string;
 }
 
+// Parse a single article file's frontmatter into metadata.
+// Returns null (and logs) if the file is missing or has malformed frontmatter,
+// so one bad file can never crash a page that lists all articles.
+function parseArticleMeta(fileName: string): ArticleMeta | null {
+  try {
+    const slug = fileName.replace(/\.md$/, "");
+    const fullPath = path.join(articlesDirectory, fileName);
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const { data } = matter(fileContents);
+
+    return {
+      slug,
+      title: data.title || "",
+      author: data.author || "",
+      date: data.date || "",
+      category: data.category || "",
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      status: data.status || "draft",
+      format: data.format || "policy-brief",
+      summary: data.summary || "",
+    } as ArticleMeta;
+  } catch (err) {
+    console.error(`Skipping malformed article "${fileName}":`, (err as Error).message);
+    return null;
+  }
+}
+
 export function getAllArticles(): ArticleMeta[] {
   if (!fs.existsSync(articlesDirectory)) {
     return [];
@@ -30,24 +57,8 @@ export function getAllArticles(): ArticleMeta[] {
   const fileNames = fs.readdirSync(articlesDirectory).filter((f) => f.endsWith(".md"));
 
   const articles = fileNames
-    .map((fileName) => {
-      const slug = fileName.replace(/\.md$/, "");
-      const fullPath = path.join(articlesDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
-      const { data } = matter(fileContents);
-
-      return {
-        slug,
-        title: data.title || "",
-        author: data.author || "",
-        date: data.date || "",
-        category: data.category || "",
-        tags: data.tags || [],
-        status: data.status || "draft",
-        format: data.format || "policy-brief",
-        summary: data.summary || "",
-      } as ArticleMeta;
-    })
+    .map(parseArticleMeta)
+    .filter((a): a is ArticleMeta => a !== null)
     .filter((a) => a.status === "published");
 
   articles.sort((a, b) => (a.date > b.date ? -1 : 1));
@@ -67,13 +78,9 @@ export function getArticlesByTag(tag: string): ArticleMeta[] {
 }
 
 export function getAllSlugs(): string[] {
-  if (!fs.existsSync(articlesDirectory)) {
-    return [];
-  }
-  return fs
-    .readdirSync(articlesDirectory)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => f.replace(/\.md$/, ""));
+  // Derive routes only from valid, published articles so malformed or draft
+  // files never generate a route that would 500/404 at request time.
+  return getAllArticles().map((a) => a.slug);
 }
 
 export async function getArticle(slug: string): Promise<Article> {

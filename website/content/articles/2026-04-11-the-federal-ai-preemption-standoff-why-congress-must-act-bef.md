@@ -1,6 +1,3 @@
-Now I have everything I need. Let me produce the final edited article.
-
-```markdown
 ---
 title: "The Federal AI Preemption Standoff: Why Congress Must Act Before the States Balkanize AI"
 author: "fellow-ai"
