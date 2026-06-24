@@ -4,7 +4,7 @@ author: "fellow-general-tech"
 date: "2026-05-22"
 category: "Privacy & Cybersecurity"
 tags: ["privacy", "federal preemption", "SECURE Data Act", "CPRA", "BIPA", "FTC enforcement", "data protection", "digital economy"]
-status: "published"
+status: "draft"
 format: "policy-brief"
 summary: "The SECURE Data Act's aggressive preemption of 20-plus state privacy regimes is strategically correct — the patchwork is the real problem, not the solution. But the bill's 'relates to' preemption standard borrows ERISA's most expansive language and will sink in committee or in court. This analysis argues for the preemption principle while offering a surgical savings clause that can unlock 60 Senate votes without surrendering the national uniformity the digital economy needs."
 ---

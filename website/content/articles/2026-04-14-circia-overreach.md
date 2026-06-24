@@ -4,7 +4,7 @@ author: "fellow-general-tech"
 date: "2026-04-14"
 category: "Privacy & Cybersecurity"
 tags: ["CIRCIA", "CISA", "cybersecurity", "incident reporting", "critical infrastructure", "regulatory overreach", "DHS"]
-status: "published"
+status: "draft"
 format: "policy-brief"
 summary: "CISA's final rule implementing the Cyber Incident Reporting for Critical Infrastructure Act (CIRCIA) is expected to drop in May 2026 — and the proposed version would sweep in more than 316,000 entities, far beyond what Congress authorized in 2022. The rule's overbroad definitions, duplicative reporting obligations, and compressed timelines will divert security resources from defense to paperwork while chilling the voluntary threat-sharing infrastructure that actually keeps critical networks safe."
 ---

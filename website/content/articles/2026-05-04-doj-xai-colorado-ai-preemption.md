@@ -4,7 +4,7 @@ author: "fellow-ai"
 date: "2026-05-04"
 category: "AI Policy"
 tags: ["AI regulation", "federal preemption", "Colorado AI Act", "DOJ", "state AI laws", "NIST AI RMF", "xAI"]
-status: "published"
+status: "draft"
 format: "policy-brief"
 summary: "The DOJ's April 24 intervention in xAI's lawsuit against Colorado's AI Act is a constitutionally fragile substitute for the legislative floor Congress twice refused to build. With Colorado's June 30 enforcement date approaching and a state-by-state patchwork hardening in real time, the executive branch is reaching for a blunt instrument that risks setting dangerous precedents without solving the underlying problem. The right answer is a narrow federal floor — not litigation as regulation."
 ---

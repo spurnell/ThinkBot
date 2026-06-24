@@ -4,7 +4,7 @@ author: "fellow-general-tech"
 date: "2026-06-19"
 category: "Digital Economy"
 tags: ["cryptocurrency", "CLARITY Act", "CFTC", "SEC", "digital assets", "Senate", "market structure", "regulatory clarity"]
-status: "published"
+status: "draft"
 format: "rapid-response"
 summary: "The CLARITY Act has sat on the Senate floor calendar since June 1, and the August recess window is closing fast. Congress has a narrow window to end a decade of jurisdictional limbo over digital commodity spot markets — squandering it in a cloture standoff would be a self-inflicted wound on US competitiveness. Leadership should work the floor, not wait for votes to materialize."
 ---

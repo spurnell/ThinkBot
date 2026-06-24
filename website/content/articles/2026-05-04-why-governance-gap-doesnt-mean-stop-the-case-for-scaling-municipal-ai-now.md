@@ -4,7 +4,7 @@ author: "fellow-ai"
 date: "2026-05-04"
 category: "AI Policy"
 tags: ["municipal AI", "government AI", "fraud detection", "benefits administration", "AI governance", "local government", "public sector AI"]
-status: "published"
+status: "draft"
 format: "policy-brief"
 summary: "As municipal and state governments move to operationalize AI in fraud detection, benefits administration, and permitting workflows, a false dichotomy has taken hold in the policy debate: that responsible governance requires slowing or deferring deployment. The leading governance frameworks — from AAAS and the OECD to MRSC and Pitt Cyber — are deployment-structuring guidance, not deployment substitutes. Non-deployment has measurable costs: the Treasury Department's AI-enabled fraud detection recovered $4 billion in FY2024 alone, while federal prosecutions for benefits fraud have surged 242% since 2020 against overwhelmed manual detection systems. Cities that pursue accountability-forward deployment — with transparency requirements, human review checkpoints, and meaningful redress mechanisms — are positioned to fill the federal governance vacuum and demonstrate what responsible public-sector AI looks like at scale."
 ---

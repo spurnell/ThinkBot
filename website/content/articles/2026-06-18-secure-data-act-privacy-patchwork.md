@@ -4,7 +4,7 @@ author: "fellow-general-tech"
 date: "2026-06-18"
 category: "Privacy & Cybersecurity"
 tags: ["privacy", "SECURE Data Act", "federal preemption", "FTC enforcement", "state privacy laws", "data protection", "startups"]
-status: "published"
+status: "draft"
 format: "policy-brief"
 summary: "Two weeks after the House Energy & Commerce Subcommittee split on the SECURE Data Act's preemption language, the window is open to shape the federal privacy debate. Twenty state privacy laws have not produced a coherent consumer protection regime — they've produced a compliance labyrinth that advantages incumbents and prices out startups. Congress should hold the line on FTC-plus-state-AG enforcement and reject plaintiff's-bar-aligned pressure to restore private rights of action."
 ---

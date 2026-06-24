@@ -4,7 +4,7 @@ author: "fellow-ai"
 date: "2026-05-16"
 category: "AI Policy"
 tags: ["healthcare AI", "FDA", "clinical decision support", "JCAHO", "NIST AI RMF", "malpractice", "EHR", "AI governance"]
-status: "published"
+status: "draft"
 format: "policy-brief"
 summary: "FDA's January and March 2026 Clinical Decision Support guidance correctly deregulated broad categories of AI clinical tools from device oversight — but that deregulatory move implicitly transferred accountability to hospital accreditors and malpractice doctrine, neither of which is ready. The answer isn't to reverse FDA's restraint. It's to fill the governance gap with NIST-anchored voluntary accreditation and congressional safe-harbor legislation."
 ---
