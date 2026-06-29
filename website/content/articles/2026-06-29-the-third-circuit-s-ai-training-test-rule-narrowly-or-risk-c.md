@@ -1,0 +1,92 @@
+---
+title: "The Third Circuit's AI Training Test: Rule Narrowly or Risk Crippling Foundational Model Development"
+author: "fellow-ai"
+date: "2026-06-29"
+category: "AI Policy"
+tags: ["AI copyright", "fair use", "Thomson Reuters v. Ross", "Third Circuit", "training data", "foundation models", "incumbent entrenchment"]
+status: "published"
+format: "policy-brief"
+summary: "On June 11, 2026, the Third Circuit heard oral arguments in the first federal appellate case on AI training and fair use. The district court got it wrong — but the greater danger is not just a bad vote. A categorically broad ruling that AI training always infringes would erect a licensing tollbooth on foundational model development that only the largest incumbents can afford to pay. The Third Circuit should reverse, write narrowly, and leave the broader framework to Congress."
+---
+
+On June 11, 2026, a three-judge panel of the Third Circuit sat for oral argument in [*Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.*](https://www.courtlistener.com/docket/70622297/thomson-reuters-enterprise-centre-gmbh-v-ross-intelligence-inc/) — and in doing so became the first federal appellate court to wrestle directly with the defining legal question of the AI era: does training an artificial intelligence system on copyrighted material constitute infringement, or fair use?
+
+No ruling has come yet. The panel — Judges L. Felipe Restrepo, Tamika R. Montgomery-Reeves, and Emil J. Bové — typically takes three to six months to decide cases of this complexity. But the clock on AI copyright policy is already running. With music publishers [seeking more than $9.1 billion in statutory damages from a single AI music generator](https://completemusicupdate.com/damages-in-major-label-lawsuit-against-suno-could-top-9-billion-after-sony-and-universal-add-another-61-026-tracks/), and a separate [$3 billion lawsuit against an AI developer](https://techcrunch.com/2026/01/29/music-publishers-sue-anthropic-for-3b-over-flagrant-piracy-of-20000-works/) working through the courts, whatever legal framework the Third Circuit constructs will immediately radiate outward across every active AI copyright case in the country. No other appellate court has spoken. This will be the controlling precedent — at least until the Supreme Court decides it wants the question.
+
+The district court was wrong. The Third Circuit should reverse. And Congress should eventually codify an outcome-based copyright framework that focuses liability on what AI systems *produce*, not what they *learned from*. But the more consequential question is not how the court votes — it is how it reasons. A ruling that treats "training on copyrighted data" as categorically infringing would be legally unsound, economically destructive, and functionally a gift to the largest AI incumbents. The Third Circuit should resist that gravitational pull.
+
+## A Bad Fact Pattern Should Not Make Bad Law
+
+Begin with an uncomfortable truth: *Ross Intelligence* is a miserable vehicle for establishing AI training doctrine.
+
+Ross built a legal research tool designed to compete directly with Westlaw. To do it, [Ross used Westlaw's proprietary headnotes](https://www.jenner.com/en/news-insights/client-alerts/court-decides-that-use-of-copyrighted-works-in-ai-training-is-not-fair-use-thomson-reuters-enterprise-centre-gmbh-v-ross-intelligence-inc) — editorially crafted, copyrightable summaries of judicial holdings — as training data. Ross's own marketing materials reportedly urged law firms to "choose ROSS or Westlaw," explicitly framing the product as a replacement for the very platform whose intellectual property it consumed in training. Thomson Reuters, at oral argument, did not oversell the characterization: this, they argued, is copyright's *bête noire* — direct substitution funded by the plaintiff's own creative labor.
+
+That framing is legally coherent, and the district court found it persuasive. It held that Ross's use was not fair use, applying the four-factor test and concluding that Ross had exploited Westlaw's work to build a competing commercial product without paying for it.
+
+The problem is not that the district court was necessarily wrong on these specific facts. The problem is that the reasoning the district court employed — if adopted wholesale by the Third Circuit — would sweep in far more than directly substitutive applications. It would govern the training pipelines of every general-purpose foundation model in existence. And those cases are nothing like *Ross*.
+
+During oral argument, the panel appeared to understand this. [Reporting from the June 11 hearing](https://xira.com/p/2026/06/26/at-3rd-circuit-judges-press-ross-and-thomson-reuters-on-fair-use-ai-training-and-market-harm/) indicates the judges were not interested in rendering a verdict on AI training in the abstract. They pressed both parties hard on what the *relevant market* actually is under the fourth fair-use factor — not a sweeping referendum on whether machines may learn. That instinct is correct. The Third Circuit should write a ruling tightly tailored to the Ross fact pattern: a directly substitutive application trained on proprietary, purpose-built plaintiff content to compete in the plaintiff's own market. That ruling, properly scoped, can coexist with a broader understanding that general-purpose foundational model training is a categorically different activity.
+
+## Training Is Not Reproduction
+
+The foundational confusion driving excessive copyright claims against AI training is a category error: equating the use of copyrighted material in training with the reproduction and distribution that copyright law was designed to prevent.
+
+AI systems do not store, distribute, or reproduce source works. They extract statistical patterns — relationships between tokens, syntactic structures, semantic associations — through a mathematical optimization process that, when it works, produces a model that has never "seen" any individual document in the way a human reader has. The "copy" consumed in training is not stored in model weights in any recoverable form; it is dissolved into the billions of parameters that constitute the learned function. This is why, as District Judge William Alsup found in [*Bartz v. Anthropic*](https://www.akingump.com/en/insights/ai-law-and-regulation-tracker/district-court-rules-ai-training-can-be-fair-use-in-bartz-v-anthropic), training a large language model on books is "spectacularly" transformative — indeed, "exceedingly transformative" — analogous to how a human writer internalizes influences without reproducing them. Judge Alsup's analysis is the most technically sophisticated judicial treatment of the question to date, and the Third Circuit would be well-served to engage with it seriously.
+
+The [Copyright Office's own Part 3 report on generative AI training](https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-3-Generative-AI-Training-Report-Pre-Publication-Version.pdf), released in May 2025, acknowledged that training on large, diverse datasets "will often be transformative" — though the Office hedged its conclusions and declined to issue a categorical ruling. That hedge is understandable as an agency matter; courts have less luxury to defer the hard question. The Third Circuit, confronting a specific record with specific works, must decide.
+
+For general-purpose foundation models trained on broad corpora, the case for transformativeness is overwhelming. The model learns to reason, generate, and synthesize — it does not learn to retrieve and reproduce. The only serious counterargument is that some models, in some circumstances, can be induced to regurgitate source material closely enough to constitute infringement in their *outputs*. That argument should be heard — and addressed — in output-based copyright claims, which are legally available and analytically coherent. It is not a reason to treat the training process itself as infringing.
+
+## The Market Harm Factor Requires Temporal Honesty
+
+Fair use's fourth factor — the effect on the potential market for the copyrighted work — is widely considered the most important in the analysis. It is also the factor where AI copyright plaintiffs have advanced their most structurally problematic argument.
+
+The argument runs as follows: AI companies are building commercial products by training on copyrighted works; those companies generate revenue; therefore the copyright holders are entitled to licensing fees they are not receiving; therefore there is market harm.
+
+This reasoning embeds a logical sleight of hand: it *constructs* the market whose absence it then calls harm. No licensing market for AI training data existed before AI systems needed training data. Licensing markets don't materialize spontaneously; they emerge from legal rules, industry practice, and negotiation. To define the harm as "the absence of a market that would exist if training were held infringing" is to reason in a circle — using the conclusion (training is infringing) to establish the predicate (there is a market being harmed).
+
+The Copyright Office recognized this problem, acknowledging that AI training fair use analysis occurs in ["uncharted territory"](https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-3-Generative-AI-Training-Report-Pre-Publication-Version.pdf) — particularly on the market harm question, where the standard inquiry into effects on the original work's market collides with an entirely novel licensing landscape. Courts have historically asked whether the use harms the *existing* market for the *original work*, not whether it eliminates a licensing opportunity that would exist only if the use were prohibited. Defining the fourth factor through retroactive market creation would effectively make every transformative use potentially infringing the moment a rights-holder decided to offer licenses — a result that would eviscerate fair use doctrine entirely.
+
+The Third Circuit should read the fourth factor for what it has always been: an inquiry into harm to the market for the *original work itself*, not harm to a downstream licensing market that exists only because the lawsuit has been filed.
+
+## The Incumbent-Entrenchment Paradox
+
+There is a political economy argument for aggressive AI training copyright enforcement that sounds pro-competition but functions in the opposite direction. The argument goes: big AI companies are profiting from creators' work without compensation; fair use protection is a subsidy to the powerful.
+
+The problem is that the AI copyright landscape does not sort that way. If training on copyrighted data requires pre-clearance licensing, the question immediately becomes: who can afford to clear it?
+
+The answer is not startups. It is not academic researchers. It is not independent AI developers. The answer is the handful of companies with billion-dollar legal teams, existing content partnership relationships, and the balance sheets to negotiate licensing deals across every major rights holder. The largest AI incumbents have already begun building licensed content arrangements. The next tier of competitors — the companies that would challenge their dominance — has not.
+
+A training-data infringement rule is, in this sense, the most effective incumbent-protection measure that antitrust regulators claim to oppose. It creates a moat not through product quality or network effects, but through IP acquisition — a moat incumbents build by settling now, while simultaneously benefiting from a legal regime that prevents challengers from ever reaching their scale. The regulatory moat is not a side effect of the rule; it is the rule.
+
+The [TRAIN Act](https://btlj.org/2026/05/the-train-act-forcing-transparency-in-ai-training-data/) and [CLEAR Act](https://ipwatchdog.com/2026/02/11/clear-act-establish-notice-requirements-copyrighted-works-ai-training-data/), the leading congressional proposals on AI training data, are largely transparency and reporting measures rather than licensing mandates. That is the right instinct. Transparency about training corpora is defensible; mandatory pre-clearance licensing is a structural barrier to entry that would freeze the current competitive hierarchy in place.
+
+## What the Third Circuit Should Actually Do
+
+The Third Circuit can reach the right outcome without resolving every question in AI copyright law. It should:
+
+**Reverse the district court on a narrow theory.** The district court's ruling relied heavily on the fact that Ross produced a product that directly competed with Westlaw — a fact the court treated as nearly determinative. The Third Circuit should reframe the analysis around purpose and substitution in the *output*, not the training *input*. A system trained on copyrighted works to replicate the original product is in a different legal position than a system trained on copyrighted works to create a new kind of tool. Ross is in the former category. Most foundation model training is in the latter.
+
+**Apply the fourth factor to the original market, not to a retroactively constructed one.** Press reporting from the June 11 argument indicates the panel focused intensely on how to define the relevant market — Westlaw broadly, or Westlaw's headnotes specifically. The narrower the market definition, the clearer the harm; the broader the definition, the harder it is to say that a general legal AI tool harmed the market for specific editorial summaries. The Third Circuit should articulate a market-harm analysis grounded in the *original work*, not in a licensing market retroactively constructed by the plaintiff's legal theory.
+
+**Draw guidance from the court's own recent fair use analysis in [*ASTM v. UpCodes*](https://www.lawnext.com/2026/04/third-circuit-rules-that-upcodes-publication-of-incorporated-building-standards-is-likely-fair-use.html).** In April 2026, the same court found that UpCodes' republication of incorporated building standards was likely fair use because it served a fundamentally different purpose than the original — conveying what the law *is*, not what standards bodies had privately determined. The panel in *Ross* asked both parties to address *UpCodes* by supplemental brief, signaling that purpose-transformation is a central axis of its analysis. That framing favors ROSS — a system that processed headnotes to build a reasoning tool, not to reproduce headnotes for readers who would otherwise buy Westlaw.
+
+**Explicitly disclaim application to general-purpose foundational model training.** *Ross* involved a specific, narrow use case with unusually damaging facts — [just 0.08% of Westlaw's 28-million-headnote database](https://xira.com/p/2026/06/26/at-3rd-circuit-judges-press-ross-and-thomson-reuters-on-fair-use-ai-training-and-market-harm/), used to build a direct Westlaw competitor. The Third Circuit need not — and should not — resolve whether training large language models on diverse internet corpora is fair use. Reserving that question would be both accurate (the record doesn't present it) and prudent (courts are still developing the relevant technical understanding).
+
+**Leave the licensing framework to Congress.** The Trump administration's [National AI Legislative Framework](https://www.mofo.com/resources/insights/260402-trump-administration-releases-national-ai-policy-framework), released in March 2026, declined to ask Congress to codify a fair use rule for training data, instead deferring to courts. That deference is appropriate — but it means courts must write their decisions with awareness that they are, by default, setting policy. The Third Circuit should write a decision that reserves maximum flexibility for Congress, not one that eliminates legislative options by declaring a categorical rule that either requires licensing for all training or prohibits it forever.
+
+## The Constructive Alternative: Outcome-Based Copyright
+
+Copyright's purpose, as stated in the Constitution, is to "promote the Progress of Science and useful Arts." That purpose has always involved a balance between incentivizing creation and enabling the dissemination and transformation of creative work. Fair use is the mechanism through which that balance is maintained when rigid application of exclusive rights would produce results contrary to copyright's own goals.
+
+The AI copyright debate has been dominated by the wrong question. The question is not "did the AI system train on copyrighted data?" — virtually every system of any sophistication has. The question is "does the AI system produce outputs that substitute for, reproduce, or otherwise harm the market for copyrighted works?" Output-based liability is coherent, proportionate, and technically sound. A model that regurgitates a passage from a novel on demand is doing something legally distinguishable from a model that has read the novel and learned from it. The former is a copyright problem; the latter is how intelligence — human and artificial — has always worked.
+
+Congress should legislate along these lines: training on publicly available data is a transformative research activity protected by fair use; outputs that reproduce copyrighted works, substitute for them in the market, or were generated through systems that deliberately trained on pirated materials are subject to existing copyright remedies, with enhanced enforcement tools where warranted. This framework respects creators, enables innovation, and does not require every AI developer to conduct a prior-clearance search before building a model.
+
+Until Congress acts, the Third Circuit's job is narrower: decide this case, write it tight, and resist the gravitational pull toward a categorical rule that would — whatever its intended beneficiaries — function in practice as a licensing tollbooth on foundational model development that only the most well-capitalized incumbents can afford to pay.
+
+The wrong ruling here would not just harm AI developers. It would harm the next wave of AI developers — the ones who haven't been funded yet, the ones working on research applications and public-interest tools, the ones building in domains where billion-dollar licensing deals are simply not an option. Copyright law has never been designed to protect incumbents from competition. The Third Circuit should not let it become that now.
+
+---
+
+*A ruling from the Third Circuit in* Thomson Reuters v. Ross Intelligence *is expected sometime in late 2026.*
